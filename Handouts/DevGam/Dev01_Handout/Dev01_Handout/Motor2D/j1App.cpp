@@ -61,6 +61,13 @@ bool j1App::Awake()
 	// If everything goes well, load the top tag inside the xml_node property
 	// created in the last TODO
 
+	doc.load_file("config.xml");
+
+	//doc.child("config").attribute("title").value();
+
+	node = doc.child("config");  //alternativa: node = doc.first_child();
+	
+
 	bool ret = true;
 
 	p2List_item<j1Module*>* item;
@@ -79,6 +86,11 @@ bool j1App::Awake()
 	 
 	// TODO 4: Read the title from the config file
 	// and set the window title using win->SetTitle()
+
+	//win->SetTitle(doc.child("config").attribute("title").value());
+	
+	win->SetTitle(node.child("title").child_value());
+
 
 	return ret;
 }

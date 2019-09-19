@@ -1,6 +1,8 @@
 #ifndef __j1APP_H__
 #define __j1APP_H__
 
+
+
 #include "p2List.h"
 #include "j1Module.h"
 #include "PugiXml\src\pugixml.hpp"
@@ -78,7 +80,10 @@ private:
 
 	// TODO 2: Create two new variables from pugui namespace:
 	// a xml_document to store the while config file and
+	pugi::xml_document doc;
 	// a xml_node to read specific branches of the xml
+	pugi::xml_node node;
+
 
 	int					argc;
 	char**				args;
