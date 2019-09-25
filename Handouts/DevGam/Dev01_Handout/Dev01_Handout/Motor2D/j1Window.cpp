@@ -60,7 +60,11 @@ bool j1Window::Awake()
 
 
 		//TODO 7: Move "Todo 4" code to the awake method on the window module
-		App->win->SetTitle(node.child("title").child_value());
+		
+		
+				//App->win->SetTitle(node.child("title").child_value());
+
+
 		//win->SetTitle(node.child("title").child_value());
 
 		//Pass the title as a variable when creating the window
@@ -75,7 +79,6 @@ bool j1Window::Awake()
 		{
 			//Get window surface
 			screen_surface = SDL_GetWindowSurface(window);
-
 		}
 	}
 
