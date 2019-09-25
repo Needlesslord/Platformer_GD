@@ -80,6 +80,18 @@ bool j1App::Awake()
 		// that can be used to read all variables for that module.
 		// Send nullptr if the node does not exist in config.xml
 
+
+
+		if (doc.child("name").empty)
+			return nullptr;
+		
+		else
+		item->data->name = doc.child("name").name;
+		
+
+
+
+
 		ret = item->data->Awake();
 		item = item->next; 
 	}
@@ -89,8 +101,8 @@ bool j1App::Awake()
 
 	//win->SetTitle(doc.child("config").attribute("title").value());
 	
-	win->SetTitle(node.child("title").child_value());
 
+	//win->SetTitle(node.child("title").child_value());
 
 	return ret;
 }

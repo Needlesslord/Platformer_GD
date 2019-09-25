@@ -103,7 +103,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="config.xml">
+    <Xml Include="..\Game\config.xml">
       <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
     </Xml>
   </ItemGroup>
