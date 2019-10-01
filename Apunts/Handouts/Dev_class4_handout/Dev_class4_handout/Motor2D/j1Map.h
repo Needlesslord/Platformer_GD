@@ -10,6 +10,21 @@
 // Ignore Terrain Types and Tile Types for now, but we want the image!
 // ----------------------------------------------------
 
+struct TileSet {
+
+	char* source;
+	unsigned int firstgid = 0;			//1
+	char* name = " ";					//Desert
+	unsigned int width = 0;				//50			//uint width = 0u;	uint is a number with sign, if we add the las "u", it is unsigned
+	unsigned int height = 0;			//15
+	unsigned int tilewidth = 0;			//32
+	unsigned int tileheight = 0;		//32
+	unsigned int margin = 0;			//1
+
+	//Terrain Types enum
+	//Tile Types enum
+
+};
 
 // TODO 1: Create a struct needed to hold the information to Map node
 
@@ -77,7 +92,7 @@ private:
 public:
 
 	// TODO 1: Add your struct for map info as public for now
-	
+	Map map1;
 
 private:
 
