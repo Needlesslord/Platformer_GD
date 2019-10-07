@@ -154,7 +154,7 @@ bool j1Map::Load(const char* file_name)
 
 		// TODO 4: Add info here about your loaded layers
 		// Adapt this code with your own variables
-		/*
+		
 		p2List_item<MapLayer*>* item_layer = data.layers.start;
 		while(item_layer != NULL)
 		{
@@ -163,7 +163,7 @@ bool j1Map::Load(const char* file_name)
 			LOG("name: %s", l->name.GetString());
 			LOG("tile width: %d tile height: %d", l->width, l->height);
 			item_layer = item_layer->next;
-		}*/
+		}
 	}
 
 	map_loaded = ret;
@@ -246,6 +246,7 @@ bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	set->tile_height = tileset_node.attribute("tileheight").as_int();
 	set->margin = tileset_node.attribute("margin").as_int();
 	set->spacing = tileset_node.attribute("spacing").as_int();
+
 	pugi::xml_node offset = tileset_node.child("tileoffset");
 
 	if(offset != NULL)
@@ -301,16 +302,26 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 // TODO 3: Create the definition for a function that loads a single layer
 bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
+	bool ret = true;
 
-	layer->name.create(node.attribute("name").as_string());
-	//layer->name = (node.attribute("name").as_string());
-	layer->width = (node.attribute("width").as_uint());
-	layer->height = (node.attribute("height").as_uint());
+	layer->name = (node.attribute("name").as_string());
+	layer->width = (node.attribute("width").as_int());
+	layer->height = (node.attribute("height").as_int());
 
 	memset(layer, 0, 3);
 
-	///////////////////////////  ACABAR!!!
+	pugi::xml_node node_layer = node.child("layerattributes");
 
+	if (node_layer != NULL) {
+		//layer->name = node_layer.attribute("name").as_string();
+		layer->width = node_layer.attribute("width").as_int();
+		layer->height = node_layer.attribute("height").as_int();
+	}
+	else {
+		//layer->name = 0;
+		layer->width = 0;
+		layer->height = 0;
+	}
 	
-	return true;
+	return ret;
 }
