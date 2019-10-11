@@ -78,6 +78,7 @@ private:
 	uint				frames;
 	float				dt;
 
+//NO SE VALE:			public:
 	// TODO 2: Create two new variables from pugui namespace:
 	// a xml_document to store the while config file and
 	pugi::xml_document doc;
