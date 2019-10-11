@@ -61,11 +61,9 @@ bool j1Window::Awake()
 
 		//TODO 7: Move "Todo 4" code to the awake method on the window module
 		
-		
-				//App->win->SetTitle(node.child("title").child_value());
+		//DOESN'T WORK:			App->win->SetTitle(App->doc.child("config").child("title").child_value());
 
 
-		//win->SetTitle(node.child("title").child_value());
 
 		//Pass the title as a variable when creating the window
 		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);

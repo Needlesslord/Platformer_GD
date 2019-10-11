@@ -63,11 +63,7 @@ bool j1App::Awake()
 
 	doc.load_file("config.xml");
 
-	//doc.child("config").attribute("title").value();
-
-	node = doc.child("config");  //alternativa: node = doc.first_child();
-	
-
+	doc.child("config").attribute("title").value();
 	bool ret = true;
 
 	p2List_item<j1Module*>* item;
@@ -80,15 +76,15 @@ bool j1App::Awake()
 		// that can be used to read all variables for that module.
 		// Send nullptr if the node does not exist in config.xml
 
+		/*
 
-
-		if (doc.child("name").empty)
+		if (doc.child("name").empty())
 			return nullptr;
 		
 		else
-		item->data->name = doc.child("name").name;
+		item->data->name = doc.child("name").child_value();
 		
-
+		*/
 
 
 
@@ -99,10 +95,9 @@ bool j1App::Awake()
 	// TODO 4: Read the title from the config file
 	// and set the window title using win->SetTitle()
 
-	//win->SetTitle(doc.child("config").attribute("title").value());
+	//MOVED TO TODO 7:				
+	win->SetTitle(doc.child("config").child("title").child_value());
 	
-
-	//win->SetTitle(node.child("title").child_value());
 
 	return ret;
 }
