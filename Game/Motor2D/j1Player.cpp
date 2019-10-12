@@ -11,11 +11,12 @@
 #include "j1Collisions.h"
 #include "j1Particles.h"
 #include "j1Player.h"
-#include "j1SceneSpace.h"
+#include "j1Level1.h"
+#include "j1Level2.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
-ModulePlayer::ModulePlayer()
+j1Player::j1Player()
 {
 	// idle animation (just the ship)
 	idle.PushBack({ 66, 1, 32, 14 });
@@ -33,15 +34,15 @@ ModulePlayer::ModulePlayer()
 	down.speed = 0.1f;
 }
 
-ModulePlayer::~ModulePlayer()
+j1Player::~j1Player()
 {}
 
 // Load assets
-bool ModulePlayer::Start()
+bool j1Player::Start()
 {
 	LOG("Loading player");
 
-	graphics = App->textures->Load("rtype\ship.png");
+	img = App->textures->Load("rtype\ship.png");
 
 	destroyed = false;
 	positionX = 50;
@@ -63,11 +64,11 @@ bool ModulePlayer::Start()
 }
 
 // Unload assets
-bool ModulePlayer::CleanUp()
+bool j1Player::CleanUp()
 {
 	LOG("Unloading player");
 
-	App->textures->Unload(graphics);
+	App->textures->Unload(img);
 	if (colup != nullptr)
 		colup->to_delete = true;
 	if (coldown != nullptr)
@@ -81,7 +82,7 @@ bool ModulePlayer::CleanUp()
 }
 
 // Update: draw background
-update_status ModulePlayer::Update()
+update_status j1Player::Update()
 {
 	float speed = 1;
 	float t = 1;
@@ -145,13 +146,13 @@ update_status ModulePlayer::Update()
 
 	// Draw everything --------------------------------------
 	if (destroyed == false)
-		App->render->Blit(graphics, positionX, positionY, &(current_animation->GetCurrentFrame()));
+		App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()));
 
 	return UPDATE_CONTINUE;
 }
 
 
-void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
+void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 == coldown && destroyed == false && App->fade->IsFading() == false && velocityY <0 && c2->type == COLLIDER_WALL && c1->rect.x > c2->rect.x)
 	{

@@ -2,26 +2,25 @@
 #ifndef __ModulePlayer_H__
 #define __ModulePlayer_H__
 
-#include "Module.h"
-#include "Animation.h"
-#include "p2Point.h"
-
+#include "j1Module.h"
 struct SDL_Texture;
 struct Collider;
 
-class ModulePlayer : public Module
-{
+class j1Player : public j1Module {
 public:
-	ModulePlayer();
-	~ModulePlayer();
-
+	j1Player();
+	virtual ~j1Player();
+	bool Awake();
 	bool Start();
-	update_status Update();
+	bool PreUpdate();
+	bool Update(float dt);
+	bool PostUpdate();
 	bool CleanUp();
+
 	void OnCollision(Collider* c1, Collider* c2);
 
 private:
-	SDL_Texture* graphics = nullptr;
+	SDL_Texture* img = nullptr;
 
 public:
 
