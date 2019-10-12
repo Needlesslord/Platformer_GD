@@ -4,13 +4,10 @@
 #include "j1Input.h"
 #include "j1Window.h"
 #include "SDL/include/SDL.h"
-
 #define MAX_KEYS 300
 
-j1Input::j1Input() : j1Module()
-{
+j1Input::j1Input() : j1Module() {
 	name.create("input");
-
 	keyboard = new j1KeyState[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(j1KeyState) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(j1KeyState) * NUM_MOUSE_BUTTONS);
@@ -23,8 +20,7 @@ j1Input::~j1Input()
 }
 
 // Called before render is available
-bool j1Input::Awake(pugi::xml_node& config)
-{
+bool j1Input::Awake(pugi::xml_node& config) {
 	LOG("Init SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
@@ -39,57 +35,42 @@ bool j1Input::Awake(pugi::xml_node& config)
 }
 
 // Called before the first frame
-bool j1Input::Start()
-{
+bool j1Input::Start() {
 	SDL_StopTextInput();
+
 	return true;
 }
 
 // Called each loop iteration
-bool j1Input::PreUpdate()
-{
+bool j1Input::PreUpdate() {
 	static SDL_Event event;
-	
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 
-	for(int i = 0; i < MAX_KEYS; ++i)
-	{
-		if(keys[i] == 1)
-		{
-			if(keyboard[i] == KEY_IDLE)
-				keyboard[i] = KEY_DOWN;
-			else
-				keyboard[i] = KEY_REPEAT;
+	for(int i = 0; i < MAX_KEYS; ++i) {
+		if(keys[i] == 1) {
+			if(keyboard[i] == KEY_IDLE) keyboard[i] = KEY_DOWN;
+			else keyboard[i] = KEY_REPEAT;
 		}
-		else
-		{
-			if(keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
-				keyboard[i] = KEY_UP;
-			else
-				keyboard[i] = KEY_IDLE;
+		else {
+			if(keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN) keyboard[i] = KEY_UP;
+			else keyboard[i] = KEY_IDLE;
 		}
 	}
 
-	for(int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
-	{
-		if(mouse_buttons[i] == KEY_DOWN)
-			mouse_buttons[i] = KEY_REPEAT;
+	for(int i = 0; i < NUM_MOUSE_BUTTONS; ++i) {
+		if(mouse_buttons[i] == KEY_DOWN) mouse_buttons[i] = KEY_REPEAT;
 
-		if(mouse_buttons[i] == KEY_UP)
-			mouse_buttons[i] = KEY_IDLE;
+		if(mouse_buttons[i] == KEY_UP) mouse_buttons[i] = KEY_IDLE;
 	}
 
-	while(SDL_PollEvent(&event) != 0)
-	{
-		switch(event.type)
-		{
+	while(SDL_PollEvent(&event) != 0) {
+		switch(event.type) {
 			case SDL_QUIT:
 				windowEvents[WE_QUIT] = true;
 			break;
 
 			case SDL_WINDOWEVENT:
-				switch(event.window.event)
-				{
+				switch(event.window.event) {
 					//case SDL_WINDOWEVENT_LEAVE:
 					case SDL_WINDOWEVENT_HIDDEN:
 					case SDL_WINDOWEVENT_MINIMIZED:
@@ -132,27 +113,24 @@ bool j1Input::PreUpdate()
 }
 
 // Called before quitting
-bool j1Input::CleanUp()
-{
+bool j1Input::CleanUp() {
 	LOG("Quitting SDL event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
+
 	return true;
 }
 
 // ---------
-bool j1Input::GetWindowEvent(j1EventWindow ev)
-{
+bool j1Input::GetWindowEvent(j1EventWindow ev) {
 	return windowEvents[ev];
 }
 
-void j1Input::GetMousePosition(int& x, int& y)
-{
+void j1Input::GetMousePosition(int& x, int& y) {
 	x = mouse_x;
 	y = mouse_y;
 }
 
-void j1Input::GetMouseMotion(int& x, int& y)
-{
+void j1Input::GetMouseMotion(int& x, int& y) {
 	x = mouse_motion_x;
 	y = mouse_motion_y;
 }

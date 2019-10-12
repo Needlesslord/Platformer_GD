@@ -1,15 +1,11 @@
 #ifndef __P2DEFS_H__
 #define __P2DEFS_H__
-
 #include <stdio.h>
-
 //  NULL just in case ----------------------
-
 #ifdef NULL
 #undef NULL
 #endif
 #define NULL  0
-
 // Deletes a buffer
 #define RELEASE( x ) \
     {                        \
@@ -39,8 +35,7 @@
 typedef unsigned int uint;
 typedef unsigned char uchar;
 
-template <class VALUE_TYPE> void SWAP(VALUE_TYPE& a, VALUE_TYPE& b)
-{
+template <class VALUE_TYPE> void SWAP(VALUE_TYPE& a, VALUE_TYPE& b) {
 	VALUE_TYPE tmp = a;
 	a = b;
 	b = tmp;
@@ -52,10 +47,10 @@ template <class VALUE_TYPE> void SWAP(VALUE_TYPE& a, VALUE_TYPE& b)
 #define HUGE_STR	8192
 
 // Joins a path and file
-inline const char* const PATH(const char* folder, const char* file)
-{
+inline const char* const PATH(const char* folder, const char* file) {
 	static char path[MID_STR];
 	sprintf_s(path, MID_STR, "%s/%s", folder, file);
+	
 	return path;
 }
 
