@@ -78,7 +78,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="j1FadeToBlack.cpp" />
     <ClCompile Include="j1Collisions.cpp" />
+    <ClCompile Include="j1Globals.cpp" />
+    <ClCompile Include="j1Intro.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
     <ClCompile Include="j1Audio.cpp" />
@@ -87,6 +90,7 @@
     <ClCompile Include="j1Scene.cpp" />
     <ClCompile Include="j1Level1.cpp" />
     <ClCompile Include="j1Level2.cpp" />
+    <ClCompile Include="MemLeaks.cpp" />
     <ClCompile Include="p2Log.cpp" />
     <ClCompile Include="j1Render.cpp" />
     <ClCompile Include="j1Textures.cpp" />
@@ -95,7 +99,11 @@
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="j1FadeToBlack.h" />
     <ClInclude Include="j1Collisions.h" />
+    <ClInclude Include="j1Globals.h" />
+    <ClInclude Include="j1Intro.h" />
     <ClInclude Include="j1Particles.h" />
     <ClInclude Include="j1Scene.h" />
     <ClInclude Include="j1Level1.h" />

@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="j1App.cpp">
-      <Filter>Desenvolupament  ========</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Main.cpp">
-      <Filter>Desenvolupament  ========</Filter>
-    </ClCompile>
     <ClCompile Include="p2Log.cpp">
       <Filter>Programacio 2 ===========</Filter>
     </ClCompile>
@@ -34,26 +28,38 @@
     <ClCompile Include="j1Collisions.cpp">
       <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
     </ClCompile>
-    <ClCompile Include="j1Level1.cpp">
-      <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Level2.cpp">
-      <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
-    </ClCompile>
     <ClCompile Include="j1Player.cpp">
       <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
     </ClCompile>
     <ClCompile Include="j1Particles.cpp">
       <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
     </ClCompile>
+    <ClCompile Include="j1Level1.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Level2.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="j1FadeToBlack.cpp">
+      <Filter>Desenvolupament  ========\Modules\SubModules\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Intro.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Globals.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="MemLeaks.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="j1App.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Main.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="j1App.h">
-      <Filter>Desenvolupament  ========</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Module.h">
-      <Filter>Desenvolupament  ========</Filter>
-    </ClInclude>
     <ClInclude Include="p2Defs.h">
       <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
@@ -99,17 +105,35 @@
     <ClInclude Include="j1Collisions.h">
       <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
     </ClInclude>
-    <ClInclude Include="j1Level1.h">
-      <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Level2.h">
-      <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
-    </ClInclude>
     <ClInclude Include="j1Player.h">
       <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
     </ClInclude>
     <ClInclude Include="j1Particles.h">
       <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Level1.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Level2.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="j1FadeToBlack.h">
+      <Filter>Desenvolupament  ========\Modules\SubModules\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Intro.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Globals.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="j1App.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Module.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +160,12 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Modules\SubModules">
       <UniqueIdentifier>{306ae99c-3b83-4169-8689-2cabb97b7114}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\SubModules\Others">
+      <UniqueIdentifier>{e91bee6e-a3fd-4b4f-ab99-289dee8fa332}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Core">
+      <UniqueIdentifier>{1d96da78-36a4-49f4-a788-b9c331030719}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
