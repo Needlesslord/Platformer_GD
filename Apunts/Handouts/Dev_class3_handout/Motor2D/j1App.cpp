@@ -152,14 +152,14 @@ void j1App::PrepareUpdate()
 void j1App::FinishUpdate()
 {
 	// TODO 2: This is a good place to call load / Save functions
-	if (scene->saveRequest) {
+	if (saveRequest) {
 		saving();
-		scene->saveRequest = false;
+		saveRequest = false;
 	}
 
-	if (scene->loadRequest) {
+	if (loadRequest) {
 		loading();
-		scene->loadRequest = false;
+		loadRequest = false;
 	}
 }
 
@@ -274,24 +274,60 @@ const char* j1App::GetOrganization() const
 
 // TODO 5: Fill the application load function
 // Start by opening the file as an xml_document (as with config file)
-//bool j1App::loading() {
-//	pugi::xml_document  savegame_file;
-//
-//	bool ret = true;
-//	p2List_item<j1Module*>* item;
-//	item = modules.start->data->loading;
-//
-//	while (item != NULL && ret == true)
-//	{
-//		ret = item->data->loading(savegame_file);
-//		item = item->prev;
-//	}
-//
-//	return ret;
-//}
+bool j1App::loading() {
+	bool ret = true;
 
+	pugi::xml_document saving_file;
+	pugi::xml_node saving_node;
+
+	pugi::xml_parse_result result = saving_file.load_file("savegame.xml");
+
+	if (result == NULL)
+	{
+		LOG("Could not load map xml file savegame.xml. pugi error: %s", result.description());
+		ret = false;
+	}
+	else
+	{
+		saving_node = saving_file.child("save");
+
+		p2List_item<j1Module*>* item;
+		item = modules.start;
+
+		while (item != NULL)
+		{
+			ret = item->data->loading(saving_node.child(item->data->name.GetString()));
+			item = item->next;
+		}
+	}
+
+	return ret;
+}
 
 // TODO 7: Fill the application save function
 // Generate a new pugi::xml_document and create a node for each module.
 // Call each module's save function and then save the file using pugi::xml_document::save_file()
+
+bool j1App::saving() {
+	bool ret;
+
+	pugi::xml_document saving_file;
+	pugi::xml_node saving_node;
+	pugi::xml_node node;
+
+	saving_node = saving_file.append_child("save");	
+
+	p2List_item<j1Module*>* item;
+	item = modules.start;
+
+	while (item != NULL)
+	{
+		node = saving_node.append_child(item->data->name.GetString());
+		ret = item->data->saving(node);
+		item = item->next;
+	}
+
+	saving_file.save_file("savegame.xml");
+	return ret;
+}
 
