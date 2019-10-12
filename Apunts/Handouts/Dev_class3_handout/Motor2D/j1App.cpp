@@ -152,20 +152,15 @@ void j1App::PrepareUpdate()
 void j1App::FinishUpdate()
 {
 	// TODO 2: This is a good place to call load / Save functions
-	
-	if (App->save) {
-
-		Saving();
-
+	if (scene->saveRequest) {
+		saving();
+		scene->saveRequest = false;
 	}
 
-	if (App->save && App->load) {
-
-		Loading();
-
+	if (scene->loadRequest) {
+		loading();
+		scene->loadRequest = false;
 	}
-
-
 }
 
 // Call modules before each loop iteration
@@ -279,49 +274,21 @@ const char* j1App::GetOrganization() const
 
 // TODO 5: Fill the application load function
 // Start by opening the file as an xml_document (as with config file)
-bool j1App::Loading() {
-
-	savinggame.load_file("savegame.xml");
-
-	node = savinggame.child("save");
-
-	pugi::xml_parse_result result = config_file.load_file("savegame.xml");
-
-
-	bool ret = true;
-
-	p2List_item<j1Module*>* item;
-	item = modules.start;
-
-	if (item == NULL) {
-
-		LOG("Could not load map xml file savegame.xml. pugi error: %s", result.description());
-		ret = false;
-
-	}
-
-	else {
-
-		while (item != NULL && ret == true) {
-
-			if (savinggame.child("name").empty)
-				return nullptr;
-
-			else
-				item->data->name = savinggame.child("name").name;
-
-			ret = item->data->Loading();
-			item = item->next;
-
-		}
-
-	}
-
-	return ret;
-
-}
-
-
+//bool j1App::loading() {
+//	pugi::xml_document  savegame_file;
+//
+//	bool ret = true;
+//	p2List_item<j1Module*>* item;
+//	item = modules.start->data->loading;
+//
+//	while (item != NULL && ret == true)
+//	{
+//		ret = item->data->loading(savegame_file);
+//		item = item->prev;
+//	}
+//
+//	return ret;
+//}
 
 
 // TODO 7: Fill the application save function

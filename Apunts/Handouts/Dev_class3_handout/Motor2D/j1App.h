@@ -63,13 +63,11 @@ private:
 
 	// Call modules after each loop iteration
 	bool PostUpdate();
-	   
 
 	// TODO 2: Create the functions for Loading / Saving the game state (leave those empty for now)
-	bool Saving() {};
-	bool Loading() {};
+	bool saving() { return true; };
 
-
+	bool loading() { return true; };
 
 public:
 
@@ -80,9 +78,6 @@ public:
 	j1Textures*			tex;
 	j1Audio*			audio;
 	j1Scene*			scene;
-
-	bool save = false;
-	bool load = false;
 
 private:
 
@@ -97,9 +92,6 @@ private:
 
 	p2SString			title;
 	p2SString			organization;
-
-	pugi::xml_document savinggame;
-	pugi::xml_node node;
 
 };
 

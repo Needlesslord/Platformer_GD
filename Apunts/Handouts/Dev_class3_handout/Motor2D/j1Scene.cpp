@@ -29,8 +29,8 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	img = App->tex->Load("textures/test.png");
-	App->audio->PlayMusic("audio/music/music_sadpiano.ogg");
+	img = App->tex->Load("textures/Rick.png");//NOW RICK CAUSE WHY NOT
+	//AUDIO REMOVED			App->audio->PlayMusic("audio/music/music_sadpiano.ogg");
 	return true;
 }
 
@@ -44,7 +44,11 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	// TODO 1: Request Load / Save on application when pressing L/S
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		saveRequest = true;
 
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+		loadRequest = true;
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y -= 1;
@@ -57,18 +61,6 @@ bool j1Scene::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x += 1;
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		App->save = true;
-
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
-		
-		if (App->save) {
-			App->load = true;
-		}
-
-	}
-
 
 	App->render->Blit(img, 0, 0);
 	return true;
