@@ -32,8 +32,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool saveRequest;
-	bool loadRequest;
 
 private:
 	SDL_Texture* img;

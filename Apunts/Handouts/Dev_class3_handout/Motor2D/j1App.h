@@ -65,11 +65,15 @@ private:
 	bool PostUpdate();
 
 	// TODO 2: Create the functions for Loading / Saving the game state (leave those empty for now)
-	bool saving() { return true; };
 
-	bool loading() { return true; };
+
+	bool saving();
+
+	bool loading();
 
 public:
+	bool saveRequest = false;
+	bool loadRequest = false;
 
 	// Modules
 	j1Window*			win;

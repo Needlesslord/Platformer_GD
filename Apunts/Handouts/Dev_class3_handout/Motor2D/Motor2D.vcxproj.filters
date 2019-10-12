@@ -104,5 +104,6 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\config.xml" />
+    <Xml Include="..\Game\savegame.xml" />
   </ItemGroup>
 </Project>
