@@ -87,25 +87,28 @@ bool j1Render::CleanUp()
 	return true;
 }
 
-// Load Game State
-bool j1Render::Load(pugi::xml_node& data)
-{
-	camera.x = data.child("camera").attribute("x").as_int();
-	camera.y = data.child("camera").attribute("y").as_int();
 
+// TODO 6: Create the load method on the renderer. For now load camera's x and y
+bool j1Render::Load(pugi::xml_node& saved)
+{
+	camera.x = saved.child("camera").attribute("x").as_int();
+	camera.y = saved.child("camera").attribute("y").as_int();
+	App->load = false;
 	return true;
 }
 
-// Save Game State
-bool j1Render::Save(pugi::xml_node& data) const
+// TODO 8: Create the save method on the renderer. Fill the camera's data
+// using append_child and append_attribute
+bool j1Render::Save(pugi::xml_node& data)
 {
 	pugi::xml_node cam = data.append_child("camera");
+	cam.append_attribute("x").set_value(camera.x);
+	cam.append_attribute("y").set_value(camera.y);
 
-	cam.append_attribute("x") = camera.x;
-	cam.append_attribute("y") = camera.y;
-
+	App->save = false;
 	return true;
 }
+
 
 void j1Render::SetBackgroundColor(SDL_Color color)
 {

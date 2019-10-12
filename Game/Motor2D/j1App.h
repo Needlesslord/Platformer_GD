@@ -12,7 +12,6 @@ class j1Render;
 class j1Textures;
 class j1Audio;
 class j1Scene;
-class j1Map;
 
 class j1App
 {
@@ -45,14 +44,10 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
-	void LoadGame();
-	void SaveGame() const;
-	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
-
 private:
 
 	// Load config file
-	pugi::xml_node LoadConfig(pugi::xml_document&) const;
+	bool LoadConfig();
 
 	// Call modules before each loop iteration
 	void PrepareUpdate();
@@ -69,9 +64,9 @@ private:
 	// Call modules after each loop iteration
 	bool PostUpdate();
 
-	// Load / Save
-	bool LoadGameNow();
-	bool SavegameNow() const;
+	// TODO 2: Create the functions for Loading / Saving the game state (leave those empty for now)
+	bool Save();
+	bool Load();
 
 public:
 
@@ -82,25 +77,26 @@ public:
 	j1Textures*			tex;
 	j1Audio*			audio;
 	j1Scene*			scene;
-	j1Map*				map;
+
+	bool save = false;
+	bool load = false;
 
 private:
 
 	p2List<j1Module*>	modules;
 	uint				frames;
 	float				dt;
+	pugi::xml_document	config_file;
+	pugi::xml_node		config;
+	pugi::xml_node		app_config;
 	int					argc;
 	char**				args;
 
 	p2SString			title;
 	p2SString			organization;
 
-	mutable bool		want_to_save;
-	bool				want_to_load;
-	p2SString			load_game;
-	mutable p2SString	save_game;
 };
 
-extern j1App* App; // No student is asking me about that ... odd :-S
+extern j1App* App;
 
 #endif

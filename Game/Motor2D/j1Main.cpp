@@ -25,9 +25,9 @@ j1App* App = NULL;
 
 int main(int argc, char* args[])
 {
-	LOG("Engine starting ... %d");
+	LOG("Engine starting ...");
 
-	MainState state = MainState::CREATE;
+	MainState state = CREATE;
 	int result = EXIT_FAILURE;
 
 	while(state != EXIT)

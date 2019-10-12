@@ -2,8 +2,6 @@
 #define __j1AUDIO_H__
 
 #include "j1Module.h"
-#include "SDL_mixer\include\SDL_mixer.h"
-#include "p2List.h"
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
@@ -33,6 +31,15 @@ public:
 
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
+
+	// Load and Save
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&);
+
+	// Called each loop iteration
+	bool PreUpdate();
+
+	int volume;
 
 private:
 

@@ -1,7 +1,8 @@
 #include "p2Defs.h"
 #include "p2Log.h"
+#include "j1App.h"
+#include "j1FileSystem.h"
 #include "j1Audio.h"
-#include "p2List.h"
 
 #include "SDL/include/SDL.h"
 #include "SDL_mixer\include\SDL_mixer.h"
@@ -23,6 +24,8 @@ bool j1Audio::Awake(pugi::xml_node& config)
 	LOG("Loading Audio Mixer");
 	bool ret = true;
 	SDL_Init(0);
+
+	volume = config.child("volume").attribute("value").as_int();
 
 	if(SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
 	{
@@ -170,4 +173,33 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 	}
 
 	return ret;
+}
+
+// TODO 6: Create the load method on the renderer. For now load camera's x and y
+bool j1Audio::Load(pugi::xml_node& saved)
+{
+	volume = saved.child("volume").attribute("value").as_int();								//This I don't understand: why "volume" if it's camera?
+
+	return true;
+}
+
+// TODO 8: Create the save method on the renderer. Fill the camera's data
+// using append_child and append_attribute
+bool j1Audio::Save(pugi::xml_node& data)
+{
+	pugi::xml_node vol = data.append_child("volume");
+	vol.append_attribute("value").set_value(volume);
+
+	return true;
+}
+
+bool j1Audio::PreUpdate()
+{
+	if (Mix_VolumeMusic(volume) < 0)
+	{
+		LOG("Cannot play in music %s. Mix_GetError(): %s", Mix_GetError());
+		return false;
+	}
+
+	return true;
 }

@@ -10,6 +10,10 @@
     <vsync value="false"/>
   </renderer>
 
+  <audio>
+    <volume value="64"></volume>
+  </audio>
+
   <window>
     <resolution width="1024" height="768" scale="1"/>
     <fullscreen value="false"/>
@@ -17,13 +21,5 @@
     <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>
-
-  <file_system>
-    <path>data.zip</path>
-  </file_system>
-
-  <map>
-    <folder>maps/</folder>
-  </map>
 
 </config>
