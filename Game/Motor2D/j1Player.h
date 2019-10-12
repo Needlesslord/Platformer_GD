@@ -1,56 +1,56 @@
-#pragma once
-#ifndef __ModulePlayer_H__
-#define __ModulePlayer_H__
-
-#include "j1Module.h"
-struct SDL_Texture;
-struct Collider;
-
-class j1Player : public j1Module {
-public:
-	j1Player();
-	virtual ~j1Player();
-	bool Awake();
-	bool Start();
-	bool PreUpdate();
-	bool Update(float dt);
-	bool PostUpdate();
-	bool CleanUp();
-
-	void OnCollision(Collider* c1, Collider* c2);
-
-private:
-	SDL_Texture* img = nullptr;
-
-public:
-
-	Animation* current_animation = nullptr;
-	Animation idle;
-	Animation up;
-	Animation down;
-
-
-	float positionX;
-	float positionY;
-
-	float desiredPositionX;
-	float desiredPositionY;
-
-	float velocityX;
-	float velocityY;
-
-	Collider* colup;
-	Collider* coldown;
-	Collider* colright;
-	Collider* colleft;
-
-	//Collider* col2;
-
-
-	bool destroyed = false;
-
-
-	bool jumping;
-};
-
-#endif
+//#pragma once
+//#ifndef __ModulePlayer_H__
+//#define __ModulePlayer_H__
+//
+//#include "j1Module.h"
+//struct SDL_Texture;
+//struct Collider;
+//
+//class j1Player : public j1Module {
+//public:
+//	j1Player();
+//	virtual ~j1Player();
+//	bool Awake();
+//	bool Start();
+//	bool PreUpdate();
+//	bool Update(float dt);
+//	bool PostUpdate();
+//	bool CleanUp();
+//
+//	void OnCollision(Collider* c1, Collider* c2);
+//
+//private:
+//	SDL_Texture* img = nullptr;
+//
+//public:
+//
+//	Animation* current_animation = nullptr;
+//	Animation idle;
+//	Animation up;
+//	Animation down;
+//
+//
+//	float positionX;
+//	float positionY;
+//
+//	float desiredPositionX;
+//	float desiredPositionY;
+//
+//	float velocityX;
+//	float velocityY;
+//
+//	Collider* colup;
+//	Collider* coldown;
+//	Collider* colright;
+//	Collider* colleft;
+//
+//	//Collider* col2;
+//
+//
+//	bool destroyed = false;
+//
+//
+//	bool jumping;
+//};
+//
+//#endif
