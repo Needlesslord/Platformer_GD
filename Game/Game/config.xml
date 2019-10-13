@@ -2,8 +2,8 @@
 
 <config>
   <app>
-    <title>Game Development Testbed</title>
-    <organization>UPC</organization>
+    <title>Ninja Frog Against Gravity</title>
+    <organization>Nuto Studios + UPC</organization>
   </app>
 	
   <renderer>
@@ -15,11 +15,23 @@
   </audio>
 
   <window>
-    <resolution width="1024" height="768" scale="1"/>
+    <resolution width="1024" height="768" scale="3.5"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>
+
+  <player>
+    <player_skin>    
+    </player_skin>
+  </player>
+
+  <scene>
+    <current_scene scene="true" intro="false" l1="false" l2="false"/>
+    <change_scene change_scene="false" Intro_L1="false" L1_L2="false" L2_Intro="false" Intro_L2="false" L2_L1="false" L1_Intro="false"/>
+  </scene>
+
+  <update_status update_continue="true" update_stop="false" update_error="false"/>
 
 </config>

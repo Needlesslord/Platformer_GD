@@ -24,10 +24,10 @@
 //
 //public:
 //
-//	Animation* current_animation = nullptr;
-//	Animation idle;
-//	Animation up;
-//	Animation down;
+//	j1Animation* current_j1Animation = nullptr;
+//	j1Animation idle;
+//	j1Animation up;
+//	j1Animation down;
 //
 //
 //	float positionX;

@@ -25,8 +25,11 @@ bool j1Scene::Awake() {
 
 // Called before the first frame
 bool j1Scene::Start() {
-	img = App->tex->Load("textures/Jump.png");
-	App->audio->PlayMusic("audio/music/bensound-birthofahero.ogg");
+	
+	if (current_scene) {
+		img = App->tex->Load("textures/Jump.png");
+		App->audio->PlayMusic("audio/music/bensound-birthofahero.ogg");
+	}
 	
 	return true;
 }
@@ -63,8 +66,16 @@ bool j1Scene::Update(float dt) {
 // Called each loop iteration
 bool j1Scene::PostUpdate() {
 	bool ret = true;
+	//pugi::xml_node& config = config;
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		//current_scene scene="true" intro="false" l1="false" l2="false"
+		//current_scene = config.child("current_scene").attribute("scene").as_bool(false);
+		//following_scene = config.child("current_scene").attribute("l1").as_bool(true);
+		//App->intro;
+	}
 
 	return ret;
 }

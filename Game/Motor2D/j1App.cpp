@@ -9,6 +9,15 @@
 #include "j1Audio.h"
 #include "j1Scene.h"
 #include "j1App.h"
+#include "j1Intro.h"
+#include "j1Animation.h"
+#include "j1Collisions.h"
+#include "j1FadeToBlack.h"
+#include "j1Level1.h"
+#include "j1Level2.h"
+#include "j1Particles.h"
+#include "j1Player.h"
+//#include "j1Globals.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
@@ -28,6 +37,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
 	AddModule(scene);
 	// render last to swap buffer
 	AddModule(render);
+	intro = new j1Intro();
+	AddModule(intro);
+	//animation = new j1Animation();
+	//AddModule(animation);
 }
 
 // Destructor

@@ -18,7 +18,7 @@
 //
 //j1Player::j1Player()
 //{
-//	// idle animation (just the ship)
+//	// idle j1Animation (just the ship)
 //	idle.PushBack({ 66, 1, 32, 14 });
 //
 //	// move upwards
@@ -121,10 +121,10 @@
 //		velocityY = 4 * speed;
 //
 //		/*
-//				if (current_animation != &up)
+//				if (current_j1Animation != &up)
 //				{
 //					up.Reset();
-//					current_animation = &up;
+//					current_j1Animation = &up;
 //				}
 //		*/
 //	}
@@ -137,7 +137,7 @@
 //
 //	if (App->input->keyboard[SDL_SCANCODE_S] == KEY_STATE::KEY_IDLE
 //		&& App->input->keyboard[SDL_SCANCODE_W] == KEY_STATE::KEY_IDLE)
-//		current_animation = &idle;
+//		current_j1Animation = &idle;
 //
 //	colup->SetPos(positionX + 1, positionY);
 //	coldown->SetPos(positionX + 1, positionY + 22);
@@ -146,7 +146,7 @@
 //
 //	// Draw everything --------------------------------------
 //	if (destroyed == false)
-//		App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()));
+//		App->render->Blit(img, positionX, positionY, &(current_j1Animation->GetCurrentFrame()));
 //
 //	return UPDATE_CONTINUE;
 //}

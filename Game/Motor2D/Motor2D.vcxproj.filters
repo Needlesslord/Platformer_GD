@@ -126,13 +126,13 @@
     <ClInclude Include="j1Globals.h">
       <Filter>Desenvolupament  ========\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClInclude>
     <ClInclude Include="j1App.h">
       <Filter>Desenvolupament  ========\Core</Filter>
     </ClInclude>
     <ClInclude Include="j1Module.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Animation.h">
       <Filter>Desenvolupament  ========\Core</Filter>
     </ClInclude>
   </ItemGroup>

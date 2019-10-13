@@ -99,7 +99,7 @@
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.h" />
+    <ClInclude Include="j1Animation.h" />
     <ClInclude Include="j1FadeToBlack.h" />
     <ClInclude Include="j1Collisions.h" />
     <ClInclude Include="j1Globals.h" />

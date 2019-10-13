@@ -11,6 +11,8 @@ class j1Render;
 class j1Textures;
 class j1Audio;
 class j1Scene;
+class j1Intro;
+//Missing other classes
 
 class j1App {
 public:
@@ -59,6 +61,14 @@ public:
 	j1Textures*			tex;
 	j1Audio*			audio;
 	j1Scene*			scene;
+	j1Intro*			intro;
+	//j1Animation*		animation;
+	//j1Collisions*		collision;
+	//j1FadeToBlack*		fade;
+	//j1Level1*			l1;
+	//j1Level2*			l2;
+	//j1Particles*		particle;
+	//j1Player*			player;
 	bool save = false;
 	bool load = false;
 
