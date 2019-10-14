@@ -17,7 +17,7 @@ public:
 
 private:
 	SDL_Texture* img;
-	bool current_scene;
+	int current_scene;
 	bool following_scene;
 	bool change_scene;
 };

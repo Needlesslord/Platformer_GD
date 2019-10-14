@@ -69,8 +69,8 @@ public:
 	//j1Level2*			l2;
 	//j1Particles*		particle;
 	//j1Player*			player;
-	bool save = false;
-	bool load = false;
+	bool SaveRequest = false;
+	bool LoadRequest = false;
 
 private:
 	p2List<j1Module*>	modules;

@@ -28,7 +28,7 @@
   </player>
 
   <scene>
-    <current_scene scene="true" intro="false" l1="false" l2="false"/>
+    <current_scene scene="1"/>
     <change_scene change_scene="false" Intro_L1="false" L1_L2="false" L2_Intro="false" Intro_L2="false" L2_L1="false" L1_Intro="false"/>
   </scene>
 
