@@ -35,7 +35,7 @@
 
 ## Credits:
 
-Art:
+Art (Sprites and Tilesets):
 	[Pixel Frog](https://pixel-frog.itch.io/)
 		[Pixel Adventure 1](https://pixel-frog.itch.io/pixel-adventure-1)
 		[Pixel Frog's Twitter](https://twitter.com/PixelFrog123)
@@ -133,11 +133,18 @@ DEBUG:
 
 
 
-
 ## Content
 
 	_under construction_
 
+
+
+
+## Disclosure
+
+This is a game made by two second year students of the Videogame Design and Development degree taught at CITM.
+It's a platformer with two levels, where the player can move right and left, jump and dash.
+The game has been made using C++, using SDL and pugi libraries. The maps have been made using Tiled.
 
 
 ## Links
@@ -156,6 +163,8 @@ Developed by Nuto Studios:
 
 ## License
 
+Copyright (c) [2017] [Tomás Carreras Ugarte, Núria Lamonja Pujol]
+
 All rights reserved to the developers and publishers of the original release (Tomás Carreras and Núria Lamonja). 
 The aim of this project (link to the github project can be found above) and respectively wiki is only educational. 
 The content can only be used for non-commercial purposes. 
@@ -165,5 +174,7 @@ In case you want to use it for other cases please do contact their rightful owne
 
 If you want to use this game or its content please do ask beforehand (email: nutostudios@gmail.com).
 
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
 
