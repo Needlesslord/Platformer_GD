@@ -9,7 +9,7 @@
 #include "j1Intro.h"
 
 j1Intro::j1Intro() : j1Module() {
-	name.create("intro");
+	name.create("scene");
 }
 
 // Destructor
@@ -27,7 +27,7 @@ bool j1Intro::Awake() {
 bool j1Intro::Start() {
 	
 	img = App->tex->Load("textures/Start_small.png");
-	App->audio->PlayMusic("audio/music/bensound-birthofahero.ogg");
+	//App->audio->PlayMusic("audio/music/bensound-birthofahero.ogg");
 
 	return true;
 }
@@ -40,9 +40,9 @@ bool j1Intro::PreUpdate() {
 // Called each loop iteration
 bool j1Intro::Update(float dt) {
 	// TODO 1: Request Load / Save on application when pressing L/S
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) App->load = true;
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) App->LoadRequest = true;
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) App->save = true;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) App->SaveRequest = true;
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) App->render->camera.y -= 1;
 

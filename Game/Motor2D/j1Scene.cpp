@@ -26,11 +26,7 @@ bool j1Scene::Awake() {
 // Called before the first frame
 bool j1Scene::Start() {
 	
-	if (current_scene) {
-		img = App->tex->Load("textures/Jump.png");
-		App->audio->PlayMusic("audio/music/bensound-birthofahero.ogg");
-	}
-	
+
 	return true;
 }
 
@@ -42,9 +38,9 @@ bool j1Scene::PreUpdate() {
 // Called each loop iteration
 bool j1Scene::Update(float dt) {
 	// TODO 1: Request Load / Save on application when pressing L/S
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) App->load = true;
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) App->LoadRequest = true;
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) App->save = true;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) App->SaveRequest = true;
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) App->render->camera.y -= 1;
 
@@ -68,7 +64,14 @@ bool j1Scene::PostUpdate() {
 	bool ret = true;
 	pugi::xml_node config;
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+
+
+
+
+
+
+
 		//current_scene scene="true" intro="false" l1="false" l2="false"
 		current_scene = config.child("current_scene").attribute("scene").as_bool(false);
 		following_scene = config.child("current_scene").attribute("l1").as_bool(true);

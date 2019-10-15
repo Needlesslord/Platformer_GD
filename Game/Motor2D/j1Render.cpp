@@ -85,7 +85,7 @@ bool j1Render::Load(pugi::xml_node& saved)
 {
 	camera.x = saved.child("camera").attribute("x").as_int();
 	camera.y = saved.child("camera").attribute("y").as_int();
-	App->load = false;
+	App->LoadRequest = false;
 
 	return true;
 }
@@ -96,7 +96,7 @@ bool j1Render::Save(pugi::xml_node& data) {
 	pugi::xml_node cam = data.append_child("camera");
 	cam.append_attribute("x").set_value(camera.x);
 	cam.append_attribute("y").set_value(camera.y);
-	App->save = false;
+	App->SaveRequest = false;
 
 	return true;
 }
