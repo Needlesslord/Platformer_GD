@@ -62,9 +62,7 @@ bool j1Scene::Update(float dt) {
 // Called each loop iteration
 bool j1Scene::PostUpdate() {
 	bool ret = true;
-	//pugi::xml_node& config = config;
-
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
+	pugi::xml_node config;
 
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 
@@ -75,10 +73,12 @@ bool j1Scene::PostUpdate() {
 
 
 		//current_scene scene="true" intro="false" l1="false" l2="false"
-		//current_scene = config.child("current_scene").attribute("scene").as_bool(false);
-		//following_scene = config.child("current_scene").attribute("l1").as_bool(true);
-		//App->intro;
-	}
+		current_scene = config.child("current_scene").attribute("scene").as_bool(false);
+		following_scene = config.child("current_scene").attribute("l1").as_bool(true);
+		App->intro;
+	}	
+	
+	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
 
 	return ret;
 }
