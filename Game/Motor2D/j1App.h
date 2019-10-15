@@ -12,6 +12,9 @@ class j1Textures;
 class j1Audio;
 class j1Scene;
 class j1Intro;
+class j1Colliders;
+class j1Player;
+
 //Missing other classes
 
 class j1App {
@@ -62,13 +65,13 @@ public:
 	j1Audio*			audio;
 	j1Scene*			scene;
 	j1Intro*			intro;
+	//j1Collisions*		collisions;
 	//j1Animation*		animation;
-	//j1Collisions*		collision;
 	//j1FadeToBlack*		fade;
 	//j1Level1*			l1;
 	//j1Level2*			l2;
 	//j1Particles*		particle;
-	//j1Player*			player;
+	j1Player*			player;
 	bool SaveRequest = false;
 	bool LoadRequest = false;
 

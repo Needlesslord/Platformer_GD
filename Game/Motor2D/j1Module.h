@@ -9,7 +9,7 @@
 #include "PugiXml\src\pugixml.hpp"
 
 class j1App;
-
+struct Collider;
 class j1Module {
 public:
 	j1Module() : active(false) {}
@@ -60,6 +60,7 @@ public:
 public:
 	p2SString	name;
 	bool		active;
+	virtual void OnCollision(Collider*, Collider*) {} //WE NEED AN ONCOLLISION VOID ON ENEMIES		.H
 };
 
 #endif // __j1MODULE_H__

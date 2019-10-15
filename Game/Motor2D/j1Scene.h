@@ -13,13 +13,15 @@ public:
 	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
+	bool Loading();
+	bool Saving();
 	bool CleanUp();
 
 private:
 	SDL_Texture* img;
-	int current_scene;
-	bool following_scene;
-	bool change_scene;
+	int		current_scene;
+	bool	following_scene;
+	bool	change_scene;
 };
 
 #endif // __j1SCENE_H__
