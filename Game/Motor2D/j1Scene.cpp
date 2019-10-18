@@ -7,6 +7,7 @@
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1Scene.h"
+#include "j1Map.h"
 
 j1Scene::j1Scene() : j1Module() {
 	name.create("scene");
@@ -27,6 +28,7 @@ bool j1Scene::Awake() {
 // Called before the first frame
 bool j1Scene::Start() {
 	//App->player->Enable();
+	App->map->Load("Level1.tmx");
 
 	return true;
 }
@@ -40,7 +42,6 @@ bool j1Scene::PreUpdate() {
 bool j1Scene::Update(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) App->LoadRequest = true;
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) App->SaveRequest = true;
-
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) App->render->camera.y -= 1;
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) App->render->camera.y += 1;
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) App->render->camera.x -= 1;
@@ -58,19 +59,12 @@ bool j1Scene::PostUpdate() {
 	bool ret = true;
 	pugi::xml_node config;
 
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-
-
-
-
-
-
-
-		//current_scene scene="true" intro="false" l1="false" l2="false"
-		current_scene = config.child("current_scene").attribute("scene").as_int();
-		//following_scene = config.child("current_scene").attribute("l1").as_bool(true);
-		App->intro;
-	}	
+	//if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+	//	//current_scene scene="true" intro="false" l1="false" l2="false"
+	//	current_scene = config.child("current_scene").attribute("scene").as_int();
+	//	//following_scene = config.child("current_scene").attribute("l1").as_bool(true);
+	//	App->intro;
+	//}	
 	
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
 

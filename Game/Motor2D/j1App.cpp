@@ -17,6 +17,7 @@
 #include "j1Level2.h"
 #include "j1Particles.h"
 #include "j1Player.h"
+#include "j1Map.h"
 //#include "j1Globals.h"
 
 // Constructor
@@ -27,7 +28,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
 	render = new j1Render();
 	tex = new j1Textures();
 	audio = new j1Audio();
-
+	map = new j1Map();
 	pugi::xml_document save_file;
 	pugi::xml_node savenode;
 	save_file.load_file("config.xml");
@@ -48,6 +49,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
 	AddModule(render);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(map);
 	
 	//animation = new j1Animation();
 	//AddModule(animation);
