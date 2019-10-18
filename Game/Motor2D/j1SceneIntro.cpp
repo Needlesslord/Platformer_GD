@@ -6,18 +6,17 @@
 #include "j1Audio.h"
 #include "j1Render.h"
 #include "j1Window.h"
-#include "j1Scene.h"
+#include "j1SceneIntro.h"
 
-j1Scene::j1Scene() : j1Module() {
-	name.create("scene");
-	//name.create("player");
+j1SceneIntro::j1SceneIntro() : j1Module() {
+	name.create("sceneintro");
 }
 
 // Destructor
-j1Scene::~j1Scene() {}
+j1SceneIntro::~j1SceneIntro() {}
 
 // Called before render is available
-bool j1Scene::Awake() {
+bool j1SceneIntro::Awake() {
 	LOG("Loading Scene");
 	bool ret = true;
 
@@ -25,27 +24,36 @@ bool j1Scene::Awake() {
 }
 
 // Called before the first frame
-bool j1Scene::Start() {
-	//App->player->Enable();
+bool j1SceneIntro::Start() {
+	
+	img = App->tex->Load("textures/Start_small.png");
+	//App->audio->PlayMusic("audio/music/bensound-birthofahero.ogg");
 
 	return true;
 }
 
 // Called each loop iteration
-bool j1Scene::PreUpdate() {
+bool j1SceneIntro::PreUpdate() {
 	return true;
 }
 
 // Called each loop iteration
-bool j1Scene::Update(float dt) {
+bool j1SceneIntro::Update(float dt) {
+	// TODO 1: Request Load / Save on application when pressing L/S
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) App->LoadRequest = true;
+
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) App->SaveRequest = true;
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) App->render->camera.y -= 1;
+
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) App->render->camera.y += 1;
+
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) App->render->camera.x -= 1;
+
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) App->render->camera.x += 1;
+
 	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN && App->audio->volume < 128) App->audio->volume += 2;
+
 	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 2;
 
 	App->render->Blit(img, 0, 0);
@@ -54,32 +62,16 @@ bool j1Scene::Update(float dt) {
 }
 
 // Called each loop iteration
-bool j1Scene::PostUpdate() {
+bool j1SceneIntro::PostUpdate() {
 	bool ret = true;
-	pugi::xml_node config;
 
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-
-
-
-
-
-
-
-		//current_scene scene="true" intro="false" l1="false" l2="false"
-		current_scene = config.child("current_scene").attribute("scene").as_int();
-		//following_scene = config.child("current_scene").attribute("l1").as_bool(true);
-		App->intro;
-
-	}	
-	
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
 
 	return ret;
 }
 
 // Called before quitting
-bool j1Scene::CleanUp() {
+bool j1SceneIntro::CleanUp() {
 	LOG("Freeing scene");
 
 	return true;

@@ -11,9 +11,11 @@ class j1Render;
 class j1Textures;
 class j1Audio;
 class j1Scene;
-class j1Intro;
+class j1SceneIntro;
 class j1Colliders;
 class j1Player;
+class j1SceneLevel1;
+class j1Map1;
 
 //Missing other classes
 
@@ -66,12 +68,14 @@ public:
 	j1Textures*			tex;
 	j1Audio*			audio;
 	j1Scene*			scene;
-	j1Intro*			intro;
+	j1SceneIntro*		sceneintro;
+	j1SceneLevel1*		scenelevel1;
+	j1Map*				map;
 	//j1Collisions*		collisions;
 	//j1Animation*		animation;
 	//j1FadeToBlack*		fade;
-	//j1Level1*			l1;
-	//j1Level2*			l2;
+	//j1SceneLevel1*			l1;
+	//j1SceneLevel2*			l2;
 	//j1Particles*		particle;
 	j1Player*			player;
 	bool SaveRequest = false;

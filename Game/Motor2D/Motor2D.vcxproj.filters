@@ -34,17 +34,8 @@
     <ClCompile Include="j1Particles.cpp">
       <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
     </ClCompile>
-    <ClCompile Include="j1Level1.cpp">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Level2.cpp">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="j1FadeToBlack.cpp">
       <Filter>Desenvolupament  ========\Modules\SubModules\Others</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Intro.cpp">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="j1Globals.cpp">
       <Filter>Desenvolupament  ========\Core</Filter>
@@ -57,6 +48,18 @@
     </ClCompile>
     <ClCompile Include="j1Main.cpp">
       <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Map1.cpp">
+      <Filter>Desenvolupament  ========\Scenes\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="j1SceneLevel1.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="j1SceneIntro.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="j1SceneLevel2.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -111,17 +114,8 @@
     <ClInclude Include="j1Particles.h">
       <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
     </ClInclude>
-    <ClInclude Include="j1Level1.h">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Level2.h">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="j1FadeToBlack.h">
       <Filter>Desenvolupament  ========\Modules\SubModules\Others</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Intro.h">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="j1Globals.h">
       <Filter>Desenvolupament  ========\Core</Filter>
@@ -134,6 +128,18 @@
     </ClInclude>
     <ClInclude Include="j1Animation.h">
       <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Map1.h">
+      <Filter>Desenvolupament  ========\Scenes\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="j1SceneIntro.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="j1SceneLevel1.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="j1SceneLevel2.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +172,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Core">
       <UniqueIdentifier>{1d96da78-36a4-49f4-a788-b9c331030719}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Scenes\Maps">
+      <UniqueIdentifier>{41e62d1f-93d6-4369-b3fd-1ea2c5cd7bc1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
