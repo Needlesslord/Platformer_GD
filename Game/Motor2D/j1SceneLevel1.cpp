@@ -6,39 +6,39 @@
 #include "j1Audio.h"
 #include "j1Render.h"
 #include "j1Window.h"
-#include "j1Intro.h"
+#include "j1SceneLevel1.h"
+#include "j1Map1.h"
 
-j1Intro::j1Intro() : j1Module() {
-	name.create("scene");
+j1SceneLevel1::j1SceneLevel1() : j1Module() {
+	name.create("scenelevel1");
 }
 
 // Destructor
-j1Intro::~j1Intro() {}
+j1SceneLevel1::~j1SceneLevel1() {}
 
 // Called before render is available
-bool j1Intro::Awake() {
-	LOG("Loading Scene");
+bool j1SceneLevel1::Awake() {
+	LOG("Loading SceneLevel1");  //LOG("Loading Scene");
 	bool ret = true;
 
 	return ret;
 }
 
 // Called before the first frame
-bool j1Intro::Start() {
-	
-	img = App->tex->Load("textures/Start_small.png");
-	//App->audio->PlayMusic("audio/music/bensound-birthofahero.ogg");
+bool j1SceneLevel1::Start() {
+
+	App->map->Load("level1.tmx")
 
 	return true;
 }
 
 // Called each loop iteration
-bool j1Intro::PreUpdate() {
+bool j1SceneLevel1::PreUpdate() {
 	return true;
 }
 
 // Called each loop iteration
-bool j1Intro::Update(float dt) {
+bool j1SceneLevel1::Update(float dt) {
 	// TODO 1: Request Load / Save on application when pressing L/S
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) App->LoadRequest = true;
 
@@ -62,8 +62,23 @@ bool j1Intro::Update(float dt) {
 }
 
 // Called each loop iteration
-bool j1Intro::PostUpdate() {
+bool j1SceneLevel1::PostUpdate() {
 	bool ret = true;
+	pugi::xml_node config;
+
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+
+
+
+
+
+
+
+		//current_scene scene="true" intro="false" l1="false" l2="false"
+		current_scene = config.child("current_scene").attribute("scene").as_bool(false);
+		following_scene = config.child("current_scene").attribute("l1").as_bool(true);
+		App->sceneintro;
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
 
@@ -71,7 +86,7 @@ bool j1Intro::PostUpdate() {
 }
 
 // Called before quitting
-bool j1Intro::CleanUp() {
+bool j1SceneLevel1::CleanUp() {
 	LOG("Freeing scene");
 
 	return true;
