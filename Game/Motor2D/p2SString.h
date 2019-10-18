@@ -330,6 +330,29 @@ public:
 		return ret;
 	}
 
+	uint SubString(unsigned int start, unsigned int end, p2SString& buffer) const
+	{
+		if (str != NULL)
+		{
+			start = MIN(start, size);
+			end = (end == 0) ? size : MIN(end, size);
+			uint s = end - start;
+
+			if (s > buffer.size)
+			{
+				char* tmp = buffer.str;
+				buffer.Alloc(s);
+				delete[] tmp;
+			}
+			strncpy_s(buffer.str, s, &str[start], s);
+			buffer.str[s] = '\0';
+			return(end - start);
+		}
+		else
+			return 0;
+	}
+
+
 private:
 
 	void Alloc(unsigned int requiered_memory)
@@ -338,6 +361,11 @@ private:
 		str = new char[size];
 	}
 
+
 };
+
+
+
+
 
 #endif // __p2SString_H__

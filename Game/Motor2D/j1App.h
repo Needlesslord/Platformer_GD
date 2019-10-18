@@ -14,6 +14,7 @@ class j1Scene;
 class j1Intro;
 class j1Colliders;
 class j1Player;
+class j1Map;
 
 //Missing other classes
 
@@ -67,9 +68,10 @@ public:
 	j1Audio*			audio;
 	j1Scene*			scene;
 	j1Intro*			intro;
+	j1Map*				map;
 	//j1Collisions*		collisions;
 	//j1Animation*		animation;
-	//j1FadeToBlack*		fade;
+	//j1FadeToBlack*	fade;
 	//j1Level1*			l1;
 	//j1Level2*			l2;
 	//j1Particles*		particle;
@@ -88,6 +90,11 @@ private:
 	char**				args;
 	p2SString			title;
 	p2SString			organization;
+
+	//mutable bool		want_to_save;
+	//bool				want_to_load;
+	//p2SString			load_game;
+	//mutable p2SString	save_game;
 };
 
 extern j1App* App;
