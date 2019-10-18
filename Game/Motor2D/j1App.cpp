@@ -30,14 +30,14 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
 
 	pugi::xml_document save_file;
 	pugi::xml_node savenode;
-	savenode = save_file.child("scene");
+	save_file.load_file("config.xml");
+	savenode = save_file.child("config");
 
-	currentScene = save_file.child("scene").child("current_scene").attribute("scene").as_int();
-	if (currentScene == 0) {
+	if (strcmp(savenode.child("scene").attribute("current_scene").value(), "0") == 0) {
 		intro = new j1Intro();
 		AddModule(intro);
 	}
-	else if (currentScene == 1) {
+	else if (strcmp(savenode.child("scene").attribute("current_scene").value(), "1") == 0) {
 		scene = new j1Scene();
 		AddModule(scene);
 	}

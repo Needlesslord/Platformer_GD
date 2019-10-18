@@ -63,7 +63,7 @@ bool j1App::Awake()
 
 	doc.load_file("config.xml");
 
-	doc.child("config").attribute("title").value();
+	//doc.child("config").attribute("title").value();
 	bool ret = true;
 
 	p2List_item<j1Module*>* item;

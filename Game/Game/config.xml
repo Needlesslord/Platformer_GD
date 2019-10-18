@@ -27,7 +27,6 @@
     </player_skin>
   </player>
 
-  <scene>
-    <current_scene scene="1"/>
-  </scene>
+  <scene current_scene ="1"/>
+
 </config>
