@@ -39,6 +39,8 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
+	int currentScene;
+
 private:
 	// Load config file
 	bool LoadConfig();

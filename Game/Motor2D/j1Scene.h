@@ -13,8 +13,8 @@ public:
 	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
-	bool Loading();
-	bool Saving();
+	bool Load();
+	bool Save();
 	bool CleanUp();
 
 private:

@@ -27,18 +27,28 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
 	render = new j1Render();
 	tex = new j1Textures();
 	audio = new j1Audio();
-	scene = new j1Scene();
+
+	pugi::xml_document save_file;
+	pugi::xml_node savenode;
+	savenode = save_file.child("scene");
+
+	currentScene = save_file.child("scene").child("current_scene").attribute("scene").as_int();
+	if (currentScene == 0) {
+		intro = new j1Intro();
+		AddModule(intro);
+	}
+	else if (currentScene == 1) {
+		scene = new j1Scene();
+		AddModule(scene);
+	}
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(input);
 	AddModule(win);
+	AddModule(render);
 	AddModule(tex);
 	AddModule(audio);
-	AddModule(scene);
-	// render last to swap buffer
-	AddModule(render);
-	intro = new j1Intro();
-	AddModule(intro);
+	
 	//animation = new j1Animation();
 	//AddModule(animation);
 }
