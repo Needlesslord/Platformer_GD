@@ -70,7 +70,6 @@ bool j1Scene::PostUpdate() {
 		current_scene = config.child("current_scene").attribute("scene").as_int();
 		//following_scene = config.child("current_scene").attribute("l1").as_bool(true);
 		App->intro;
-
 	}	
 	
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;

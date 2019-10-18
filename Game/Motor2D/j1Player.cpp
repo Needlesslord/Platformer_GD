@@ -11,8 +11,8 @@
 #include "j1Collisions.h"
 #include "j1Particles.h"
 #include "j1Player.h"
-#include "j1SceneLevel1.h"
-#include "j1SceneLevel2.h"
+#include "j1Level1.h"
+#include "j1Level2.h"
 
 
 j1Player::j1Player() : j1Module()
@@ -101,7 +101,7 @@ bool j1Player::Update(float dt)
 	positionX -= velocityX;
 	positionY -= velocityY;
 
-	if (App->sceneintro)
+	if (App->intro)
 	{
 		App->render->camera.y = positionY - 250;
 	}

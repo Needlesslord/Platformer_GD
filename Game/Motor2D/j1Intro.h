@@ -1,13 +1,13 @@
-#ifndef __j1SCENEINTRO_H__
-#define __j1SCENEINTRO_H__
+#ifndef __j1INTRO_H__
+#define __j1INTRO_H__
 #include "j1Module.h"
 
 struct SDL_Texture;
 
-class j1SceneIntro : public j1Module {
+class j1Intro : public j1Module {
 public:
-	j1SceneIntro();
-	virtual ~j1SceneIntro();
+	j1Intro();
+	virtual ~j1Intro();
 	bool Awake();
 	bool Start();
 	bool PreUpdate();
@@ -19,7 +19,7 @@ private:
 	SDL_Texture* img;
 };
 
-#endif // __j1SCENEINTRO_H__
+#endif // __j1SCENE_H__
 
 
 
