@@ -29,19 +29,37 @@ j1Player::j1Player() : j1Module() {
 	//j1Animation player_daeth;
 
 	//idle
-	player_idle.PushBack({  0,   0, 32, 32 });
-	player_idle.PushBack({  0,  32, 32, 32 });
-	player_idle.PushBack({  0,  64, 32, 32 });
-	player_idle.PushBack({  0,  96, 32, 32 });
-	player_idle.PushBack({  0, 128, 32, 32 });
-	player_idle.PushBack({  0, 160, 32, 32 });
-	player_idle.PushBack({  0, 192, 32, 32 });
-	player_idle.PushBack({  0, 224, 32, 32 });
-	player_idle.PushBack({ 32,   0, 32, 32 });
-	player_idle.PushBack({ 32,  32, 32, 32 });
-	player_idle.PushBack({ 32,  64, 32, 32 });
+	player_idle.PushBack({   0,   0,  32, 32 });
+	player_idle.PushBack({  32,   0,  32, 32 });
+	player_idle.PushBack({  64,   0,  32, 32 });
+	player_idle.PushBack({  96,   0,  32, 32 });
+	player_idle.PushBack({ 128,   0,  32, 32 });
+	player_idle.PushBack({ 160,   0,  32, 32 });
+	player_idle.PushBack({ 192,   0,  32, 32 });
+	player_idle.PushBack({   0,  32,  32, 32 });
+	player_idle.PushBack({  32,  32,  32, 32 });
+	player_idle.PushBack({  64,  32,  32, 32 });
+	player_idle.PushBack({  96,  32,  32, 32 });
 	player_idle.loop = true;
-	player_idle.speed = 0.1f;
+	player_idle.speed = 0.05f;
+	//jumping
+	player_jumping.PushBack({ 160,  32,  32, 32 });
+	//walking
+	player_walking.PushBack({ 0,    64,  32, 32 });
+	player_walking.PushBack({ 32,   64,  32, 32 });
+	player_walking.PushBack({ 64,   64,  32, 32 });
+	player_walking.PushBack({ 96,   64,  32, 32 });
+	player_walking.PushBack({ 128,  64,  32, 32 });
+	player_walking.PushBack({ 160,  64,  32, 32 });
+	player_walking.PushBack({ 192,  64,  32, 32 });
+	player_walking.PushBack({ 0,    96,  32, 32 });
+	player_walking.PushBack({ 32,   96,  32, 32 });
+	player_walking.PushBack({ 64,   96,  32, 32 });
+	player_walking.PushBack({ 96,   96,  32, 32 });
+	player_walking.PushBack({ 128,  96,  32, 32 });
+	player_walking.speed = 0.05f;
+	//jumping
+	player_falling.PushBack({ 192,  96,  32, 32 });
 
 }
 
@@ -54,9 +72,9 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 bool j1Player::Start() {
 	LOG("Loading player");
-	graphics = App->tex->Load("textures\Ninja_Frog.png");
+	graphics = App->tex->Load("textures/Ninja_Frog.png");
 	current_state = PLAYER_ST_IDLE_R;
-	current_animation = &player_idle;
+	current_animation = &player_falling;
 
 	//-------------------------------------		PASAR AL XML		------------------------------------------
 
@@ -105,10 +123,14 @@ bool j1Player::Update(float dt)
 {
 	float speed = 1;
 	float t = 1;
+
 	//POSITION
 	if (positionX > 30) positionX -= velocityX;
-	else if (velocityX < 0)positionX -= velocityX;
+	else if (velocityX < 0) positionX -= velocityX;
+
 	positionY -= velocityY;
+
+	App->render->Blit(graphics, positionX, positionY, &(current_animation->GetCurrentFrame()));
 
 	if (App->intro) App->render->camera.y = positionY - 250;
 
@@ -129,12 +151,18 @@ bool j1Player::Update(float dt)
 		velocityY = 1.5 * speed;
 		hasDoubleJumped = true;
 	}
+
 	//JUMP
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && velocityY > -1) {
 		jumping = true;
 		velocityY = 1.5 * speed;
 		hasDoubleJumped = false;
 	}
+
+	if (velocityX == 0 && !jumping) current_animation = &player_idle;
+	else if (jumping) current_animation = &player_jumping;
+	//else if (hasDouobleJumped)  current_animation = &player_doublejumping;
+	else current_animation = &player_walking;
 
 	/*			------------------------------------PARTICLES--------------------------------------------------
 

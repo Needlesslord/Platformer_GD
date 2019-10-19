@@ -3,6 +3,7 @@
 #define __ModulePlayer_H__
 #include "j1Module.h"
 #include "j1Animation.h"
+#include "p2Point.h"
 struct SDL_Texture;
 struct Collider;
 
