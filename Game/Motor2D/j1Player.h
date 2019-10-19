@@ -52,6 +52,7 @@ public:
 
 
 	bool jumping;
+	bool hasDoubleJumped;
 };
 
 #endif
