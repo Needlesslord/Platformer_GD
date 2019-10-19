@@ -8,6 +8,7 @@
 #include "j1Window.h"
 #include "j1Scene.h"
 #include "j1Map.h"
+#include "j1Collisions.h"
 
 j1Scene::j1Scene() : j1Module() {
 	name.create("scene");
@@ -29,6 +30,9 @@ bool j1Scene::Awake() {
 bool j1Scene::Start() {
 	//App->player->Enable();
 	App->map->Load("Level1.tmx");
+
+	App->collisions->AddCollider({ 0, 150, 3930, 16 }, COLLIDER_WALL);
+
 
 	return true;
 }

@@ -29,18 +29,23 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
 	tex = new j1Textures();
 	audio = new j1Audio();
 	map = new j1Map();
-	pugi::xml_document save_file;
-	pugi::xml_node savenode;
-	save_file.load_file("config.xml");
-	savenode = save_file.child("config");
+	collisions = new j1Collisions();
+	player = new j1Player();
 
-	if (strcmp(savenode.child("scene").attribute("current_scene").value(), "0") == 0) {
-		intro = new j1Intro();
-		AddModule(intro);
-	}
-	else if (strcmp(savenode.child("scene").attribute("current_scene").value(), "1") == 0) {
-		scene = new j1Scene();
-		AddModule(scene);
+	{//Intro or Scene
+		pugi::xml_document save_file;
+		pugi::xml_node savenode;
+		save_file.load_file("config.xml");
+		savenode = save_file.child("config");
+
+		if (strcmp(savenode.child("scene").attribute("current_scene").value(), "0") == 0) {
+			intro = new j1Intro();
+			AddModule(intro);
+		}
+		else if (strcmp(savenode.child("scene").attribute("current_scene").value(), "1") == 0) {
+			scene = new j1Scene();
+			AddModule(scene);
+		}
 	}
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -50,6 +55,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(map);
+	AddModule(collisions);
+	AddModule(player);
 	
 	//animation = new j1Animation();
 	//AddModule(animation);

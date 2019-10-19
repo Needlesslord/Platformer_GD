@@ -12,7 +12,7 @@ class j1Textures;
 class j1Audio;
 class j1Scene;
 class j1Intro;
-class j1Colliders;
+class j1Collisions;
 class j1Player;
 class j1Map;
 
@@ -69,7 +69,7 @@ public:
 	j1Scene*			scene;
 	j1Intro*			intro;
 	j1Map*				map;
-	//j1Collisions*		collisions;
+	j1Collisions*		collisions;
 	//j1Animation*		animation;
 	//j1FadeToBlack*	fade;
 	//j1Level1*			l1;
