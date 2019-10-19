@@ -136,11 +136,11 @@ bool j1Player::Update(float dt)
 
 	velocityY -= 0.01;
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) velocityX = 0.5;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) velocityX = 0.5 -(+0.2);
 	
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) velocityX = 0;
 	
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) velocityX = -0.5;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) velocityX = -0.5 - (-0.2);
 	
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) velocityX = 0;
 
@@ -157,7 +157,7 @@ bool j1Player::Update(float dt)
 		jumping = true;
 		velocityY = 1.5 * speed;
 		hasDoubleJumped = false;
-	}
+	} 
 
 	if (velocityX == 0 && !jumping) current_animation = &player_idle;
 	else if (jumping) current_animation = &player_jumping;
@@ -172,17 +172,13 @@ bool j1Player::Update(float dt)
 	}
 	*/
 
-
-
-
 	colup->SetPos(positionX + 1, positionY);
 	coldown->SetPos(positionX + 1, positionY + 22);
 	colleft->SetPos(positionX, positionY + 5);
 	colright->SetPos(positionX + 15, positionY + 5);
 
 	// Draw everything --------------------------------------
-	if (destroyed == false)
-		App->render->Blit(img, positionX, positionY/*, &(current_j1Animation->GetCurrentFrame())*/);
+	if (destroyed == false) App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()));
 
 	return true;
 }
