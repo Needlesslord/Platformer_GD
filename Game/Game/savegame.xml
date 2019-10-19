@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 <save>
+  <player>
+    <position x="50" y="-100"/>
+    <velocity x="0" y="0"/>
+  </player>
 	<scene />
 	<input />
 	<window />

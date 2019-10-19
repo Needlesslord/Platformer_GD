@@ -123,11 +123,6 @@ bool j1Player::Update(float dt)
 		hasDoubleJumped = false;
 	}
 
-	
-
-
-
-
 	/*			------------------------------------PARTICLES--------------------------------------------------
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
