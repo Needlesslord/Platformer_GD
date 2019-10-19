@@ -87,6 +87,7 @@ public:
 	bool jumping;
 	bool Alive;
 	player_states current_state;
+	bool hasDoubleJumped;
 };
 
 #endif

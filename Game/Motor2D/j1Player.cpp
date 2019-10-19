@@ -75,6 +75,7 @@ bool j1Player::Start() {
 	//col2 = App->collision->AddCollider({ 0, 120, 16, 16 }, COLLIDER_PLAYER, this);
 
 	jumping = false;
+	hasDoubleJumped = false;
 
 	return true;
 }
@@ -123,12 +124,17 @@ bool j1Player::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) positionY = 0;
 
+	//DOUBLE JUMP
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !hasDoubleJumped && velocityY > 0 && jumping) {
+		velocityY = 1.5 * speed;
+		hasDoubleJumped = true;
+	}
+	//JUMP
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && velocityY > -1) {
 		jumping = true;
 		velocityY = 1.5 * speed;
+		hasDoubleJumped = false;
 	}
-
-
 
 	/*			------------------------------------PARTICLES--------------------------------------------------
 

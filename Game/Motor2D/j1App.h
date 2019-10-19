@@ -40,7 +40,7 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
-	int currentScene;
+	char* currentScene;
 
 private:
 	// Load config file
