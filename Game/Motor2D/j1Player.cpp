@@ -12,25 +12,37 @@
 #include "j1Player.h"
 #include "j1Level1.h"
 #include "j1Level2.h"
+#include "j1Animation.h"
 
 
 j1Player::j1Player() : j1Module() {
-	/*
-	// idle j1Animation (just the ship)
-	idle.PushBack({ 66, 1, 32, 14 });
+	//j1Animation* current_animation;
+	//j1Animation player_idle;
+	//j1Animation player_walking;
+	//j1Animation player_jumping;
+	//j1Animation player_doublejumping;
+	//j1Animation player_falling;
+	//j1Animation player_appearing;
+	//j1Animation player_disappearing;
+	//j1Animation player_hit;
+	//j1Animation player_dashing;
+	//j1Animation player_daeth;
 
-	// move upwards
-	up.PushBack({ 100, 1, 32, 14 });
-	up.PushBack({ 132, 0, 32, 14 });
-	up.loop = false;
-	up.speed = 0.1f;
+	//idle
+	player_idle.PushBack({  0,   0, 32, 32 });
+	player_idle.PushBack({  0,  32, 32, 32 });
+	player_idle.PushBack({  0,  64, 32, 32 });
+	player_idle.PushBack({  0,  96, 32, 32 });
+	player_idle.PushBack({  0, 128, 32, 32 });
+	player_idle.PushBack({  0, 160, 32, 32 });
+	player_idle.PushBack({  0, 192, 32, 32 });
+	player_idle.PushBack({  0, 224, 32, 32 });
+	player_idle.PushBack({ 32,   0, 32, 32 });
+	player_idle.PushBack({ 32,  32, 32, 32 });
+	player_idle.PushBack({ 32,  64, 32, 32 });
+	player_idle.loop = true;
+	player_idle.speed = 0.1f;
 
-	// Move down
-	down.PushBack({ 33, 1, 32, 14 });
-	down.PushBack({ 0, 1, 32, 14 });
-	down.loop = false;
-	down.speed = 0.1f;
-	*/
 }
 
 j1Player::~j1Player() {}
@@ -42,7 +54,9 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 bool j1Player::Start() {
 	LOG("Loading player");
-	img = App->tex->Load("rtype\ship.png");
+	graphics = App->tex->Load("textures\Ninja_Frog.png");
+	current_state = PLAYER_ST_IDLE_R;
+	current_animation = &player_idle;
 
 	//-------------------------------------		PASAR AL XML		------------------------------------------
 
@@ -51,13 +65,12 @@ bool j1Player::Start() {
 	positionY = -100;
 	velocityX = 0;
 	velocityY = 0;
-
-	
 	colup =		App->collisions->AddCollider({ 150, 120, 14, 10 }, COLLIDER_PLAYER, this);
 	coldown =	App->collisions->AddCollider({ 150, 120, 14, 10 }, COLLIDER_PLAYER, this);
 	colleft	=	App->collisions->AddCollider({ 150, 120, 1, 18 }, COLLIDER_PLAYER, this);
 	colright =	App->collisions->AddCollider({ 150, 120, 1, 18 }, COLLIDER_PLAYER, this);
-	
+
+
 
 	//col2 = App->collision->AddCollider({ 0, 120, 16, 16 }, COLLIDER_PLAYER, this);
 
@@ -69,7 +82,7 @@ bool j1Player::Start() {
 // Unload assets
 bool j1Player::CleanUp() {
 	LOG("Unloading player");
-	App->tex->UnLoad(img);
+	App->tex->UnLoad(graphics);
 
 	if (colup != nullptr) colup->to_delete = true;
 	

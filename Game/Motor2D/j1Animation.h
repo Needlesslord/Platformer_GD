@@ -18,8 +18,9 @@ private:
 	enum pingpong {
 		forward,
 		backward
-	} 
-	direction = forward;
+	};
+
+	enum pingpong direction = forward;
 
 public:
 	j1Animation() {}
@@ -68,4 +69,4 @@ public:
 	}
 };
 
-#endif#pragma once
+#endif#
