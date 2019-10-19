@@ -7,7 +7,6 @@
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1Scene.h"
-
 #include "j1Collisions.h"
 #include "j1Particles.h"
 #include "j1Player.h"
@@ -15,8 +14,7 @@
 #include "j1Level2.h"
 
 
-j1Player::j1Player() : j1Module()
-{
+j1Player::j1Player() : j1Module() {
 	/*
 	// idle j1Animation (just the ship)
 	idle.PushBack({ 66, 1, 32, 14 });
@@ -35,18 +33,15 @@ j1Player::j1Player() : j1Module()
 	*/
 }
 
-j1Player::~j1Player()
-{}
+j1Player::~j1Player() {}
 
-bool j1Player::Awake(pugi::xml_node& config){
+bool j1Player::Awake(pugi::xml_node& config) {
 	return true;
 }
 
 
-bool j1Player::Start()
-{
+bool j1Player::Start() {
 	LOG("Loading player");
-
 	img = App->tex->Load("rtype\ship.png");
 
 	//-------------------------------------		PASAR AL XML		------------------------------------------
@@ -72,19 +67,17 @@ bool j1Player::Start()
 }
 
 // Unload assets
-bool j1Player::CleanUp()
-{
+bool j1Player::CleanUp() {
 	LOG("Unloading player");
-
 	App->tex->UnLoad(img);
-	if (colup != nullptr)
-		colup->to_delete = true;
-	if (coldown != nullptr)
-		coldown->to_delete = true;
-	if (colleft != nullptr)
-		colleft->to_delete = true;
-	if (colright != nullptr)
-		colright->to_delete = true;
+
+	if (colup != nullptr) colup->to_delete = true;
+	
+	if (coldown != nullptr) coldown->to_delete = true;
+	
+	if (colleft != nullptr) colleft->to_delete = true;
+	
+	if (colright != nullptr) colright->to_delete = true;
 
 	return true;
 }
@@ -98,32 +91,26 @@ bool j1Player::Update(float dt)
 {
 	float speed = 1;
 	float t = 1;
-
 	//POSITION
 	if (positionX > 30) positionX -= velocityX;
 	else if (velocityX < 0)positionX -= velocityX;
-
 	positionY -= velocityY;
-
-
 
 	if (App->intro) App->render->camera.y = positionY - 250;
 
 	velocityY -= 0.01;
 
-	{
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) velocityX = 0.5;
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) velocityX = 0;
-	}
-
-
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) velocityX = 0.5;
+	
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) velocityX = 0;
+	
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) velocityX = -0.5;
+	
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) velocityX = 0;
-
 
 	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) positionY = 0;
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !jumping && velocityY > -1) {
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && velocityY > -1) {
 		jumping = true;
 		velocityY = 1.5 * speed;
 	}
@@ -158,41 +145,33 @@ bool j1Player::PostUpdate() {
 }
 
 
-void j1Player::OnCollision(Collider* c1, Collider* c2)
-{
-	if (c1 == coldown && destroyed == false /*&& App->fade->IsFading() == false*/ && velocityY < 0 && c2->type == COLLIDER_WALL && c1->rect.x > c2->rect.x)
-	{
+void j1Player::OnCollision(Collider* c1, Collider* c2) {
+	if (c1 == coldown && destroyed == false /*&& App->fade->IsFading() == false*/ && velocityY < 0 && c2->type == COLLIDER_WALL && c1->rect.x > c2->rect.x) {
 		/*
-
 		App->fade->FadeToBlack((Module*)App->scene_space, (Module*)App->scene_intro);
-
 		App->particles->AddParticle(App->particles->explosion, position.x, position.y, COLLIDER_NONE, 150);
 		App->particles->AddParticle(App->particles->explosion, position.x + 8, position.y + 11, COLLIDER_NONE, 220);
 		App->particles->AddParticle(App->particles->explosion, position.x - 7, position.y + 12, COLLIDER_NONE, 670);
 		App->particles->AddParticle(App->particles->explosion, position.x + 5, position.y - 5, COLLIDER_NONE, 480);
 		App->particles->AddParticle(App->particles->explosion, position.x - 4, position.y - 4, COLLIDER_NONE, 350);
-
 		destroyed = true;
-
 		*/
+
 		positionY = c2->rect.y - 31;
 		velocityY = 0;
 		jumping = false;
 	}
 
-	if (c1 == colup && destroyed == false /*&& App->fade->IsFading() == false*/ && c2->type == COLLIDER_WALL)
-	{
+	if (c1 == colup && destroyed == false /*&& App->fade->IsFading() == false*/ && c2->type == COLLIDER_WALL) {
 		positionY = c2->rect.y + 16;
 		velocityY = -1;
 	}
 
-	if (c1 == colright && destroyed == false /*&& App->fade->IsFading() == false*/ && c2->type == COLLIDER_WALL)
-	{
+	if (c1 == colright && destroyed == false /*&& App->fade->IsFading() == false*/ && c2->type == COLLIDER_WALL) {
 		positionX = c2->rect.x - 16;
 	}
 
-	if (c1 == colleft && destroyed == false /*&& App->fade->IsFading() == false*/ && c2->type == COLLIDER_WALL)
-	{
+	if (c1 == colleft && destroyed == false /*&& App->fade->IsFading() == false*/ && c2->type == COLLIDER_WALL) {
 		positionX = c2->rect.x + c2->rect.w;
 	}
 }
