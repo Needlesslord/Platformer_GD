@@ -50,6 +50,7 @@ bool j1Scene::Update(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 2;
 
 	App->render->Blit(img, 0, 0);
+	App->map->Draw();
 
 	return true;
 }
