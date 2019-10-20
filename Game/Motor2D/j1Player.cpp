@@ -102,14 +102,12 @@ bool j1Player::Update(float dt)
 	velocityY -= 0.01;
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) velocityX = 0.5;
-	
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) velocityX = 0;
 	
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) velocityX = -0.5;
-	
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) velocityX = 0;
 
-	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) positionY = 0;
+	if (App->input->GetKey(SDL_SCANCODE_F12) == KEY_DOWN) positionY = 0;//DEBUG KEY
 
 	//DOUBLE JUMP
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !hasDoubleJumped && velocityY > 0 && jumping) {
