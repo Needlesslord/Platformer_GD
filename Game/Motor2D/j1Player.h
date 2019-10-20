@@ -42,14 +42,14 @@ public:
 	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
-	bool Loading();
-	bool Save();
+	//bool Loading();
+	//bool Save();
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
-	void DoubleJump();
-	void MirrorSprite();
-	void RestartPlayer();
-	bool CameraOnPlayer();
+/*	void DoubleJump()*/;
+	void Mirror();
+	//void RestartPlayer();
+	//bool CameraOnPlayer();
 
 private:
 	SDL_Texture* img = nullptr;
@@ -86,9 +86,10 @@ public:
 	//Collider* col2;
 	bool destroyed = false;
 	bool jumping;
-	bool Alive;
+	bool alive;
 	player_states current_state;
 	bool hasDoubleJumped;
+	bool mirror = false;
 };
 
 #endif

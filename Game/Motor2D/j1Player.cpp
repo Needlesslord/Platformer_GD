@@ -119,8 +119,10 @@ bool j1Player::PreUpdate() {
 }
 
 // Update: draw background
-bool j1Player::Update(float dt)
-{
+bool j1Player::Update(float dt) {
+	if (velocityX < 0) mirror = true;
+	else if (velocityX > 0) mirror = false;
+
 	float speed = 1;
 	float t = 1;
 
@@ -159,6 +161,8 @@ bool j1Player::Update(float dt)
 		hasDoubleJumped = false;
 	} 
 
+	Mirror();
+
 	if (velocityX == 0 && !jumping) current_animation = &player_idle;
 	else if (jumping) current_animation = &player_jumping;
 	//else if (hasDouobleJumped)  current_animation = &player_doublejumping;
@@ -178,7 +182,8 @@ bool j1Player::Update(float dt)
 	colright->SetPos(positionX + 15, positionY + 5);
 
 	// Draw everything --------------------------------------
-	if (destroyed == false) App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()));
+	if (mirror) App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL, -1.0);
+	else if (destroyed == false) App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()), SDL_FLIP_NONE, -1.0);
 
 	return true;
 }
@@ -187,6 +192,11 @@ bool j1Player::PostUpdate() {
 	return true;
 }
 
+void j1Player::Mirror() {
+
+	if (velocityX < 0) mirror = true;
+	else if (velocityX > 0) mirror = false;
+}
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c1 == coldown && destroyed == false /*&& App->fade->IsFading() == false*/ && velocityY < 0 && c2->type == COLLIDER_WALL && c1->rect.x > c2->rect.x) {
