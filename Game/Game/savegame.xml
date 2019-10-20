@@ -1,18 +1,16 @@
 <?xml version="1.0"?>
 <save>
-  <player>
-    <position x="50" y="-100"/>
-    <velocity x="0" y="0"/>
-  </player>
 	<scene />
 	<input />
 	<window />
 	<renderer>
-		<camera x="222" y="-137" />
+		<camera x="0" y="0" />
 	</renderer>
 	<textures />
 	<audio>
 		<volume value="64" />
 	</audio>
 	<map />
+	<:anonymous />
+	<:anonymous />
 </save>

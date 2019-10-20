@@ -12,25 +12,55 @@
 #include "j1Player.h"
 #include "j1Level1.h"
 #include "j1Level2.h"
+#include "j1Animation.h"
 
 
 j1Player::j1Player() : j1Module() {
-	/*
-	// idle j1Animation (just the ship)
-	idle.PushBack({ 66, 1, 32, 14 });
+	//j1Animation* current_animation;
+	//j1Animation player_idle;
+	//j1Animation player_walking;
+	//j1Animation player_jumping;
+	//j1Animation player_doublejumping;
+	//j1Animation player_falling;
+	//j1Animation player_appearing;
+	//j1Animation player_disappearing;
+	//j1Animation player_hit;
+	//j1Animation player_dashing;
+	//j1Animation player_daeth;
 
-	// move upwards
-	up.PushBack({ 100, 1, 32, 14 });
-	up.PushBack({ 132, 0, 32, 14 });
-	up.loop = false;
-	up.speed = 0.1f;
+	//idle
+	player_idle.PushBack({   0,   0,  32, 32 });
+	player_idle.PushBack({  32,   0,  32, 32 });
+	player_idle.PushBack({  64,   0,  32, 32 });
+	player_idle.PushBack({  96,   0,  32, 32 });
+	player_idle.PushBack({ 128,   0,  32, 32 });
+	player_idle.PushBack({ 160,   0,  32, 32 });
+	player_idle.PushBack({ 192,   0,  32, 32 });
+	player_idle.PushBack({   0,  32,  32, 32 });
+	player_idle.PushBack({  32,  32,  32, 32 });
+	player_idle.PushBack({  64,  32,  32, 32 });
+	player_idle.PushBack({  96,  32,  32, 32 });
+	player_idle.loop = true;
+	player_idle.speed = 0.05f;
+	//jumping
+	player_jumping.PushBack({ 160,  32,  32, 32 });
+	//walking
+	player_walking.PushBack({ 0,    64,  32, 32 });
+	player_walking.PushBack({ 32,   64,  32, 32 });
+	player_walking.PushBack({ 64,   64,  32, 32 });
+	player_walking.PushBack({ 96,   64,  32, 32 });
+	player_walking.PushBack({ 128,  64,  32, 32 });
+	player_walking.PushBack({ 160,  64,  32, 32 });
+	player_walking.PushBack({ 192,  64,  32, 32 });
+	player_walking.PushBack({ 0,    96,  32, 32 });
+	player_walking.PushBack({ 32,   96,  32, 32 });
+	player_walking.PushBack({ 64,   96,  32, 32 });
+	player_walking.PushBack({ 96,   96,  32, 32 });
+	player_walking.PushBack({ 128,  96,  32, 32 });
+	player_walking.speed = 0.05f;
+	//jumping
+	player_falling.PushBack({ 192,  96,  32, 32 });
 
-	// Move down
-	down.PushBack({ 33, 1, 32, 14 });
-	down.PushBack({ 0, 1, 32, 14 });
-	down.loop = false;
-	down.speed = 0.1f;
-	*/
 }
 
 j1Player::~j1Player() {}
@@ -42,7 +72,9 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 bool j1Player::Start() {
 	LOG("Loading player");
-	img = App->tex->Load("rtype\ship.png");
+	graphics = App->tex->Load("textures/Ninja_Frog.png");
+	current_state = PLAYER_ST_IDLE_R;
+	current_animation = &player_falling;
 
 	//-------------------------------------		PASAR AL XML		------------------------------------------
 
@@ -51,13 +83,12 @@ bool j1Player::Start() {
 	positionY = -100;
 	velocityX = 0;
 	velocityY = 0;
-
-	
 	colup =		App->collisions->AddCollider({ 150, 120, 14, 10 }, COLLIDER_PLAYER, this);
 	coldown =	App->collisions->AddCollider({ 150, 120, 14, 10 }, COLLIDER_PLAYER, this);
 	colleft	=	App->collisions->AddCollider({ 150, 120, 1, 18 }, COLLIDER_PLAYER, this);
 	colright =	App->collisions->AddCollider({ 150, 120, 1, 18 }, COLLIDER_PLAYER, this);
-	
+
+
 
 	//col2 = App->collision->AddCollider({ 0, 120, 16, 16 }, COLLIDER_PLAYER, this);
 
@@ -70,7 +101,7 @@ bool j1Player::Start() {
 // Unload assets
 bool j1Player::CleanUp() {
 	LOG("Unloading player");
-	App->tex->UnLoad(img);
+	App->tex->UnLoad(graphics);
 
 	if (colup != nullptr) colup->to_delete = true;
 	
@@ -88,14 +119,20 @@ bool j1Player::PreUpdate() {
 }
 
 // Update: draw background
-bool j1Player::Update(float dt)
-{
+bool j1Player::Update(float dt) {
+	if (velocityX < 0) mirror = true;
+	else if (velocityX > 0) mirror = false;
+
 	float speed = 1;
 	float t = 1;
+
 	//POSITION
 	if (positionX > 30) positionX -= velocityX;
-	else if (velocityX < 0)positionX -= velocityX;
+	else if (velocityX < 0) positionX -= velocityX;
+
 	positionY -= velocityY;
+
+	App->render->Blit(graphics, positionX, positionY, &(current_animation->GetCurrentFrame()));
 
 	if (App->intro) App->render->camera.y = positionY - 250;
 
@@ -114,12 +151,20 @@ bool j1Player::Update(float dt)
 		velocityY = 1.5 * speed;
 		hasDoubleJumped = true;
 	}
+
 	//JUMP
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && velocityY > -1) {
 		jumping = true;
 		velocityY = 1.5 * speed;
 		hasDoubleJumped = false;
-	}
+	} 
+
+	Mirror();
+
+	if (velocityX == 0 && !jumping) current_animation = &player_idle;
+	else if (jumping) current_animation = &player_jumping;
+	//else if (hasDouobleJumped)  current_animation = &player_doublejumping;
+	else current_animation = &player_walking;
 
 	/*			------------------------------------PARTICLES--------------------------------------------------
 
@@ -129,17 +174,14 @@ bool j1Player::Update(float dt)
 	}
 	*/
 
-
-
-
 	colup->SetPos(positionX + 1, positionY);
 	coldown->SetPos(positionX + 1, positionY + 22);
 	colleft->SetPos(positionX, positionY + 5);
 	colright->SetPos(positionX + 15, positionY + 5);
 
 	// Draw everything --------------------------------------
-	if (destroyed == false)
-		App->render->Blit(img, positionX, positionY/*, &(current_j1Animation->GetCurrentFrame())*/);
+	if (mirror) App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL, -1.0);
+	else if (destroyed == false) App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()), SDL_FLIP_NONE, -1.0);
 
 	return true;
 }
@@ -148,6 +190,11 @@ bool j1Player::PostUpdate() {
 	return true;
 }
 
+void j1Player::Mirror() {
+
+	if (velocityX < 0) mirror = true;
+	else if (velocityX > 0) mirror = false;
+}
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c1 == coldown && destroyed == false /*&& App->fade->IsFading() == false*/ && velocityY < 0 && c2->type == COLLIDER_WALL && c1->rect.x > c2->rect.x) {
