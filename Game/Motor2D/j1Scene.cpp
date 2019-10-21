@@ -10,6 +10,8 @@
 #include "j1Map.h"
 #include "j1Collisions.h"
 
+//#include "MAP.h"
+
 j1Scene::j1Scene() : j1Module() {
 	name.create("scene");
 	//name.create("player");
@@ -29,7 +31,19 @@ bool j1Scene::Awake() {
 // Called before the first frame
 bool j1Scene::Start() {
 	//App->player->Enable();
-	App->map->Load("textures/hello2.tmx");								/////// va muy lento!!! y más con el Level1.tmx
+
+	if (level1_active) {
+		App->map->Load("Level1.tmx");
+		keys_enabled = true;
+	}
+	else if (level2_active) {
+		App->map->Load("Level2.tmx");
+		keys_enabled = true;
+	}
+	else {
+		img = App->tex->Load("textures/test.png");
+		keys_enabled = false;
+	}
 
 	App->collisions->AddCollider({ 0, 200, 3930, 16 }, COLLIDER_WALL);
 	App->collisions->AddCollider({ 200, 64, 50, 16 }, COLLIDER_WALL);
@@ -45,16 +59,49 @@ bool j1Scene::PreUpdate() {
 // Called each loop iteration
 bool j1Scene::Update(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) App->LoadRequest = true;
+
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) App->SaveRequest = true;
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) App->render->camera.y -= 1;
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) App->render->camera.y += 1;
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) App->render->camera.x -= 1;
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) App->render->camera.x += 1;
+
+	if (keys_enabled) {
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) App->render->camera.y -= 1;
+		
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) App->render->camera.y += 1;
+		
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) App->render->camera.x -= 1;
+		
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) App->render->camera.x += 1;
+	}
+	
 	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN && App->audio->volume < 128) App->audio->volume += 2;
+	
 	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 2;
 
 	App->render->Blit(img, 0, 0);
 	App->map->Draw();
+
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
+		level1_active = true;
+		level2_active = false;
+		intro_active = false;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN) {
+		level1_active = false;
+		level2_active = true;
+		intro_active = false;
+	}
+
+
+	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
+		level1_active = false;
+		level2_active = false;
+		intro_active = true; 
+	}
+
+	if (intro_active) {
+		int rendomnum = 0;
+	}
+
 
 	return true;
 }

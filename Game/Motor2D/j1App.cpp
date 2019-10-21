@@ -20,6 +20,8 @@
 #include "j1Map.h"
 //#include "j1Globals.h"
 
+//#include "MAP.h"
+
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
 	frames = 0;

@@ -16,6 +16,10 @@ public:
 	bool Load();
 	bool Save();
 	bool CleanUp();
+	bool level1_active = true;
+	bool level2_active = false;
+	bool intro_active = false;
+	bool keys_enabled = true;
 
 private:
 	SDL_Texture* img;

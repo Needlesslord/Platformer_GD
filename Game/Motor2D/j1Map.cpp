@@ -42,62 +42,80 @@ void j1Map::Draw() {
 	//	}
 	//}
 
-////PAU PEDRA
-	MapLayer* mapLayer = data.layers[0];
+	//xxx
+//	MapLayer* mapLayer = data.layers[0];
+//
+//	pugi::xml_node* Iterator = &map_file.child("map").child("layer").child("data").child("tile");
+//
+//	for (int y = 0; y < data.height; y++) {
+//		for (int x = 0; x < data.width; x++) {
+//
+//
+//			App->render->Blit(data.tilesets[0]->texture,
+//				data.tilesets[0]->GetPos(x, y).x, data.tilesets[0]->GetPos(x, y).y,
+//				data.tilesets[0]->TileRect(Iterator->attribute("gid").as_uint()));
+//			//SDL_Rect* debug = data.tilesets[0]->TileRect(Iterator->attribute("gid").as_uint());
+//
+//			Iterator = &Iterator->next_sibling("tile");
+//
+//		}
+//	}
 
-	pugi::xml_node* Iterator = &map_file.child("map").child("layer").child("data").child("tile");
+	for (uint i = 0; i < data.layers.count(); i++) {
+		MapLayer* layer = data.layers[i];
 
-	for (int y = 0; y < data.height; y++) {
-		for (int x = 0; x < data.width; x++) {
+		for (uint j = 0; j < data.tilesets.count(); j++) {
+			TileSet* tileset = data.tilesets[j];
 
-
-			App->render->Blit(data.tilesets[0]->texture,
-				data.tilesets[0]->GetPos(x, y).x, data.tilesets[0]->GetPos(x, y).y,
-				data.tilesets[0]->TileRect(Iterator->attribute("gid").as_uint()));
-			//SDL_Rect* debug = data.tilesets[0]->TileRect(Iterator->attribute("gid").as_uint());
-
-			Iterator = &Iterator->next_sibling("tile");
-
+			for (int y = 0; y < data.height; y++) {
+				for (int x = 0; x < data.width; x++) {
+					uint idtile = layer->Get(x, y);
+					App->render->Blit(tileset->texture, MapToWorld(x, y).x, MapToWorld(x, y).y, &tileset->GetTileRect(idtile));
+				}
+			}
 		}
 	}
+
+
+
 
 
 	// TODO 10(old): Complete the draw function
 }
 
-//xxx
-////MaptoWorld and WorldtoMap ----------------------
-//iPoint j1Map::MapToWorld(int x, int y) const {
-//	iPoint ret(0, 0);
-//	// TODO 8(old): Create a method that translates x,y coordinates from map positions to world positions
-//	// TODO 1: Add isometric map to world coordinates
-//	if (data.type == MAPTYPE_ISOMETRIC) ret = { x*data.tile_width / 2 - y * data.tile_width / 2, y*data.tile_height / 2 + x * data.tile_height / 2 };
-//	else if (data.type == MAPTYPE_ORTHOGONAL) ret = { x*data.tile_width, y*data.tile_height };
-//
-//	return ret;
-//}
-//
-//iPoint j1Map::WorldToMap(int x, int y) const {
-//	iPoint ret(0, 0);
-//	// TODO 2: Add orthographic world to map coordinates
-//	// TODO 3: Add the case for isometric maps to WorldToMap
-//
-//	if (data.type == MAPTYPE_ISOMETRIC) ret = { (x / (data.tile_width / 2) + y / (data.tile_width / 2)) / 2, (y / (data.tile_height / 2) - (x / (data.tile_height / 2))) / 2 };
-//	else if (data.type == MAPTYPE_ORTHOGONAL) ret = { x / data.tile_width, y / data.tile_height };
-//
-//	return ret;
-//}
-//
-//SDL_Rect TileSet::GetTileRect(uint id) const {
-//	// TODO 7(old): Create a method that receives a tile id and returns it's Recttile_id -= firstgid;
-//	id -= firstgid;
-//	int x = id % num_tiles_width;
-//	int y = id / num_tiles_width;
-//	SDL_Rect rect = { x * tile_width + margin + x * spacing, y * tile_height + margin + y * spacing, tile_width, tile_height };
-//	
-//	return rect;
-//}
-////MaptoWorld and WorldtoMap ----------------------
+
+//MaptoWorld and WorldtoMap ----------------------
+iPoint j1Map::MapToWorld(int x, int y) const {
+	iPoint ret(0, 0);
+	// TODO 8(old): Create a method that translates x,y coordinates from map positions to world positions
+	// TODO 1: Add isometric map to world coordinates
+	if (data.type == MAPTYPE_ISOMETRIC) ret = { x*data.tile_width / 2 - y * data.tile_width / 2, y*data.tile_height / 2 + x * data.tile_height / 2 };
+	else if (data.type == MAPTYPE_ORTHOGONAL) ret = { x*data.tile_width, y*data.tile_height };
+
+	return ret;
+}
+
+iPoint j1Map::WorldToMap(int x, int y) const {
+	iPoint ret(0, 0);
+	// TODO 2: Add orthographic world to map coordinates
+	// TODO 3: Add the case for isometric maps to WorldToMap
+
+	if (data.type == MAPTYPE_ISOMETRIC) ret = { (x / (data.tile_width / 2) + y / (data.tile_width / 2)) / 2, (y / (data.tile_height / 2) - (x / (data.tile_height / 2))) / 2 };
+	else if (data.type == MAPTYPE_ORTHOGONAL) ret = { x / data.tile_width, y / data.tile_height };
+
+	return ret;
+}
+
+SDL_Rect TileSet::GetTileRect(uint id) const {
+	// TODO 7(old): Create a method that receives a tile id and returns it's Recttile_id -= firstgid;
+	id -= firstgid;
+	int x = id % num_tiles_width;
+	int y = id / num_tiles_width;
+	SDL_Rect rect = { x * tile_width + margin + x * spacing, y * tile_height + margin + y * spacing, tile_width, tile_height };
+	
+	return rect;
+}
+//MaptoWorld and WorldtoMap ----------------------
 
 // Called before quitting
 bool j1Map::CleanUp() {

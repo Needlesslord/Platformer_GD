@@ -61,6 +61,9 @@
     <ClCompile Include="j1Globals.cpp">
       <Filter>Desenvolupament  ========\Modules\Empty</Filter>
     </ClCompile>
+    <ClCompile Include="MAP.cpp">
+      <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -140,6 +143,9 @@
     </ClInclude>
     <ClInclude Include="j1Globals.h">
       <Filter>Desenvolupament  ========\Modules\Empty</Filter>
+    </ClInclude>
+    <ClInclude Include="MAP.h">
+      <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

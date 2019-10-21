@@ -114,6 +114,14 @@ bool j1Player::CleanUp() {
 	return true;
 }
 
+void j1Player::Mirror() {
+	if (velocityX < 0) mirror = true;
+	else if (velocityX > 0) mirror = false;
+
+	if (!mirror) App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()), SDL_FLIP_NONE);
+	else App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL);
+}
+
 bool j1Player::PreUpdate() {
 	return true;
 }
@@ -180,20 +188,14 @@ bool j1Player::Update(float dt) {
 	colright->SetPos(positionX + 15, positionY + 5);
 
 	// Draw everything --------------------------------------
-	if (mirror) App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL, -1.0);
-	else if (destroyed == false) App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()), SDL_FLIP_NONE, -1.0);
+	//if (mirror) App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL, -1.0);
+	//else if (destroyed == false) App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()), SDL_FLIP_NONE, -1.0);
 
 	return true;
 }
 
 bool j1Player::PostUpdate() {
 	return true;
-}
-
-void j1Player::Mirror() {
-
-	if (velocityX < 0) mirror = true;
-	else if (velocityX > 0) mirror = false;
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {

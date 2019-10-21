@@ -87,6 +87,7 @@
     <ClCompile Include="j1Audio.cpp" />
     <ClCompile Include="j1Input.cpp" />
     <ClCompile Include="j1Map.cpp" />
+    <ClCompile Include="MAP.cpp" />
     <ClCompile Include="j1Particles.cpp" />
     <ClCompile Include="j1Scene.cpp" />
     <ClCompile Include="j1Level1.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="j1Scene.h" />
     <ClInclude Include="j1Level1.h" />
     <ClInclude Include="j1Level2.h" />
+    <ClInclude Include="MAP.h" />
     <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="j1Audio.h" />
     <ClInclude Include="j1Input.h" />
