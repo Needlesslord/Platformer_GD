@@ -32,18 +32,20 @@ bool j1Scene::Awake() {
 bool j1Scene::Start() {
 	//App->player->Enable();
 
-	if (level1_active) {
-		App->map->Load("Level1.tmx");
-		keys_enabled = true;
-	}
-	else if (level2_active) {
-		App->map->Load("Level2.tmx");
-		keys_enabled = true;
-	}
-	else {
-		img = App->tex->Load("textures/test.png");
-		keys_enabled = false;
-	}
+	App->map->Load("Level1v2_col.tmx");
+
+	//if (level1_active) {
+	//	App->map->Load("Level1v2_col.tmx");
+	//	keys_enabled = true;
+	//}
+	//else if (level2_active) {
+	//	App->map->Load("Level1_5v1_col.tmx");
+	//	keys_enabled = true;
+	//}
+	//else {
+	//	img = App->tex->Load("textures/test.png");
+	//	keys_enabled = false;
+	//}
 
 	App->collisions->AddCollider({ 0, 200, 3930, 16 }, COLLIDER_WALL);
 	App->collisions->AddCollider({ 200, 64, 50, 16 }, COLLIDER_WALL);
