@@ -33,7 +33,7 @@ bool j1Scene::Start() {
 	//App->player->Enable();
 
 	if (level1_active) {
-		App->map->Load("Level1.tmx");
+		App->map->Load("maps/Level1.tmx");
 		keys_enabled = true;
 	}
 	else if (level2_active) {

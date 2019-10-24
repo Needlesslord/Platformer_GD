@@ -67,6 +67,8 @@ void j1Map::Draw() {
 		for (uint j = 0; j < data.tilesets.count(); j++) {
 			TileSet* tileset = data.tilesets[j];
 
+
+			//bucle infinito
 			for (int y = 0; y < data.height; y++) {
 				for (int x = 0; x < data.width; x++) {
 					uint idtile = layer->Get(x, y);

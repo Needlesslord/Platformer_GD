@@ -134,6 +134,7 @@
     <Xml Include="..\Game\savegame.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Art and design\Maps\Level1.tmx" />
     <None Include="..\..\Art and design\Maps\Level2.tmx" />
     <None Include="..\Game\maps\Level1.tmx" />
   </ItemGroup>
