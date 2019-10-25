@@ -53,9 +53,21 @@ bool j1Scene::Start() {
 	//App->map->Load(current_map.GetString());
 
 
+	//current_map = maps.start->data;
+	//App->map->Load(current_map.GetString());
 
-	//App->collisions->AddCollider({ 0, 200, 3930, 16 }, COLLIDER_WALL);
-	//App->collisions->AddCollider({ 200, 64, 50, 16 }, COLLIDER_WALL);
+
+	colliders[0] = App->collisions->AddCollider({ 0, 200, 3930, 16 }, COLLIDER_PLATFORM);
+	colliders[1] = App->collisions->AddCollider({ 200, 64, 50, 16 }, COLLIDER_PLATFORM);
+	colliders[2] = App->collisions->AddCollider({ 100, 164, 50, 16 }, COLLIDER_PLATFORM);
+	colliders[3] = App->collisions->AddCollider({ 250, 364, 50, 16 }, COLLIDER_PLATFORM);
+	colliders[4] = App->collisions->AddCollider({ 200, 64, 50, 16 }, COLLIDER_PLATFORM);
+	colliders[5] = App->collisions->AddCollider({ 200, 64, 50, 16 }, COLLIDER_PLATFORM);
+	colliders[6] = App->collisions->AddCollider({ 200, 64, 50, 16 }, COLLIDER_PLATFORM);
+	colliders[7] = App->collisions->AddCollider({ 200, 64, 50, 16 }, COLLIDER_PLATFORM);
+	colliders[8] = App->collisions->AddCollider({ 200, 64, 50, 16 }, COLLIDER_PLATFORM);
+
+
 
 	return true;
 }
@@ -87,9 +99,6 @@ bool j1Scene::Update(float dt) {
 
 
 
-
-	//p2List_item<p2SString>* i = maps.start;
-	//i = i->next;
 
 
 	//App->render->Blit(img, 0, 0);

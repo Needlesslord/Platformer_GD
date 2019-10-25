@@ -4,6 +4,7 @@
 #include "j1Window.h"
 #include "j1Render.h"
 #include "j1Player.h"
+#include "j1Input.h"
 #define VSYNC true
 
 j1Render::j1Render() : j1Module() {
@@ -62,7 +63,14 @@ bool j1Render::PreUpdate() {
 }
 
 bool j1Render::Update(float dt) {
-	
+	camera.x = -App->player->position.x;
+	camera.y = -App->player->position.y;
+
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) {
+		camera.x = -App->player->position.x;
+	camera.y = -App->player->position.y;
+	}
+
 	return true;
 }
 

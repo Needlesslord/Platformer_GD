@@ -79,20 +79,20 @@ bool j1Player::Start() {
 	//-------------------------------------		PASAR AL XML		------------------------------------------
 
 	destroyed = false;
-	positionX = 50;
-	positionY = -100;
-	velocityX = 0;
-	velocityY = 0;
-	colup =		App->collisions->AddCollider({ 150, 120, 14, 10 }, COLLIDER_PLAYER, this);
-	coldown =	App->collisions->AddCollider({ 150, 120, 14, 10 }, COLLIDER_PLAYER, this);
-	colleft	=	App->collisions->AddCollider({ 150, 120, 1, 18 }, COLLIDER_PLAYER, this);
-	colright =	App->collisions->AddCollider({ 150, 120, 1, 18 }, COLLIDER_PLAYER, this);
+	position.x = 50;
+	position.y = -100;
+	velocity.x = 0;
+	velocity.y = 0; 
+	
+	playerWidth = 23;
+	playerHeight = 28;
+	feet.w = playerWidth;
+	feet.h = 1;
 
-
-
-	//col2 = App->collision->AddCollider({ 0, 120, 16, 16 }, COLLIDER_PLAYER, this);
-
-	jumping = false;
+	col = App->collisions->AddCollider({ 0, 120, playerWidth, playerHeight }, COLLIDER_PLAYER, this);
+	colFeet = App->collisions->AddCollider(feet, COLLIDER_PLAYER, this);
+	
+	grounded = false;
 	hasDoubleJumped = false;
 
 	return true;
@@ -102,24 +102,20 @@ bool j1Player::Start() {
 bool j1Player::CleanUp() {
 	LOG("Unloading player");
 	App->tex->UnLoad(graphics);
+	App->tex->UnLoad(img);
 
-	if (colup != nullptr) colup->to_delete = true;
-	
-	if (coldown != nullptr) coldown->to_delete = true;
-	
-	if (colleft != nullptr) colleft->to_delete = true;
-	
-	if (colright != nullptr) colright->to_delete = true;
+	if (col != nullptr)col->to_delete = true;
+	if (colFeet != nullptr)colFeet->to_delete = true;
 
 	return true;
 }
 
 void j1Player::Mirror() {
-	if (velocityX < 0) mirror = true;
-	else if (velocityX > 0) mirror = false;
+	if (velocity.x < 0) mirror = true;
+	else if (velocity.x > 0) mirror = false;
 
-	if (!mirror) App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()), SDL_FLIP_NONE);
-	else App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL);
+	if (!mirror) App->render->Blit(img, position.x, position.y, &(current_animation->GetCurrentFrame()), SDL_FLIP_NONE);
+	else App->render->Blit(img, position.x, position.y, &(current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL);
 }
 
 bool j1Player::PreUpdate() {
@@ -128,49 +124,54 @@ bool j1Player::PreUpdate() {
 
 // Update: draw background
 bool j1Player::Update(float dt) {
-	if (velocityX < 0) mirror = true;
-	else if (velocityX > 0) mirror = false;
+	if (velocity.x < 0) mirror = true;
+	else if (velocity.x > 0) mirror = false;
 
 	float speed = 1;
 	float t = 1;
 
 	//POSITION
-	if (positionX > 30) positionX -= velocityX;
-	else if (velocityX < 0) positionX -= velocityX;
+	if (position.x > 30) position.x -= velocity.x;
+	else if (velocity.x < 0) position.x -= velocity.x;
 
-	positionY -= velocityY;
+	position.y -= velocity.y;
 
-	App->render->Blit(graphics, positionX, positionY, &(current_animation->GetCurrentFrame()));
+	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 
-	if (App->intro) App->render->camera.y = positionY - 250;
+	if (App->intro) App->render->camera.y = position.y - 250;
 
-	velocityY -= 0.01;
+	velocity.y -= 0.01;
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) velocityX = 0.5;
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) velocityX = 0;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) velocity.x = 0.5;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) velocity.x = 0;
 	
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) velocityX = -0.5;
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) velocityX = 0;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) velocity.x = -0.5;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) velocity.x = 0;
 
-	if (App->input->GetKey(SDL_SCANCODE_F12) == KEY_DOWN) positionY = 0;//DEBUG KEY
+	if (App->input->GetKey(SDL_SCANCODE_F12) == KEY_DOWN) position.y = 0;//DEBUG KEY
 
 	//DOUBLE JUMP
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !hasDoubleJumped && velocityY > 0 && jumping) {
-		velocityY = 1.5 * speed;
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !hasDoubleJumped && velocity.y > 0 && !grounded) {
+		velocity.y = 1.5 * speed;
 		hasDoubleJumped = true;
 	}
 
 	//JUMP
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping && velocityY > -1) {
-		jumping = true;
-		velocityY = 1.5 * speed;
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && grounded && velocity.y > -1) {
+		grounded = false;
+		velocity.y = 1.5 * speed;
 		hasDoubleJumped = false;
 	} 
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
+		S_Down = true;
+		grounded = false;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) S_Down = false;
 
 	Mirror();
 
-	if (velocityX == 0 && !jumping) current_animation = &player_idle;
-	else if (jumping) current_animation = &player_jumping;
+	if (velocity.x == 0 && grounded) current_animation = &player_idle;
+	else if (!grounded) current_animation = &player_jumping;
 	//else if (hasDouobleJumped)  current_animation = &player_doublejumping;
 	else current_animation = &player_walking;
 
@@ -181,12 +182,11 @@ bool j1Player::Update(float dt) {
 		App->particles->AddParticle(App->particles->laser, positionX + 20, positionY, COLLIDER_PLAYER_SHOT);
 	}
 	*/
-
-	colup->SetPos(positionX + 1, positionY);
-	coldown->SetPos(positionX + 1, positionY + 22);
-	colleft->SetPos(positionX, positionY + 5);
-	colright->SetPos(positionX + 15, positionY + 5);
-
+	feet.x = position.x;
+	feet.y = position.y + playerHeight;
+	col->SetPos(position.x, position.y);
+	colFeet->SetPos(feet.x, feet.y);
+	
 	// Draw everything --------------------------------------
 	//if (mirror) App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL, -1.0);
 	//else if (destroyed == false) App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()), SDL_FLIP_NONE, -1.0);
@@ -199,32 +199,15 @@ bool j1Player::PostUpdate() {
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
-	if (c1 == coldown && destroyed == false /*&& App->fade->IsFading() == false*/ && velocityY < 0 && c2->type == COLLIDER_WALL && c1->rect.x > c2->rect.x) {
-		/*
-		App->fade->FadeToBlack((Module*)App->scene_space, (Module*)App->scene_intro);
-		App->particles->AddParticle(App->particles->explosion, position.x, position.y, COLLIDER_NONE, 150);
-		App->particles->AddParticle(App->particles->explosion, position.x + 8, position.y + 11, COLLIDER_NONE, 220);
-		App->particles->AddParticle(App->particles->explosion, position.x - 7, position.y + 12, COLLIDER_NONE, 670);
-		App->particles->AddParticle(App->particles->explosion, position.x + 5, position.y - 5, COLLIDER_NONE, 480);
-		App->particles->AddParticle(App->particles->explosion, position.x - 4, position.y - 4, COLLIDER_NONE, 350);
-		destroyed = true;
-		*/
-
-		positionY = c2->rect.y - 31;
-		velocityY = 0;
-		jumping = false;
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_PLATFORM && velocity.y < 0 && (c1->rect.y + c1->rect.h) < c2->rect.y) {					//FLOOR COLLISION
+		velocity.y = 0;
+		position.y = c2->rect.y - playerHeight;
+		grounded = true;
 	}
-
-	if (c1 == colup && destroyed == false /*&& App->fade->IsFading() == false*/ && c2->type == COLLIDER_WALL) {
-		positionY = c2->rect.y + 16;
-		velocityY = -1;
-	}
-
-	if (c1 == colright && destroyed == false /*&& App->fade->IsFading() == false*/ && c2->type == COLLIDER_WALL) {
-		positionX = c2->rect.x - 16;
-	}
-
-	if (c1 == colleft && destroyed == false /*&& App->fade->IsFading() == false*/ && c2->type == COLLIDER_WALL) {
-		positionX = c2->rect.x + c2->rect.w;
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_PLATFORM && velocity.y < 0 && !S_Down && (				//PLATFORM VERTICAL COLLISION
+		position.y + playerHeight) < c2->rect.y + 5) {
+		velocity.y = 0;
+		position.y = c2->rect.y - playerHeight;
+		grounded = true;
 	}
 }
