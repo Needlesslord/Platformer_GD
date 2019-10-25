@@ -22,6 +22,9 @@
     <fullscreen_window value="false"/>
   </window>
 
+  <map>
+    <folder>maps/</folder>
+  </map>
   <player>
     <player_skin>    
     </player_skin>

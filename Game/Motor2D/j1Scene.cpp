@@ -14,15 +14,23 @@
 
 j1Scene::j1Scene() : j1Module() {
 	name.create("scene");
-	//name.create("player");
 }
 
 // Destructor
 j1Scene::~j1Scene() {}
 
 // Called before render is available
-bool j1Scene::Awake() {
+bool j1Scene::Awake(pugi::xml_node& config) {
 	LOG("Loading Scene");
+
+	pugi::xml_node map;
+
+	for (map = config.child("map"); map; map = map.next_sibling("map")) {
+		p2SString* level=new p2SString();
+			level->create(map.attribute("name").as_string());
+			maps.add(level->GetString());
+	}
+
 	bool ret = true;
 
 	return ret;
@@ -30,23 +38,10 @@ bool j1Scene::Awake() {
 
 // Called before the first frame
 bool j1Scene::Start() {
-	//App->player->Enable();
 
+	current_map = maps.start->data;
+	App->map->Load(current_map.GetString());
 
-	App->map->Load("Level1-0_v2_col.tmx");
-
-	//if (level1_active) {
-	//	App->map->Load("Level1v2_col.tmx");
-	//	keys_enabled = true;
-	//}
-	//else if (level2_active) {
-	//	App->map->Load("Level1_5v1_col.tmx");
-	//	keys_enabled = true;
-	//}
-	//else {
-	//	img = App->tex->Load("textures/test.png");
-	//	keys_enabled = false;
-	//}
 
 	App->collisions->AddCollider({ 0, 200, 3930, 16 }, COLLIDER_WALL);
 	App->collisions->AddCollider({ 200, 64, 50, 16 }, COLLIDER_WALL);
@@ -79,32 +74,15 @@ bool j1Scene::Update(float dt) {
 	
 	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 2;
 
+
+	p2List_item<p2SString>* i = maps.start;
+	i = i->next;
+
+
 	App->render->Blit(img, 0, 0);
 	App->map->Draw();
-
-	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
-		level1_active = true;
-		level2_active = false;
-		intro_active = false;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN) {
-		level1_active = false;
-		level2_active = true;
-		intro_active = false;
-	}
-
-
-	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
-		level1_active = false;
-		level2_active = false;
-		intro_active = true; 
-	}
-
-	if (intro_active) {
-		int rendomnum = 0;
-	}
-
+	p2SString title("Ninja_Frog_Against_Gravity");
+	App->win->SetTitle(title.GetString());
 
 	return true;
 }
