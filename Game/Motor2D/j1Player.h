@@ -67,28 +67,22 @@ public:
 	j1Animation player_hit;
 	j1Animation player_dashing;
 	j1Animation player_daeth;
-	/*
-	j1Animation* current_j1Animation = nullptr;
-	j1Animation idle;
-	j1Animation up;
-	j1Animation down;
-	*/
-	float positionX;
-	float positionY;
-	float desiredPositionX;
-	float desiredPositionY;
-	float velocityX;
-	float velocityY;
-	Collider* colup;
-	Collider* coldown;
-	Collider* colright;
-	Collider* colleft;
-	//Collider* col2;
+	
+	fPoint position;
+	int playerHeight;
+	int playerWidth;
+	fPoint desiredPosition;
+	fPoint velocity;
+	SDL_Rect feet;
+	Collider* col;
+	Collider* colFeet;
+
+	bool S_Down = false;
 	bool destroyed = false;
-	bool jumping;
+	bool grounded;
+	bool hasDoubleJumped;
 	bool alive;
 	player_states current_state;
-	bool hasDoubleJumped;
 	bool mirror = false;
 };
 

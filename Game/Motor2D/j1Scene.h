@@ -18,8 +18,10 @@ public:
 	bool CleanUp();
 	bool keys_enabled = true;
 
+	Collider* colliders[50];
+
 	p2List<p2SString> maps;
-	p2SString current_map;
+	//p2SString current_map;
 
 private:
 	SDL_Texture* img;
