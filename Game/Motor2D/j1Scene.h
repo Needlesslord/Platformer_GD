@@ -8,7 +8,7 @@ class j1Scene : public j1Module {
 public:
 	j1Scene();
 	virtual ~j1Scene();
-	bool Awake();
+	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool PreUpdate();
 	bool Update(float dt);
@@ -16,10 +16,10 @@ public:
 	bool Load();
 	bool Save();
 	bool CleanUp();
-	bool level1_active = true;
-	bool level2_active = false;
-	bool intro_active = false;
 	bool keys_enabled = true;
+
+	p2List<p2SString> maps;
+	p2SString current_map;
 
 private:
 	SDL_Texture* img;
