@@ -184,10 +184,4 @@
     <Xml Include="..\Game\config.xml" />
     <Xml Include="..\Game\savegame.xml" />
   </ItemGroup>
-  <ItemGroup>
-
-    <None Include="..\Game\maps\Level1v2_col.tmx" />
-    <None Include="..\Game\maps\Level1_5v1_col.tmx" />
-
-  </ItemGroup>
 </Project>

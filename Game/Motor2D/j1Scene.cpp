@@ -33,7 +33,7 @@ bool j1Scene::Start() {
 	//App->player->Enable();
 
 
-	App->map->Load("Level1v2_col.tmx");
+	App->map->Load("Level1-0_v2_col.tmx");
 
 	//if (level1_active) {
 	//	App->map->Load("Level1v2_col.tmx");
