@@ -73,14 +73,14 @@ bool j1Player::Awake(pugi::xml_node& config) {
 bool j1Player::Start() {
 	LOG("Loading player");
 	graphics = App->tex->Load("textures/Ninja_Frog.png");
-	current_state = PLAYER_ST_IDLE_R;
+	current_state = PLAYER_ST_IDLE;
 	current_animation = &player_falling;
 
 	//-------------------------------------		PASAR AL XML		------------------------------------------
 
-	destroyed = false;
-	position.x = 600;
-	position.y = 2000;
+	alive = true;
+	position.x = 0;
+	position.y = 0;
 	velocity.y = 0; 
 	
 	playerWidth = 23;
@@ -137,8 +137,6 @@ bool j1Player::Update(float dt) {
 
 	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 
-	if (App->intro) App->render->camera.y = position.y - 250;
-
 	velocity.y -= 0.01;
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) velocity.x = 0.5;
@@ -186,9 +184,9 @@ bool j1Player::Update(float dt) {
 	col->SetPos(position.x, position.y);
 	colFeet->SetPos(feet.x, feet.y);
 	
-	// Draw everything --------------------------------------
-	//if (mirror) App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL, -1.0);
-	//else if (destroyed == false) App->render->Blit(img, positionX, positionY, &(current_animation->GetCurrentFrame()), SDL_FLIP_NONE, -1.0);
+	//----------------------------------------- Draw everything --------------------------------------
+	if (mirror) App->render->Blit(img, position.x, position.y, &(current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL, -1.0);
+	else if (alive == true) App->render->Blit(img, position.x, position.y, &(current_animation->GetCurrentFrame()), SDL_FLIP_NONE, -1.0);
 
 	return true;
 }
@@ -198,12 +196,12 @@ bool j1Player::PostUpdate() {
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_PLATFORM && velocity.y < 0 && (c1->rect.y + c1->rect.h) < c2->rect.y) {					//FLOOR COLLISION
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_PLATFORM && velocity.y < 0 && (c1->rect.y + c1->rect.h) < c2->rect.y) {		//FLOOR COLLISION
 		velocity.y = 0;
 		position.y = c2->rect.y - playerHeight;
 		grounded = true;
 	}
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_PLATFORM && velocity.y < 0 && !S_Down && (				//PLATFORM VERTICAL COLLISION
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_PLATFORM && velocity.y < 0 && !S_Down && (									//PLATFORM VERTICAL COLLISION
 		position.y + playerHeight) < c2->rect.y + 5) {
 		velocity.y = 0;
 		position.y = c2->rect.y - playerHeight;

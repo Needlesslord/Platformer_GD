@@ -31,6 +31,8 @@ public:
 	//Load and Save
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&);
+	iPoint j1Render::ScreenToWorld(int x, int y) const;
+
 
 public:
 	iPoint velocity;

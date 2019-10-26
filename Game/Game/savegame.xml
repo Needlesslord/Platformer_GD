@@ -4,11 +4,11 @@
 	<input />
 	<window />
 	<renderer>
-		<camera x="-88" y="-5128" />
+		<camera x="0" y="0" />
 	</renderer>
 	<textures />
 	<audio>
-		<volume value="4" />
+		<volume value="64" />
 	</audio>
 	<map />
 	<:anonymous />

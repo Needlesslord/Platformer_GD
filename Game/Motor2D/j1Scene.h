@@ -25,9 +25,6 @@ public:
 
 private:
 	SDL_Texture* img;
-	//int	current_scene;
-	//bool	following_scene;
-	//bool	change_scene;
 };
 
 #endif // __j1SCENE_H__

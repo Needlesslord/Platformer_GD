@@ -27,36 +27,6 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
-//void j1Map::Draw()
-//{
-//	if(map_loaded == false)
-//		return;
-//
-//	// TODO 5(old): Prepare the loop to draw all tilesets + Blit
-//	 // for now we just use the first layer and tileset
-//	
-//
-//	for (uint i = 0; i < data.layers.count(); i++)
-//	{
-//		MapLayer* layer = data.layers[i];
-//
-//		for (uint j = 0; j < data.tilesets.count(); j++)
-//		{
-//			TileSet* tileset = data.tilesets[j];
-//
-//			for (int y = 0; y < data.height; y++)
-//			{
-//				for (int x = 0; x < data.width; x++)
-//				{
-//					uint idtile = layer->Get(x, y);
-//					App->render->Blit(tileset->texture, MapToWorld(x, y).x, MapToWorld(x, y).y, &tileset->GetTileRect(idtile));
-//				}
-//			}
-//		}
-//	}
-//	
-//	// TODO 10(old): Complete the draw function
-//}
 
 void j1Map::Draw()
 {
@@ -69,9 +39,9 @@ void j1Map::Draw()
 	{
 		MapLayer* layer = item->data;
 
-		for (int y = 0; y < data.height; ++y)
+		for (int y = 0; y < layer->height; ++y)
 		{
-			for (int x = 0; x < data.width; ++x)
+			for (int x = 0; x < layer->width; ++x)
 			{
 				int tile_id = layer->Get(x, y);
 				if (tile_id > 0)
@@ -80,7 +50,7 @@ void j1Map::Draw()
 
 					SDL_Rect r = tileset->GetTileRect(tile_id);
 					iPoint pos = MapToWorld(x, y);
-
+					if (pos.x < App->render->camera.x + App->render->camera.w && pos.x + data.width > App->render->camera.x && pos.y < App->render->camera.y + App->render->camera.h &&	pos.y + data.height > App->render->camera.y)
 					App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 				}
 			}
@@ -115,7 +85,6 @@ void j1Map::CollidersMap()
 	for (uint i = 0; i < data.object_groups.count(); i++)
 	{
 		MapObjectsToCollide* objectg = data.object_groups[i];
-
 		if (objectg->name == "Wall_col")
 		{
 			for (int j = 0; j < objectg->num_objects; j++)
@@ -165,8 +134,10 @@ iPoint j1Map::MapToWorld(int x, int y) const
 	if (data.type == MAPTYPE_ISOMETRIC)
 		ret = { x * data.tile_width / 2 - y * data.tile_width / 2, y * data.tile_height / 2 + x * data.tile_height / 2 };
 	else if (data.type == MAPTYPE_ORTHOGONAL)
-		ret = { x * data.tile_width, y * data.tile_height };
-
+	{
+		ret.x = x * data.tile_width;
+		ret.y = y * data.tile_height;
+	}
 	return ret;
 }
 
@@ -181,7 +152,10 @@ iPoint j1Map::WorldToMap(int x, int y) const
 	if (data.type == MAPTYPE_ISOMETRIC)
 		ret = { (x / (data.tile_width / 2) + y / (data.tile_width / 2)) / 2, (y / (data.tile_height / 2) - (x / (data.tile_height / 2))) / 2 };
 	else if (data.type == MAPTYPE_ORTHOGONAL)
-		ret = { x / data.tile_width, y / data.tile_height };
+	{
+		ret.x = x / data.tile_width;
+		ret.y = y / data.tile_height;
+	};
 
 	return ret;
 }

@@ -10,7 +10,6 @@
 #include "j1Map.h"
 #include "j1Collisions.h"
 
-//#include "MAP.h"
 
 j1Scene::j1Scene() : j1Module() {
 	name.create("scene");
@@ -23,14 +22,6 @@ j1Scene::~j1Scene() {}
 bool j1Scene::Awake(pugi::xml_node& config) {
 	LOG("Loading Scene");
 
-	//pugi::xml_node map;
-
-	//for (map = config.child("map"); map; map = map.next_sibling("map")) {
-	//	p2SString* level=new p2SString();
-	//		level->create(map.attribute("name").as_string());
-	//		maps.add(level->GetString());
-	//}
-
 	bool ret = true;
 
 	return ret;
@@ -40,35 +31,13 @@ bool j1Scene::Awake(pugi::xml_node& config) {
 bool j1Scene::Start() {
 
 	App->map->Load("NUTO-Level1-0_v2_col.tmx");
-	App->audio->PlayMusic("audio/music/Scene1.ogg");
+	//App->audio->PlayMusic("audio/music/Scene1.ogg");//WORKS BUT IS NOW SILENCED
 
-
-	//if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) App->map->Load("NUTO-Level1-0_v2_col.tmx");
-
-	//if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) App->map->Load("NUTO-Level1-5_v1_coll.tmx");
-
-	//if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) App->map->Load("NUTO-Level2-0_v1_col.tmx");
-
-
-	//current_map = maps.start->data;
-	//App->map->Load(current_map.GetString());
-
-
-	//current_map = maps.start->data;
-	//App->map->Load(current_map.GetString());
-
-
-	colliders[0] = App->collisions->AddCollider({ 0, 200, 3930, 16 }, COLLIDER_PLATFORM);
-	colliders[1] = App->collisions->AddCollider({ 200, 64, 50, 16 }, COLLIDER_PLATFORM);
-	colliders[2] = App->collisions->AddCollider({ 100, 164, 50, 16 }, COLLIDER_PLATFORM);
-	colliders[3] = App->collisions->AddCollider({ 250, 364, 50, 16 }, COLLIDER_PLATFORM);
-	colliders[4] = App->collisions->AddCollider({ 200, 64, 50, 16 }, COLLIDER_PLATFORM);
-	colliders[5] = App->collisions->AddCollider({ 200, 64, 50, 16 }, COLLIDER_PLATFORM);
-	colliders[6] = App->collisions->AddCollider({ 200, 64, 50, 16 }, COLLIDER_PLATFORM);
-	colliders[7] = App->collisions->AddCollider({ 200, 64, 50, 16 }, COLLIDER_PLATFORM);
-	colliders[8] = App->collisions->AddCollider({ 200, 64, 50, 16 }, COLLIDER_PLATFORM);
-
-
+	colliders[0] = App->collisions->AddCollider({   0, 200, 3930, 16 }, COLLIDER_PLATFORM);//THEY ALL NEED TO GO
+	colliders[1] = App->collisions->AddCollider({ 200,  64,   50, 16 }, COLLIDER_PLATFORM);
+	colliders[2] = App->collisions->AddCollider({ 100, 164,   50, 16 }, COLLIDER_PLATFORM);
+	colliders[3] = App->collisions->AddCollider({ 250, 364,   50, 16 }, COLLIDER_PLATFORM);
+	
 
 	return true;
 }
@@ -99,13 +68,6 @@ bool j1Scene::Update(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 4;
 
 
-
-
-
-	//App->render->Blit(img, 0, 0);
-	//App->map->Draw();
-	//p2SString title("Ninja_Frog_Against_Gravity");
-
 	App->map->Draw();
 	App->map->CollidersMap();
 
@@ -129,18 +91,12 @@ bool j1Scene::Update(float dt) {
 bool j1Scene::PostUpdate() {
 	bool ret = true;
 	pugi::xml_node config;
-
-	//if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-	//	//current_scene scene="true" intro="false" l1="false" l2="false"
-	//	current_scene = config.child("current_scene").attribute("scene").as_int();
-	//	//following_scene = config.child("current_scene").attribute("l1").as_bool(true);
-	//	App->intro;
-	//}	
 	
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
 
 	return ret;
 }
+
 
 // Called before quitting
 bool j1Scene::CleanUp() {

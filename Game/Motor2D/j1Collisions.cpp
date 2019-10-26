@@ -165,12 +165,12 @@ Collider* j1Collisions::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module*
 	{
 		if (colliders[i] == nullptr)
 		{
-			ret = colliders[i] = new Collider(rect, type, callback);
-			break;
+				ret = colliders[i] = new Collider(rect, type, callback);
+				break;
 		}
 	}
-
-	return ret;
+	
+		return ret;
 }
 
 // -----------------------------------------------------

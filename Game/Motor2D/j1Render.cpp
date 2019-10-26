@@ -39,8 +39,8 @@ bool j1Render::Awake(pugi::xml_node& config) {
 	else {
 		camera.w = App->win->screen_surface->w;
 		camera.h = App->win->screen_surface->h;
-		camera.x = 600;
-		camera.y = 2000;
+		camera.x = App->player->position.x;
+		camera.y = App->player->position.y;
 	}
 
 	return ret;
@@ -66,9 +66,9 @@ bool j1Render::Update(float dt) {
 	camera.x = -(App->player->position.x + velocity.x) + App->win->width / 2;
 	camera.y = -(App->player->position.y + velocity.y) + App->win->height / 1.40;
 
-	if (camera.x > 0) {
+	/*if (camera.x > 0) {
 		camera.x = 0;
-	}
+	}*/
 
 	if (camera.x > 600) {
 		camera.x = 600;
@@ -79,8 +79,6 @@ bool j1Render::Update(float dt) {
 
 	velocity.x = App->player->velocity.x;
 	velocity.y = App->player->velocity.y;
-
-
 	return true;
 }
 
@@ -121,6 +119,16 @@ bool j1Render::Save(pugi::xml_node& data) {
 	return true;
 }
 
+iPoint j1Render::ScreenToWorld(int x, int y) const
+{
+	iPoint ret;
+	int scale = App->win->GetScale();
+
+	ret.x = (x - camera.x / scale);
+	ret.y = (y - camera.y / scale);
+
+	return ret;
+}
 
 void j1Render::SetBackgroundColor(SDL_Color color) {
 	background = color;
@@ -139,8 +147,8 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	bool ret = true;
 	uint scale = App->win->GetScale();
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x * scale;
-	rect.y = (int)(camera.y * speed) + y * scale;
+	rect.x = (int) camera.x + x * scale;
+	rect.y = (int) camera.y + y * scale;
 
 	if(section != NULL) {
 		rect.w = section->w;
