@@ -63,13 +63,23 @@ bool j1Render::PreUpdate() {
 }
 
 bool j1Render::Update(float dt) {
-	camera.x = -App->player->position.x;
-	camera.y = -App->player->position.y;
+	camera.x = -(App->player->position.x + velocity.x) + App->win->width / 2;
+	camera.y = -(App->player->position.y + velocity.y) + App->win->height / 1.40;
 
-	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) {
-		camera.x = -App->player->position.x;
-		camera.y = -App->player->position.y;
+	if (camera.x > 0) {
+		camera.x = 0;
 	}
+
+	if (camera.x > 600) {
+		camera.x = 600;
+	}
+	if (camera.y > 0) {
+		camera.y = 0;
+	}
+
+	velocity.x = App->player->velocity.x;
+	velocity.y = App->player->velocity.y;
+
 
 	return true;
 }

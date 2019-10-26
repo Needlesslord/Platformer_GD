@@ -33,6 +33,9 @@ public:
 	bool Save(pugi::xml_node&);
 
 public:
+	iPoint velocity;
+	int				scale;
+
 	SDL_Renderer*	renderer;
 	SDL_Rect		camera;
 	SDL_Rect		viewport;

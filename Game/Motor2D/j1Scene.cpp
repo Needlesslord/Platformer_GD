@@ -40,7 +40,8 @@ bool j1Scene::Awake(pugi::xml_node& config) {
 bool j1Scene::Start() {
 
 	App->map->Load("NUTO-Level1-0_v2_col.tmx");
-	
+	App->audio->PlayMusic("audio/music/Scene1.ogg");
+
 
 	//if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) App->map->Load("NUTO-Level1-0_v2_col.tmx");
 
@@ -93,9 +94,9 @@ bool j1Scene::Update(float dt) {
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) App->render->camera.x += 100;
 	}
 	
-	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN && App->audio->volume < 128) App->audio->volume += 2;
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && App->audio->volume < 128) App->audio->volume += 4;
 	
-	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 2;
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 4;
 
 
 
