@@ -2,6 +2,7 @@
 #ifndef __ModulePlayer_H__
 #define __ModulePlayer_H__
 #include "j1Module.h"
+#include "PugiXml/src/pugixml.hpp"
 #include "j1Animation.h"
 #include "p2Point.h"
 struct SDL_Texture;
@@ -62,6 +63,7 @@ public:
 	int playerWidth;
 	fPoint desiredPosition;
 	fPoint velocity;
+	float gravity;
 	SDL_Rect feet;
 	Collider* col;
 	Collider* colFeet;
@@ -71,6 +73,8 @@ public:
 	bool hasDoubleJumped;
 	bool alive;
 	player_states current_state;
+	p2SString			folder;
+	p2SString			texture;
 	bool mirror = false;
 };
 
