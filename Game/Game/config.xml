@@ -25,27 +25,26 @@
   <map>
     <folder>maps/</folder>
   </map>
+  
   <player>
-    <player_data>
-      <position></position>
-      <desired_position></desired_position>
-      <size></size>
-      <velocity></velocity>
-      <gravity></gravity>
-      <collider></collider>
-      <feet_position></feet_position>
-      <feet_collider></feet_collider>
-      <s_down></s_down>
-      <grounded></grounded>
-      <has_doublejumped></has_doublejumped>
-      <mirror></mirror>
-      <alive></alive>
-    </player_data>
-    <animations>
-      <idle></idle>
-      <jump></jump>
-      <moving></moving>
-    </animations>
+    <position x="10" y="10.0"/>
+    <desired_position x="0.0" y="0.0"/>
+    <size w="23" h="28"/>
+    <velocity x="0" y="0"/>
+    <gravity value="0.01"/>
+    <collider/>
+    <feet h="1"/>
+    <feet_collider/>
+    <s_down value="false"/>
+    <grounded value="false"/>
+    <has_doublejumped value="false"/>
+    <mirror value="false"/>
+    <alive value ="true"/>
+    <folder>textures/</folder>
+    <texture tex ="Ninja_Frog.png"/>
+    <idle></idle>
+    <jump></jump>
+    <moving></moving>
   </player>
 
   <scene current_scene ="1"/>

@@ -16,17 +16,8 @@
 
 
 j1Player::j1Player() : j1Module() {
-	//j1Animation* current_animation;
-	//j1Animation player_idle;
-	//j1Animation player_walking;
-	//j1Animation player_jumping;
-	//j1Animation player_doublejumping;
-	//j1Animation player_falling;
-	//j1Animation player_appearing;
-	//j1Animation player_disappearing;
-	//j1Animation player_hit;
-	//j1Animation player_dashing;
-	//j1Animation player_daeth;
+	name.create("player");
+	
 
 	//idle
 	player_idle.PushBack({   0,   0,  32, 32 });
@@ -66,33 +57,38 @@ j1Player::j1Player() : j1Module() {
 j1Player::~j1Player() {}
 
 bool j1Player::Awake(pugi::xml_node& config) {
+	folder.create(config.child("folder").child_value());
+	texture				= config.child("texture").attribute("source").as_string();
+	position.x			= config.child("position").attribute("x").as_float();
+	position.y			= config.child("position").attribute("y").as_float();
+	desiredPosition.x	= config.child("desired_position").attribute("x").as_float();
+	desiredPosition.y	= config.child("desired_position").attribute("y").as_float();
+	playerWidth			= config.child("size").attribute("w").as_int();
+	playerHeight		= config.child("size").attribute("h").as_int();
+	velocity.x			= config.child("velocity").attribute("x").as_float();
+	velocity.y			= config.child("velocity").attribute("y").as_float();
+	gravity				= config.child("gravity").attribute("value").as_float();
+	feet.x				= config.child("position").attribute("x").as_float();
+	feet.y				= config.child("position").attribute("y").as_float() + config.child("size").attribute("h").as_int();	//PLAYER H + PLAYER Y
+	feet.w				= config.child("size").attribute("w").as_int();	//SAME AS PLAYER
+	feet.h				= config.child("feet").attribute("h").as_int();
+	S_Down				= config.child("s_down").attribute("value").as_bool();
+	grounded			= config.child("grounded").attribute("value").as_bool();
+	hasDoubleJumped		= config.child("has_doublejumped").attribute("value").as_bool();
+	mirror				= config.child("mirror").attribute("value").as_bool();
+	alive				= config.child("alive").attribute("value").as_bool();
+
 	return true;
 }
 
 
 bool j1Player::Start() {
 	LOG("Loading player");
-	graphics = App->tex->Load("textures/Ninja_Frog.png");
 	current_state = PLAYER_ST_IDLE;
 	current_animation = &player_falling;
 
-	//-------------------------------------		PASAR AL XML		------------------------------------------
-
-	alive = true;
-	position.x = 0;
-	position.y = 0;
-	velocity.y = 0; 
-	
-	playerWidth = 23;
-	playerHeight = 28;
-	feet.w = playerWidth;
-	feet.h = 1;
-
-	col = App->collisions->AddCollider({ 0, 120, playerWidth, playerHeight }, COLLIDER_PLAYER, this);
+	col		= App->collisions->AddCollider({ 0, 120, playerWidth, playerHeight }, COLLIDER_PLAYER, this);
 	colFeet = App->collisions->AddCollider(feet, COLLIDER_PLAYER, this);
-	
-	grounded = false;
-	hasDoubleJumped = false;
 
 	return true;
 }
@@ -137,7 +133,7 @@ bool j1Player::Update(float dt) {
 
 	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 
-	velocity.y -= 0.01;
+	velocity.y -= gravity;
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) velocity.x = 0.5;
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) velocity.x = 0;
