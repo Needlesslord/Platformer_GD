@@ -68,7 +68,7 @@ bool j1Render::Update(float dt) {
 
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) {
 		camera.x = -App->player->position.x;
-	camera.y = -App->player->position.y;
+		camera.y = -App->player->position.y;
 	}
 
 	return true;
