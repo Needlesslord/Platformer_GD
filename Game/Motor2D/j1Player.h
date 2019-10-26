@@ -32,8 +32,8 @@ public:
 	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
-	//bool Loading();
-	//bool Save();
+	bool Load(pugi::xml_node& node);
+	bool Save(pugi::xml_node& node);
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
 /*	void DoubleJump()*/;

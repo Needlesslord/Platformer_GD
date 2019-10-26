@@ -191,6 +191,26 @@ bool j1Player::PostUpdate() {
 	return true;
 }
 
+bool j1Player::Load(pugi::xml_node& node) {
+	position.x = node.child("position_x").attribute("value").as_float();
+	position.y = node.child("position_y").attribute("value").as_float();
+	velocity.x = node.child("velocity_x").attribute("value").as_float();
+	velocity.y = node.child("velocity_Y").attribute("value").as_float();
+
+	return true;
+}
+
+bool j1Player::Save(pugi::xml_node& node) {
+	node.append_child("position_x").append_attribute("value") = position.x;
+	node.append_child("position_y").append_attribute("value") = position.y;
+
+	node.append_child("velocity_x").append_attribute("value") = velocity.x;
+	node.append_child("velocity_Y").append_attribute("value") = velocity.y;
+
+	return true;
+}
+
+
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_PLATFORM && velocity.y < 0 && (c1->rect.y + c1->rect.h) < c2->rect.y) {		//FLOOR COLLISION
 		velocity.y = 0;
