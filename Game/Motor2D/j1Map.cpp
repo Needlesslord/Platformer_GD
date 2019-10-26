@@ -77,51 +77,7 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 	return set;
 }
 
-void j1Map::CollidersMap()
-{
-	if (map_loaded == false)
-		return;
-
-	for (uint i = 0; i < data.object_groups.count(); i++)
-	{
-		MapObjectsToCollide* objectg = data.object_groups[i];
-		if (objectg->name == "Wall_col")
-		{
-			for (int j = 0; j < objectg->num_objects; j++)
-			{
-				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_WALL);
-			}
-		}
-		else if (objectg->name == "Platform_col")
-		{
-			for (int j = 0; j < objectg->num_objects; j++)
-			{
-				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_WALL);
-			}
-		}
-		else if (objectg->name == "Salida")
-		{
-			for (int j = 0; j < objectg->num_objects; j++)
-			{
-				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_WIN);
-			}
-		}
-		else if (objectg->name == "Muerte_limites")
-		{
-			for (int j = 0; j < objectg->num_objects; j++)
-			{
-				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_ENEMY_SHOT);
-			}
-		}
-		else if (objectg->name == "Muerte_temporal")
-		{
-			for (int j = 0; j < objectg->num_objects; j++)
-			{
-				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_ENEMY_SHOT);
-			}
-		}
-	}
-}
+//---------
 
 iPoint j1Map::MapToWorld(int x, int y) const
 {
@@ -294,6 +250,8 @@ bool j1Map::Load(const char* file_name)
 		}
 	}
 
+	CollidersMap();
+
 	map_loaded = ret;
 
 	return ret;
@@ -454,6 +412,52 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	}
 
 	return ret;
+}
+
+void j1Map::CollidersMap()
+{
+	if (map_loaded == false)
+		return;
+
+	for (uint i = 0; i < data.object_groups.count(); i++)
+	{
+		MapObjectsToCollide* objectg = data.object_groups[i];
+		if (objectg->name == "Wall_col")
+		{
+			for (int j = 0; j < objectg->num_objects; j++)
+			{
+				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_WALL);
+			}
+		}
+		else if (objectg->name == "Platform_col")
+		{
+			for (int j = 0; j < objectg->num_objects; j++)
+			{
+				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_WALL);
+			}
+		}
+		else if (objectg->name == "Salida")
+		{
+			for (int j = 0; j < objectg->num_objects; j++)
+			{
+				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_WIN);
+			}
+		}
+		else if (objectg->name == "Muerte_limites")
+		{
+			for (int j = 0; j < objectg->num_objects; j++)
+			{
+				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_ENEMY_SHOT);
+			}
+		}
+		else if (objectg->name == "Muerte_temporal")
+		{
+			for (int j = 0; j < objectg->num_objects; j++)
+			{
+				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_ENEMY_SHOT);
+			}
+		}
+	}
 }
 
 bool j1Map::LoadMapColliders(pugi::xml_node& node, MapObjectsToCollide* objectg)
