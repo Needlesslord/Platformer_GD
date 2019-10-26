@@ -150057,7 +150057,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <objectgroup name="Platform_col">
+ <objectgroup color="#55aaff" name="Platform_col">
   <object id="100" x="1872.13" y="495.875" width="767.625" height="16"/>
   <object id="101" x="2512.13" y="464" width="47.625" height="16.25"/>
   <object id="102" x="2478.88" y="432.125" width="48.875" height="15.75"/>
@@ -150200,7 +150200,7 @@
   <object id="239" x="1936.06" y="3248" width="47.9375" height="5"/>
   <object id="240" x="1791.91" y="3328" width="47.9091" height="5.09091"/>
  </objectgroup>
- <objectgroup name="Wall_col">
+ <objectgroup color="#8d8d8d" name="Wall_col">
   <object id="9" x="2224.5" y="450" width="15.5" height="61"/>
   <object id="10" x="2176.5" y="481" width="15.5" height="31"/>
   <object id="11" x="2272" y="416.5" width="16" height="47.5"/>
@@ -150289,13 +150289,13 @@
   <object id="98" x="384" y="3776.38" width="16" height="78.75"/>
   <object id="99" x="447.125" y="3776.5" width="16.875" height="78.75"/>
  </objectgroup>
- <objectgroup name="Salida">
+ <objectgroup color="#00ff00" name="Salida">
   <object id="8" x="2312.5" y="328.5" width="46.5" height="55.5"/>
  </objectgroup>
- <objectgroup name="Muerte_temporal">
+ <objectgroup color="#ff0000" name="Muerte_temporal">
   <object id="2" x="16" y="3904" width="4768" height="32"/>
  </objectgroup>
- <objectgroup name="Muerte_limites">
+ <objectgroup color="#aa0000" name="Muerte_limites">
   <object id="3" x="4768" y="7" width="28" height="3989"/>
   <object id="5" x="4" y="6" width="4791" height="25"/>
   <object id="6" x="5" y="8" width="27" height="3987"/>

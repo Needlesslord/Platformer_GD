@@ -15,7 +15,7 @@
   </audio>
 
   <window>
-    <resolution width="1024" height="768" scale="3.5"/>
+    <resolution width="1024" height="768" scale="2.5"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>

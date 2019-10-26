@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="150" tilewidth="16" tileheight="16" nextobjectid="366">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="150" tilewidth="16" tileheight="16" nextobjectid="367">
  <tileset firstgid="1" name="Tiles_Sand_Mud_Ice_16" tilewidth="16" tileheight="16" tilecount="55" columns="11">
   <image source="Tiles_Sand_Mud_Ice_16.png" width="176" height="80"/>
   <terraintypes>
@@ -90057,7 +90057,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <objectgroup name="Platform_col">
+ <objectgroup color="#55aaff" name="Platform_col">
   <object id="93" x="416" y="1136" width="127.667" height="15.6667"/>
   <object id="98" x="528" y="1167.33" width="784" height="15.3333"/>
   <object id="99" x="1376" y="1168.67" width="495.333" height="14"/>
@@ -90226,8 +90226,9 @@
   <object id="357" x="1328.38" y="1072.13" width="31.25" height="15.875"/>
   <object id="358" x="1328.63" y="1104" width="31" height="16.25"/>
   <object id="363" x="928.5" y="1119.75" width="94.75" height="16.5"/>
+  <object id="366" x="3215.75" y="1151.75" width="48.5" height="5.25"/>
  </objectgroup>
- <objectgroup name="Wall_col">
+ <objectgroup color="#989898" name="Wall_col">
   <object id="173" x="527.333" y="1137.33" width="16" height="42"/>
   <object id="174" x="416" y="1138" width="15.3333" height="170"/>
   <object id="175" x="464" y="1297.33" width="15.3333" height="90"/>
@@ -90299,7 +90300,7 @@
   <object id="364" x="928.25" y="1120" width="16" height="62.5"/>
   <object id="365" x="1007.75" y="1120.75" width="16" height="60.75"/>
  </objectgroup>
- <objectgroup name="Salida">
+ <objectgroup color="#00ff00" name="Salida">
   <object id="72" x="4232.67" y="489.33" width="46" height="52"/>
  </objectgroup>
  <objectgroup name="Muerte_definitiva" visible="0">
@@ -90307,13 +90308,13 @@
   <object id="67" x="132" y="2324" width="1144" height="72"/>
   <object id="68" x="124" y="104" width="3856" height="68"/>
  </objectgroup>
- <objectgroup name="Muerte_limites">
+ <objectgroup color="#aa0000" name="Muerte_limites">
   <object id="325" x="4768" y="6.66667" width="28" height="2388"/>
   <object id="326" x="2.66667" y="6.66667" width="28.6667" height="2388.67"/>
   <object id="327" x="4.66667" y="10" width="4789.33" height="21.3333"/>
   <object id="328" x="6" y="2368.67" width="4789.33" height="25.3333"/>
  </objectgroup>
- <objectgroup name="Muerte_temporal">
+ <objectgroup color="#ff0000" name="Muerte_temporal">
   <object id="316" x="1824" y="1280" width="159.333" height="15.3333"/>
   <object id="317" x="1279.33" y="1280" width="128" height="16"/>
   <object id="318" x="16.6667" y="1280" width="430.667" height="16"/>

@@ -79,9 +79,8 @@ bool j1Player::Start() {
 	//-------------------------------------		PASAR AL XML		------------------------------------------
 
 	destroyed = false;
-	position.x = 50;
-	position.y = -100;
-	velocity.x = 0;
+	position.x = 600;
+	position.y = 2000;
 	velocity.y = 0; 
 	
 	playerWidth = 23;
