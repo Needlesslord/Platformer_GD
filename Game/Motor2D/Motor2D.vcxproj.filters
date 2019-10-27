@@ -52,9 +52,6 @@
     <ClCompile Include="j1Map.cpp">
       <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
     </ClCompile>
-    <ClCompile Include="j1Collisions.cpp">
-      <Filter>Desenvolupament  ========\Modules\Empty</Filter>
-    </ClCompile>
     <ClCompile Include="j1Particles.cpp">
       <Filter>Desenvolupament  ========\Modules\Empty</Filter>
     </ClCompile>
@@ -63,6 +60,9 @@
     </ClCompile>
     <ClCompile Include="MAP.cpp">
       <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Collisions.cpp">
+      <Filter>Desenvolupament  ========\Modules\j1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -135,9 +135,6 @@
     <ClInclude Include="j1Map.h">
       <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
     </ClInclude>
-    <ClInclude Include="j1Collisions.h">
-      <Filter>Desenvolupament  ========\Modules\Empty</Filter>
-    </ClInclude>
     <ClInclude Include="j1Particles.h">
       <Filter>Desenvolupament  ========\Modules\Empty</Filter>
     </ClInclude>
@@ -146,6 +143,9 @@
     </ClInclude>
     <ClInclude Include="MAP.h">
       <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Collisions.h">
+      <Filter>Desenvolupament  ========\Modules\j1</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

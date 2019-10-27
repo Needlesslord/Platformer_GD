@@ -13,7 +13,7 @@ struct MapLayer
 	p2SString	name;
 	int			width;
 	int			height;
-	uint* data;
+	uint*		data;
 
 	MapLayer() : data(NULL)
 	{}
@@ -57,7 +57,7 @@ struct TileSet
 	int					spacing;
 	int					tile_width;
 	int					tile_height;
-	SDL_Texture* texture;
+	SDL_Texture*		texture;
 	int					tex_width;
 	int					tex_height;
 	int					num_tiles_width;
@@ -129,8 +129,6 @@ public:
 
 	MapData data;
 	float parallax_speed = 0.057F;
-	iPoint culling_variation;
-	iPoint culling_view;
 
 private:
 
