@@ -51,8 +51,8 @@ j1Player::~j1Player() {}
 bool j1Player::Awake(pugi::xml_node& config) {
 	folder.create(config.child("folder").child_value());
 	texture				= config.child("texture").attribute("source").as_string();
-	position.x			= config.child("position").attribute("x").as_float();
-	position.y			= config.child("position").attribute("y").as_float();
+	position.x			= config.child("position_scene_1").attribute("x").as_float();
+	position.y			= config.child("position_scene_1").attribute("y").as_float();
 	desiredPosition.x	= config.child("desired_position").attribute("x").as_float();
 	desiredPosition.y	= config.child("desired_position").attribute("y").as_float();
 	playerWidth			= config.child("size").attribute("w").as_int();
@@ -60,8 +60,8 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	velocity.x			= config.child("velocity").attribute("x").as_float();
 	velocity.y			= config.child("velocity").attribute("y").as_float();
 	gravity				= config.child("gravity").attribute("value").as_float();
-	feet.x				= config.child("position").attribute("x").as_float();
-	feet.y				= config.child("position").attribute("y").as_float() + config.child("size").attribute("h").as_int();	//PLAYER H + PLAYER Y
+	feet.x				= config.child("position_scene_1").attribute("x").as_float();
+	feet.y				= config.child("position_scene_1").attribute("y").as_float() + config.child("size").attribute("h").as_int();	//PLAYER H + PLAYER Y
 	feet.w				= config.child("size").attribute("w").as_int();	//SAME AS PLAYER
 	feet.h				= config.child("feet").attribute("h").as_int();
 	S_Down				= config.child("s_down").attribute("value").as_bool();
@@ -215,16 +215,19 @@ bool j1Player::Save(pugi::xml_node& node) {
 
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_PLATFORM && velocity.y < 0 && (c1->rect.y + c1->rect.h) < c2->rect.y) {		//FLOOR COLLISION
-		velocity.y = 0;
-		position.y = c2->rect.y - playerHeight;
-		grounded = true;
-	}
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_PLATFORM && velocity.y < 0 && !S_Down && (									//PLATFORM VERTICAL COLLISION
+	if (c1->type == COLLIDER_PLAYER && (c2->type == COLLIDER_PLATFORM || c2->type == COLLIDER_WALL) && (c1 != colRightside || c1 != colLeftside) && velocity.y < 0 && !S_Down && (	//PLATFORM VERTICAL COLLISION
 		position.y + playerHeight) < c2->rect.y + 5) {
 		velocity.y = 0;
 		position.y = c2->rect.y - playerHeight;
 		grounded = true;
+	}
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL && velocity.x < 0 && (position.x + playerWidth) < c2->rect.x + 5) {//PLAYER'S RIGHTSIDE COLLISION
+		velocity.x = 0;
+		position.x = c2->rect.x - playerWidth;
+	}
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL && velocity.x > 0 && position.x - 5 > c2->rect.x + c1->rect.w) {//PLAYER'S LEFTSIDE COLLISION
+		velocity.x = 0;
+		position.x = c2->rect.x + c2->rect.w;
 	}
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WIN) {
 		App->render->Blit(imgwin, position.x, position.y);
