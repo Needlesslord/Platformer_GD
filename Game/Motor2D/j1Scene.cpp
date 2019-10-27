@@ -70,9 +70,28 @@ bool j1Scene::Update(float dt) {
 	
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 4;
 
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		if (current_scene != 1) {
+			App->scene->CleanUp();
+			App->player->CleanUp();
+
+			current_scene = 1;
+			App->player->current_map = 1;
+
+			App->scene->Start();
+			App->player->Start();
+		}
+	}
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
 		if (current_scene != 2) {
-			App->map->CleanUp();
+			App->scene->CleanUp();
+			App->player->CleanUp();
+
+			current_scene = 2;
+			App->player->current_map = 2;
+
+			App->scene->Start();
+			App->player->Start();
 		}
 	}
 
