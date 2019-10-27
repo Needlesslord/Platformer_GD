@@ -226,5 +226,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	}
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WIN) 
 		App->render->Blit(imgwin, App->render->camera.x, App->render->camera.y);
-
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH) {
+		position.x = originalPosition.x;
+		position.y = originalPosition.y;
+		velocity.x = 0;
+		velocity.y = 0;
+		grounded = true
+	}
 }
