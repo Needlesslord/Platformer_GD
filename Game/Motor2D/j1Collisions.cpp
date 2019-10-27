@@ -11,6 +11,8 @@ j1Collisions::j1Collisions() : j1Module()
 	matrix[COLLIDER_PLATFORM][COLLIDER_PLAYER_SHOT] = true;
 	matrix[COLLIDER_PLATFORM][COLLIDER_ENEMY_SHOT] = true;
 	matrix[COLLIDER_PLATFORM][COLLIDER_WALL] = false;
+	matrix[COLLIDER_PLATFORM][COLLIDER_WIN] = false;
+	matrix[COLLIDER_PLATFORM][COLLIDER_DEATH] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_PLATFORM] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
@@ -18,6 +20,8 @@ j1Collisions::j1Collisions() : j1Module()
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER_SHOT] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY_SHOT] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_WIN] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = true;
 
 	matrix[COLLIDER_ENEMY][COLLIDER_PLATFORM] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
@@ -25,6 +29,8 @@ j1Collisions::j1Collisions() : j1Module()
 	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER_SHOT] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY_SHOT] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_WALL] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_WIN] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_DEATH] = false;
 
 	matrix[COLLIDER_PLAYER_SHOT][COLLIDER_PLATFORM] = true;
 	matrix[COLLIDER_PLAYER_SHOT][COLLIDER_PLAYER] = false;
@@ -32,6 +38,8 @@ j1Collisions::j1Collisions() : j1Module()
 	matrix[COLLIDER_PLAYER_SHOT][COLLIDER_PLAYER_SHOT] = false;
 	matrix[COLLIDER_PLAYER_SHOT][COLLIDER_ENEMY_SHOT] = false;
 	matrix[COLLIDER_PLAYER_SHOT][COLLIDER_WALL] = true;
+	matrix[COLLIDER_PLAYER_SHOT][COLLIDER_WIN] = false;
+	matrix[COLLIDER_PLAYER_SHOT][COLLIDER_DEATH] = false;
 
 	matrix[COLLIDER_ENEMY_SHOT][COLLIDER_PLATFORM] = true;
 	matrix[COLLIDER_ENEMY_SHOT][COLLIDER_PLAYER] = true;
@@ -39,6 +47,8 @@ j1Collisions::j1Collisions() : j1Module()
 	matrix[COLLIDER_ENEMY_SHOT][COLLIDER_PLAYER_SHOT] = false;
 	matrix[COLLIDER_ENEMY_SHOT][COLLIDER_ENEMY_SHOT] = false;
 	matrix[COLLIDER_ENEMY_SHOT][COLLIDER_WALL] = true;
+	matrix[COLLIDER_ENEMY_SHOT][COLLIDER_WIN] = false;
+	matrix[COLLIDER_ENEMY_SHOT][COLLIDER_DEATH] = false;
 
 	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WALL][COLLIDER_PLATFORM] = false;
@@ -46,13 +56,26 @@ j1Collisions::j1Collisions() : j1Module()
 	matrix[COLLIDER_WALL][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER_SHOT] = true;
 	matrix[COLLIDER_WALL][COLLIDER_ENEMY_SHOT] = true;
+	matrix[COLLIDER_WALL][COLLIDER_WIN] = false; 
+	matrix[COLLIDER_WALL][COLLIDER_DEATH] = false;
 
+	matrix[COLLIDER_WIN][COLLIDER_WIN] = false;
 	matrix[COLLIDER_WIN][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WIN][COLLIDER_PLATFORM] = false;
 	matrix[COLLIDER_WIN][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_WIN][COLLIDER_ENEMY] = false;
 	matrix[COLLIDER_WIN][COLLIDER_PLAYER_SHOT] = false;
 	matrix[COLLIDER_WIN][COLLIDER_ENEMY_SHOT] = false;
+	matrix[COLLIDER_WIN][COLLIDER_DEATH] = false;
+
+	matrix[COLLIDER_DEATH][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_DEATH][COLLIDER_PLATFORM] = false;
+	matrix[COLLIDER_DEATH][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_DEATH][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_DEATH][COLLIDER_PLAYER_SHOT] = false;
+	matrix[COLLIDER_DEATH][COLLIDER_ENEMY_SHOT] = false;
+	matrix[COLLIDER_DEATH][COLLIDER_WALL] = false;
+	matrix[COLLIDER_DEATH][COLLIDER_WIN] = false;
 }
 
 // Destructor

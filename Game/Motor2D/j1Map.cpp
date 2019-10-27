@@ -432,7 +432,7 @@ void j1Map::CollidersMap()
 				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_WALL);
 			}
 		}
-		else if (objectg->name == "Platform_col")
+		if (objectg->name == "Platform_col")
 		{
 			for (int j = 0; j < objectg->num_objects; j++)
 			{

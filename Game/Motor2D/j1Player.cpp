@@ -224,5 +224,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		velocity.x = 0;
 		position.x = c2->rect.x + c2->rect.w;
 	}
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WIN) App->render->Blit(imgwin, App->render->camera.x, App->render->camera.y);
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WIN) 
+		App->render->Blit(imgwin, App->render->camera.x, App->render->camera.y);
+
 }
