@@ -85,6 +85,7 @@ bool j1Player::Start() {
 	colRightside	= App->collisions->AddCollider(rightside, COLLIDER_PLAYER, this);
 	colLeftside		= App->collisions->AddCollider(leftside, COLLIDER_PLAYER, this);
 	img = App->tex->Load("textures/Ninja_Frog.png");
+	imgwin = App->tex->Load("textures/imgwin.png");
 	return true;
 }
 
@@ -120,7 +121,7 @@ bool j1Player::Update(float dt) {
 	if (velocity.x < 0) mirror = true;
 	else if (velocity.x > 0) mirror = false;
 
-	float speed = 3;
+	float speed = 2;
 	float t = 1;
 
 	//POSITION

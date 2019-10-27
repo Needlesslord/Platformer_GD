@@ -450,14 +450,14 @@ void j1Map::CollidersMap()
 		{
 			for (int j = 0; j < objectg->num_objects; j++)
 			{
-				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_ENEMY_SHOT);
+				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_DEATH);
 			}
 		}
 		else if (objectg->name == "Muerte_temporal")
 		{
 			for (int j = 0; j < objectg->num_objects; j++)
 			{
-				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_ENEMY_SHOT);
+				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_DEATH);
 			}
 		}
 	}

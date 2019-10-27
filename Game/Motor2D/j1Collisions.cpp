@@ -177,9 +177,9 @@ bool j1Collisions::Update(float dt) {
 		case COLLIDER_WIN: //magenta
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
 			break;
-		//case COLLIDER_DEATH: //magenta
-			//App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
-			//break;
+		case COLLIDER_DEATH: //magenta
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
 		}
 	}
 
