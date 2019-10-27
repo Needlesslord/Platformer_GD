@@ -68,6 +68,7 @@ public:
 	Collider* col;
 	Collider* colFeet;
 
+	bool playerCanMove = false;
 	bool S_Down = false;
 	bool grounded;
 	bool hasDoubleJumped;

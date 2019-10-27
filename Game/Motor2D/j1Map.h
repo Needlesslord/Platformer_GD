@@ -101,7 +101,7 @@ public:
 	bool Awake(pugi::xml_node& conf);
 
 	// Called each loop iteration
-	void Draw();
+	void Draw(int player_pos);
 	void CollidersMap();
 
 	// Called before quitting
@@ -128,6 +128,9 @@ private:
 public:
 
 	MapData data;
+	float parallax_speed = 0.057F;
+	iPoint culling_variation;
+	iPoint culling_view;
 
 private:
 

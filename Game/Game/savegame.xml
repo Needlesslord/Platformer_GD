@@ -4,7 +4,7 @@
 	<input />
 	<window />
 	<renderer>
-		<camera x="335" y="0" />
+		<camera x="444" y="0" />
 	</renderer>
 	<textures />
 	<audio>
@@ -12,5 +12,5 @@
 	</audio>
 	<map />
 	<:anonymous />
-	<:anonymous />
+	<player />
 </save>

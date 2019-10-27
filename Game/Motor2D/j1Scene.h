@@ -22,9 +22,15 @@ public:
 
 	p2List<p2SString> maps;
 	//p2SString current_map;
+	bool cullingView = false;
+	bool cameraMoving = true;
+	bool lateralMove = false;
 
 private:
 	SDL_Texture* img;
+
+	int cameraLimitX;
+	int cameraLimitY;
 };
 
 #endif // __j1SCENE_H__

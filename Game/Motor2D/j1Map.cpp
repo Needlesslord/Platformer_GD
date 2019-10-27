@@ -5,6 +5,7 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include "j1Collisions.h"
+#include "j1App.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -28,16 +29,19 @@ bool j1Map::Awake(pugi::xml_node& config)
 }
 
 
-void j1Map::Draw()
+void j1Map::Draw(int camera_position)
 {
 	if (map_loaded == false)
 		return;
 
 	p2List_item<MapLayer*>* item = data.layers.start;
+	int tile_num;
+	int tiles_painted = 0;
 
 	for (; item != NULL; item = item->next)
 	{
 		MapLayer* layer = item->data;
+		tile_num = 0;
 
 		for (int y = 0; y < layer->height; ++y)
 		{
@@ -53,6 +57,27 @@ void j1Map::Draw()
 					if (pos.x < App->render->camera.x + App->render->camera.w && pos.x + data.width > App->render->camera.x && pos.y < App->render->camera.y + App->render->camera.h &&	pos.y + data.height > App->render->camera.y)
 					App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 				}
+
+
+				if (App->render->CameraCulling(x, y, data.tile_width, data.tile_height, camera_position))
+				{
+					int tile_id = item->data->data[tile_num];
+					if (tile_id > 0)
+					{
+						TileSet* tileset = GetTilesetFromTileId(tile_id);
+						if (tileset != nullptr)
+						{
+							tiles_painted++;
+							SDL_Rect r = tileset->GetTileRect(tile_id);
+							iPoint pos = MapToWorld(x, y);
+
+							App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, parallax_speed);
+						}
+					}
+				}
+				tile_num++;
+
+
 			}
 		}
 	}
@@ -491,3 +516,4 @@ bool j1Map::LoadMapColliders(pugi::xml_node& node, MapObjectsToCollide* objectg)
 
 	return ret;
 }
+
