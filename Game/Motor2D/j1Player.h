@@ -37,7 +37,7 @@ public:
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
 /*	void DoubleJump()*/;
-	void Mirror();
+	bool Mirror();
 	//void RestartPlayer();
 	//bool CameraOnPlayer();
 

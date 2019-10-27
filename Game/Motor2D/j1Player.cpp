@@ -114,11 +114,12 @@ bool j1Player::CleanUp() {
 	return true;
 }
 
-void j1Player::Mirror() {
+bool j1Player::Mirror() {
 	if (velocity.x < 0) mirror = true;
 	else if (velocity.x > 0) mirror = false;
-	if (!mirror) App->render->Blit(img, position.x, position.y, &(current_animation->GetCurrentFrame()), SDL_FLIP_NONE);
-	else App->render->Blit(img, position.x, position.y, &(current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL);
+	//if (!mirror) App->render->Blit(img, position.x, position.y, &(current_animation->GetCurrentFrame()), SDL_FLIP_NONE);
+	//else App->render->Blit(img, position.x, position.y, &(current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL);
+	return mirror;
 }
 
 bool j1Player::PreUpdate() {
@@ -127,9 +128,9 @@ bool j1Player::PreUpdate() {
 
 // Update: draw background
 bool j1Player::Update(float dt) {
-	if (velocity.x < 0) mirror = true;
-	else if (velocity.x > 0) mirror = false;
-
+	//if (velocity.x < 0) mirror = true;
+	//else if (velocity.x > 0) mirror = false;
+	Mirror();
 	float speed = 2;
 	float t = 1;
 
@@ -141,8 +142,12 @@ bool j1Player::Update(float dt) {
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		velocity.x = 2.5;
+	
 	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) velocity.x = 0;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) {
+		velocity.x = 0;
+
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		velocity.x = -2.5;
@@ -205,7 +210,8 @@ bool j1Player::Update(float dt) {
 	
 
 	//----------------------------------------- Draw everything --------------------------------------
-	App->render->Blit(img, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
+	if (mirror) App->render->Blit(img, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL, -1.0);
+	else App->render->Blit(img, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
 
 	return true;
 }
