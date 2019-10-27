@@ -64,12 +64,16 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	feet.y				= config.child("position_scene_1").attribute("y").as_float() + config.child("size").attribute("h").as_int();	//PLAYER H + PLAYER Y
 	feet.w				= config.child("size").attribute("w").as_int();	//SAME AS PLAYER
 	feet.h				= config.child("feet").attribute("h").as_int();
-	S_Down				= config.child("s_down").attribute("value").as_bool();
+	X_Down				= config.child("s_down").attribute("value").as_bool();
 	grounded			= config.child("grounded").attribute("value").as_bool();
 	hasDoubleJumped		= config.child("has_doublejumped").attribute("value").as_bool();
 	mirror				= config.child("mirror").attribute("value").as_bool();
 	alive				= config.child("alive").attribute("value").as_bool();
-	
+	AnimationOffstet.x	= config.child("animation_offset").attribute("x").as_int();
+	AnimationOffstet.y	= config.child("animation_offset").attribute("y").as_int(); 
+	originalPosition.x	= config.child("position_scene_1").attribute("x").as_int();
+	originalPosition.y	= config.child("position_scene_1").attribute("y").as_int();
+
 	return true;
 }
 
@@ -77,18 +81,12 @@ bool j1Player::Awake(pugi::xml_node& config) {
 bool j1Player::Start() {
 	LOG("Loading player");
 	current_state = PLAYER_ST_IDLE;
-	current_animation = &player_falling;
-
-	originalPosition.x = position.x;
-	originalPosition.y = position.y;
+	current_animation = &player_jumping;
 	col				= App->collisions->AddCollider({ originalPosition.x, originalPosition.y, playerWidth, playerHeight }, COLLIDER_PLAYER, this);
 	colFeet			= App->collisions->AddCollider(feet, COLLIDER_PLAYER, this);
 	colRightside	= App->collisions->AddCollider(rightside, COLLIDER_PLAYER, this);
 	colLeftside		= App->collisions->AddCollider(leftside, COLLIDER_PLAYER, this);
-	AnimationOffstet.x = 4;
-	AnimationOffstet.y = 3;
 	img = App->tex->Load("textures/Ninja_Frog.png");
-
 	return true;
 }
 
@@ -97,9 +95,12 @@ bool j1Player::CleanUp() {
 	LOG("Unloading player");
 	App->tex->UnLoad(graphics);
 	App->tex->UnLoad(img);
+	App->tex->UnLoad(imgwin);
 
 	if (col != nullptr)col->to_delete = true;
 	if (colFeet != nullptr)colFeet->to_delete = true;
+	if (colRightside != nullptr) colRightside->to_delete = true;
+	if (colLeftside != nullptr) colLeftside->to_delete = true;
 
 	return true;
 }
@@ -125,9 +126,7 @@ bool j1Player::Update(float dt) {
 	float t = 1;
 
 	//POSITION
-	if (position.x > 30) position.x -= velocity.x;
-	else if (velocity.x < 0) position.x -= velocity.x;
-
+	position.x -= velocity.x;
 	position.y -= velocity.y;
 
 	velocity.y -= gravity;
@@ -160,11 +159,11 @@ bool j1Player::Update(float dt) {
 		velocity.y = 1.5 * speed;
 		hasDoubleJumped = false;
 	} 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
-		S_Down = true;
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) {
+		X_Down = true;
 		grounded = false;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) S_Down = false;
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_UP) X_Down = false;
 
 	//Mirror();
 
@@ -181,11 +180,17 @@ bool j1Player::Update(float dt) {
 	*/
 	feet.x = position.x;
 	feet.y = position.y + playerHeight;
+	rightside.x = position.x + playerWidth;
+	rightside.y = position.y;
+	leftside.x = position.x - leftside.w;
+	leftside.y = position.y;
 	col->SetPos(position.x, position.y);
 	colFeet->SetPos(feet.x, feet.y);
-	
+	colRightside->SetPos(rightside.x, rightside.y);
+	colLeftside->SetPos(leftside.x, leftside.y);
+
 	//----------------------------------------- Draw everything --------------------------------------
-	if (alive == true) App->render->Blit(img, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()), SDL_FLIP_NONE, -1.0);
+	App->render->Blit(img, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
 
 	return true;
 }
@@ -199,23 +204,22 @@ bool j1Player::Load(pugi::xml_node& node) {
 	position.y = node.child("position_y").attribute("value").as_float();
 	velocity.x = node.child("velocity_x").attribute("value").as_float();
 	velocity.y = node.child("velocity_Y").attribute("value").as_float();
-
+	grounded = node.child("grounded").attribute("value").as_bool();//doesn't work
 	return true;
 }
 
 bool j1Player::Save(pugi::xml_node& node) {
 	node.append_child("position_x").append_attribute("value") = position.x;
 	node.append_child("position_y").append_attribute("value") = position.y;
-
 	node.append_child("velocity_x").append_attribute("value") = velocity.x;
 	node.append_child("velocity_Y").append_attribute("value") = velocity.y;
-
+	node.append_child("grounded").append_attribute("value") = grounded;//doens' work
 	return true;
 }
 
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
-	if (c1->type == COLLIDER_PLAYER && (c2->type == COLLIDER_PLATFORM || c2->type == COLLIDER_WALL) && (c1 != colRightside || c1 != colLeftside) && velocity.y < 0 && !S_Down && (	//PLATFORM VERTICAL COLLISION
+	if (c1->type == COLLIDER_PLAYER && (c2->type == COLLIDER_PLATFORM || c2->type == COLLIDER_WALL) && (c1 != colRightside || c1 != colLeftside) && velocity.y < 0 && !X_Down && (	//PLATFORM VERTICAL COLLISION
 		position.y + playerHeight) < c2->rect.y + 5) {
 		velocity.y = 0;
 		position.y = c2->rect.y - playerHeight;
@@ -225,12 +229,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		velocity.x = 0;
 		position.x = c2->rect.x - playerWidth;
 	}
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL && velocity.x > 0 && position.x - 5 > c2->rect.x + c1->rect.w) {//PLAYER'S LEFTSIDE COLLISION
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL && velocity.x > 0 && position.x + 5 > c2->rect.x + c1->rect.w) {//PLAYER'S LEFTSIDE COLLISION
 		velocity.x = 0;
 		position.x = c2->rect.x + c2->rect.w;
 	}
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WIN) {
-		App->render->Blit(imgwin, position.x, position.y);
+		App->render->Blit(imgwin, App->render->camera.x, App->render->camera.y);
 
 	}
 

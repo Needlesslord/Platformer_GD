@@ -76,7 +76,7 @@ public:
 	iPoint AnimationOffstet;
 
 	bool playerCanMove = false;
-	bool S_Down = false;
+	bool X_Down = false;
 	bool grounded;
 	bool hasDoubleJumped;
 	bool alive;
