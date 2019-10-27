@@ -126,19 +126,16 @@ bool j1Player::Update(float dt) {
 	//POSITION
 	position.x -= velocity.x;
 	position.y -= velocity.y;
-	if (!grounded) App->render->camera.y += velocity.y * App->render->scale + gravity * App->render->scale;
 
 	velocity.y -= gravity;
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		velocity.x = 2.5;
-		App->render->camera.x += velocity.x * App->render->scale;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) velocity.x = 0;
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		velocity.x = -2.5;
-		App->render->camera.x += velocity.x * App->render->scale;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) velocity.x = 0;
 

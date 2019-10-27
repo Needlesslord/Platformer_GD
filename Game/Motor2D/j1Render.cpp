@@ -77,7 +77,8 @@ bool j1Render::PreUpdate() {
 }
 
 bool j1Render::Update(float dt) {
-	//camera.x-=App->player->velocity.x 
+	camera.x = -(App->player->position.x + App->player->playerWidth) * scale + camera.w / scale;
+	camera.y = -(App->player->position.y + App->player->playerHeight) * scale + camera.h / scale;
 	return true;
 }
 

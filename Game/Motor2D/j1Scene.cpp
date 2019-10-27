@@ -67,48 +67,6 @@ bool j1Scene::Update(float dt) {
 	
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 4;
 
-//camera follows player and camera limits (should be removed, the player should die if they get off limits)
-	//if (App->player != nullptr)
-	//{
-	//	if (lateralMove) {
-	//		if (App->render->camera.x >= -App->player->position.x * App->win->GetScale() + App->win->width / 2) {
-	//			App->render->camera.x -= 3.5f;
-	//			App->player->playerCanMove = false;
-	//		}
-	//		else {
-	//			lateralMove = false;
-	//			App->player->playerCanMove = true;
-	//		}
-	//	}
-	//	else
-	//		App->render->camera.x = -App->player->position.x * App->win->GetScale() + App->win->width / 2;
-
-	//	// LIMITING X CAMERA -- need to implement transition to death
-	//	if (-App->render->camera.x < 0)
-	//		App->render->camera.x = 0;
-	//	else if (App->render->camera.x < cameraLimitX)
-	//		App->render->camera.x = cameraLimitX;
-
-	//	if (cameraMoving)
-	//	{
-	//		if (App->render->camera.y >= -App->player->position.y * App->win->GetScale() + App->win->height / 2) {
-	//			App->render->camera.y -= 2.0f;
-	//			App->player->playerCanMove = false;
-	//		}
-	//		else {
-	//			cameraMoving = false;
-	//			App->player->playerCanMove = true;
-	//		}
-	//	}
-	//	else
-	//		App->render->camera.y = -App->player->position.y * App->win->GetScale() + App->win->height / 2;
-
-	//	// LIMITING Y CAMERA -- need to implement transition to death
-	//	if (App->render->camera.y > 0)
-	//		App->render->camera.y = 0;
-	//	else if (App->render->camera.y < cameraLimitY)
-	//		App->render->camera.y = cameraLimitY;
-	//}
 
 
 	App->map->Draw(-App->render->camera.x);
