@@ -30,8 +30,10 @@ bool j1Scene::Awake(pugi::xml_node& config) {
 
 // Called before the first frame
 bool j1Scene::Start() {
+
 	App->map->Load("NUTO-Level1-0_v2_col.tmx");
 	App->audio->PlayMusic("audio/music/Scene1.ogg");//WORKS BUT IS NOW SILENCED	
+
 	return true;
 }
 
@@ -100,6 +102,7 @@ bool j1Scene::CleanUp() {
 	if (App->player != nullptr)
 		App->player->CleanUp();
 	App->CleanUp();
+	App->tex->UnLoad(imgwin);
 
 	return true;
 }

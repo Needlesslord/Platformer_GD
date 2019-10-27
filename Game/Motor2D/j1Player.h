@@ -84,6 +84,7 @@ public:
 	p2SString			folder;
 	p2SString			texture;
 	bool mirror = false;
+	int current_map = 1;
 };
 
 #endif
