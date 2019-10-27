@@ -5,6 +5,9 @@
 #include "j1Render.h"
 #include "j1Player.h"
 #include "j1Input.h"
+#include "j1Map.h"
+#include "j1App.h"
+#include "j1Scene.h"
 #define VSYNC true
 
 j1Render::j1Render() : j1Module() {
@@ -39,8 +42,14 @@ bool j1Render::Awake(pugi::xml_node& config) {
 	else {
 		camera.w = App->win->screen_surface->w;
 		camera.h = App->win->screen_surface->h;
-		camera.x = App->player->position.x;
-		camera.y = App->player->position.y;
+
+		if (App->player != nullptr) {
+			camera.x = -App->player->position.x;
+			camera.y = -App->player->position.y;
+		}
+
+		//camera.x = App->player->position.x;
+		//camera.y = App->player->position.y;
 	}
 
 	return ret;
@@ -65,6 +74,10 @@ bool j1Render::PreUpdate() {
 bool j1Render::Update(float dt) {
 	camera.x = -(App->player->position.x + velocity.x) + App->win->width / 2;
 	camera.y = -(App->player->position.y + velocity.y) + App->win->height / 1.40;
+
+	camera.x = -(App->player->position.x + velocity.x) + App->win->width / 2;
+	camera.y = -(App->player->position.y + velocity.y) + App->win->height / 1.40;
+
 
 	/*if (camera.x > 0) {
 		camera.x = 0;
@@ -147,8 +160,8 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	bool ret = true;
 	uint scale = App->win->GetScale();
 	SDL_Rect rect;
-	rect.x = (int) camera.x + x * scale;
-	rect.y = (int) camera.y + y * scale;
+	rect.x = (int) (camera.x * speed) + x * scale;
+	rect.y = (int) (camera.y * speed) + y * scale;
 
 	if(section != NULL) {
 		rect.w = section->w;
@@ -240,6 +253,46 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		ret = false;
 	}
+
+	return ret;
+}
+
+bool j1Render::IsOnCamera(int x, int y, int w, int h, int player_position)
+{
+	bool ret = false;
+
+	int camera_width = App->win->width / 2;
+	SDL_Rect tile_to_print = { App->map->MapToWorld(x,y).x, App->map->MapToWorld(x,y).y, w, h };
+
+	if (player_position - camera_width <= tile_to_print.x && player_position + camera_width >= tile_to_print.x)
+		ret = true;
+
+	else ret = false;
+
+	return ret;
+}
+
+bool j1Render::CameraCulling(int x, int y, int w, int h, int camera_position)
+{
+	bool ret = false;
+
+	iPoint variation;
+
+	if (!App->scene->cullingView)
+		variation = { App->map->culling_variation };
+	else
+		variation = { App->map->culling_view };
+
+	int camera_width = App->win->width;
+	int scale = App->win->scale;
+	float speed = App->map->parallax_speed;
+
+	SDL_Rect tile_to_print = { App->map->MapToWorld(x,y).x, App->map->MapToWorld(x,y).y, w, h };
+
+	if ((camera_position * speed - variation.x) / scale <= tile_to_print.x && (camera_position * speed - variation.y) / scale + camera_width >= tile_to_print.x)
+		ret = true;
+
+	else ret = false;
 
 	return ret;
 }

@@ -226,13 +226,13 @@ bool j1App::PostUpdate() {
 // Called before quitting
 bool j1App::CleanUp() {
 	bool ret = true;
-	p2List_item<j1Module*>* item;
-	item = modules.end;
+	//p2List_item<j1Module*>* item;
+	//item = modules.end;
 
-	while(item != NULL && ret == true) {
-		ret = item->data->CleanUp();
-		item = item->prev;
-	}
+	//while(item != NULL && ret == true) {
+	//	ret = item->data->CleanUp();
+	//	item = item->prev;
+	//}
 
 	return ret;
 }

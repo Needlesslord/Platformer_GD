@@ -74,6 +74,7 @@ public:
 	Collider* colLeftside;
 	iPoint AnimationOffstet;
 
+	bool playerCanMove = false;
 	bool S_Down = false;
 	bool grounded;
 	bool hasDoubleJumped;
