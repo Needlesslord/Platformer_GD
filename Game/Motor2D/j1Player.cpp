@@ -26,18 +26,17 @@ j1Player::j1Player() : j1Module() {
 	//jumping
 	player_jumping.PushBack({ 92, 0, 23, 28 });
 	//walking
-	player_walking.PushBack({   0,  64,  32, 32 });
-	player_walking.PushBack({  32,  64,  32, 32 });
-	player_walking.PushBack({  64,  64,  32, 32 });
-	player_walking.PushBack({  96,  64,  32, 32 });
-	player_walking.PushBack({ 128,  64,  32, 32 });
-	player_walking.PushBack({ 160,  64,  32, 32 });
-	player_walking.PushBack({ 192,  64,  32, 32 });
-	player_walking.PushBack({   0,  96,  32, 32 });
-	player_walking.PushBack({  32,  96,  32, 32 });
-	player_walking.PushBack({  64,  96,  32, 32 });
-	player_walking.PushBack({  96,  96,  32, 32 });
-	player_walking.PushBack({ 128,  96,  32, 32 });
+	player_walking.PushBack({   0,  37,  23, 28 });
+	player_walking.PushBack({  23,  37,  23, 28 });
+	player_walking.PushBack({  46,  37,  23, 28 });
+	player_walking.PushBack({  69,  37,  23, 28 });
+	player_walking.PushBack({  92,  37,  23, 28 });
+	player_walking.PushBack({ 115,  37,  23, 28 });
+	player_walking.PushBack({ 138,  37,  23, 28 });
+	player_walking.PushBack({ 161,  37,  23, 28 });
+	player_walking.PushBack({ 184,  37,  25, 28 });
+	player_walking.PushBack({ 171,  65,  25, 28 });
+	player_walking.PushBack({ 196,  65,  25, 28 });
 	player_walking.speed = 0.7f;
 	//falling
 	player_falling.PushBack({ 192,  96,  32, 32 });
@@ -223,8 +222,8 @@ bool j1Player::Update(float dt) {
 	
 
 	//----------------------------------------- Draw everything --------------------------------------
-	if (mirror) App->render->Blit(img_m, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
-	else App->render->Blit(img, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
+	//if (mirror) App->render->Blit(img_m, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
+	App->render->Blit(img, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
 
 	return true;
 }
