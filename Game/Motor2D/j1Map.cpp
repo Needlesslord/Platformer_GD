@@ -54,30 +54,8 @@ void j1Map::Draw(int camera_position)
 
 					SDL_Rect r = tileset->GetTileRect(tile_id);
 					iPoint pos = MapToWorld(x, y);
-					if (pos.x < App->render->camera.x + App->render->camera.w && pos.x + data.width > App->render->camera.x && pos.y < App->render->camera.y + App->render->camera.h &&	pos.y + data.height > App->render->camera.y)
 					App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 				}
-
-
-				/*if (App->render->CameraCulling(x, y, data.tile_width, data.tile_height, camera_position))
-				{
-					int tile_id = item->data->data[tile_num];
-					if (tile_id > 0)
-					{
-						TileSet* tileset = GetTilesetFromTileId(tile_id);
-						if (tileset != nullptr)
-						{
-							tiles_painted++;
-							SDL_Rect r = tileset->GetTileRect(tile_id);
-							iPoint pos = MapToWorld(x, y);
-
-							App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, parallax_speed);
-						}
-					}
-				}
-				tile_num++;*/
-
-
 			}
 		}
 	}

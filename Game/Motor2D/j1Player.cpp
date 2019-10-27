@@ -17,8 +17,6 @@
 
 j1Player::j1Player() : j1Module() {
 	name.create("player");
-	
-
 	//idle
 	player_idle.PushBack({  0, 0, 23, 28 });
 	player_idle.PushBack({ 23, 0, 23, 28 });
@@ -28,17 +26,17 @@ j1Player::j1Player() : j1Module() {
 	//jumping
 	player_jumping.PushBack({ 92, 0, 23, 28 });
 	//walking
-	player_walking.PushBack({ 0,    64,  32, 32 });
-	player_walking.PushBack({ 32,   64,  32, 32 });
-	player_walking.PushBack({ 64,   64,  32, 32 });
-	player_walking.PushBack({ 96,   64,  32, 32 });
+	player_walking.PushBack({   0,  64,  32, 32 });
+	player_walking.PushBack({  32,  64,  32, 32 });
+	player_walking.PushBack({  64,  64,  32, 32 });
+	player_walking.PushBack({  96,  64,  32, 32 });
 	player_walking.PushBack({ 128,  64,  32, 32 });
 	player_walking.PushBack({ 160,  64,  32, 32 });
 	player_walking.PushBack({ 192,  64,  32, 32 });
-	player_walking.PushBack({ 0,    96,  32, 32 });
-	player_walking.PushBack({ 32,   96,  32, 32 });
-	player_walking.PushBack({ 64,   96,  32, 32 });
-	player_walking.PushBack({ 96,   96,  32, 32 });
+	player_walking.PushBack({   0,  96,  32, 32 });
+	player_walking.PushBack({  32,  96,  32, 32 });
+	player_walking.PushBack({  64,  96,  32, 32 });
+	player_walking.PushBack({  96,  96,  32, 32 });
 	player_walking.PushBack({ 128,  96,  32, 32 });
 	player_walking.speed = 0.05f;
 	//jumping
@@ -93,6 +91,7 @@ bool j1Player::Start() {
 // Unload assets
 bool j1Player::CleanUp() {
 	LOG("Unloading player");
+
 	App->tex->UnLoad(graphics);
 	App->tex->UnLoad(img);
 	App->tex->UnLoad(imgwin);
@@ -108,7 +107,6 @@ bool j1Player::CleanUp() {
 void j1Player::Mirror() {
 	if (velocity.x < 0) mirror = true;
 	else if (velocity.x > 0) mirror = false;
-
 	if (!mirror) App->render->Blit(img, position.x, position.y, &(current_animation->GetCurrentFrame()), SDL_FLIP_NONE);
 	else App->render->Blit(img, position.x, position.y, &(current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL);
 }
@@ -122,28 +120,25 @@ bool j1Player::Update(float dt) {
 	if (velocity.x < 0) mirror = true;
 	else if (velocity.x > 0) mirror = false;
 
-	float speed = 1;
+	float speed = 3;
 	float t = 1;
 
 	//POSITION
 	position.x -= velocity.x;
 	position.y -= velocity.y;
+	if (!grounded) App->render->camera.y += velocity.y * App->render->scale + gravity * App->render->scale;
 
 	velocity.y -= gravity;
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		velocity.x = 0.5;
-		if (App->render->camera.x > 0) App->render->camera.x = App->render->camera.x + 2* velocity.x;
+		velocity.x = 2.5;
+		App->render->camera.x += velocity.x * App->render->scale;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) {
-		velocity.x = 0;
-		if (App->render->camera.x > 0) App->render->camera.x = App->render->camera.x;
-	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		velocity.x = -0.5;
-		if (App->render->camera.x < 1000) App->render->camera.x = App->render->camera.x - 2* velocity.x;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) velocity.x = 0;
 
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		velocity.x = -2.5;
+		App->render->camera.x += velocity.x * App->render->scale;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) velocity.x = 0;
 
@@ -159,13 +154,12 @@ bool j1Player::Update(float dt) {
 		velocity.y = 1.5 * speed;
 		hasDoubleJumped = false;
 	} 
+
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) {
 		X_Down = true;
 		grounded = false;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_UP) X_Down = false;
-
-	//Mirror();
 
 	if (velocity.x == 0 && grounded) current_animation = &player_idle;
 	else if (!grounded) current_animation = &player_jumping;
@@ -233,9 +227,5 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		velocity.x = 0;
 		position.x = c2->rect.x + c2->rect.w;
 	}
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WIN) {
-		App->render->Blit(imgwin, App->render->camera.x, App->render->camera.y);
-
-	}
-
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WIN) App->render->Blit(imgwin, App->render->camera.x, App->render->camera.y);
 }

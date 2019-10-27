@@ -62,6 +62,9 @@ bool j1Render::Start() {
 	LOG("render start");
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
+	scale = App->win->scale;
+	camera.x = -(App->player->position.x + App->player->playerWidth) * scale + camera.w/scale;
+	camera.y = -(App->player->position.y + App->player->playerHeight) * scale + camera.h/scale;
 
 	return true;
 }
@@ -74,46 +77,7 @@ bool j1Render::PreUpdate() {
 }
 
 bool j1Render::Update(float dt) {
-	camera.x = -(App->player->position.x + velocity.x) + App->win->width / 2;
-	camera.y = -(App->player->position.y + velocity.y) + App->win->height / 1.40;
-
-
-	/*if (camera.x > 0) {
-		camera.x = 0;
-	}*/
-
-	if (camera.x > 600) {
-		camera.x = 600;
-	}
-	if (camera.y > 0) {
-		camera.y = 0;
-	}
-
-	//limites inferiores faltan
-
-	velocity.x = App->player->velocity.x;
-	velocity.y = App->player->velocity.y;
-
-	//float speed = 1.7F;
-	//if (App->input->GetKey(SDL_SCANCODE_7) == KEY_REPEAT) camera.x += speed;
-	//if (App->input->GetKey(SDL_SCANCODE_8) == KEY_REPEAT) camera.x -= speed;
-	//if (App->input->GetKey(SDL_SCANCODE_9) == KEY_REPEAT) camera.y += speed;
-	//if (App->input->GetKey(SDL_SCANCODE_0) == KEY_REPEAT) camera.y -= speed;
-
-	//if (App->player->velocity.x<0 || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	//	if (camera.x < 0 &&	App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT) camera.x -= -speed;
-
-	//if (App->player->velocity.x > 0 || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	//	if (camera.x < 1000 && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT) camera.x += +speed;
-
-	//if (App->player->velocity.y < 0 || App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
-	//	if (camera.y > 0) camera.y -= speed;
-
-	//if (App->player->velocity.y > 0 || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	//	if (camera.y < 0) camera.y += speed;
-
-
-
+	//camera.x-=App->player->velocity.x 
 	return true;
 }
 
@@ -279,42 +243,3 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 	return ret;
 }
 
-bool j1Render::IsOnCamera(int x, int y, int w, int h, int player_position)
-{
-	bool ret = false;
-
-	int camera_width = App->win->width / 2;
-	SDL_Rect tile_to_print = { App->map->MapToWorld(x,y).x, App->map->MapToWorld(x,y).y, w, h };
-
-	if (player_position - camera_width <= tile_to_print.x && player_position + camera_width >= tile_to_print.x)
-		ret = true;
-
-	else ret = false;
-
-	return ret;
-}
-
-bool j1Render::CameraCulling(int x, int y, int w, int h, int camera_position)
-{
-	bool ret = false;
-
-	iPoint variation;
-
-	if (!App->scene->cullingView)
-		variation = { App->map->culling_variation };
-	else
-		variation = { App->map->culling_view };
-
-	int camera_width = App->win->width;
-	int scale = App->win->scale;
-	float speed = App->map->parallax_speed;
-
-	SDL_Rect tile_to_print = { App->map->MapToWorld(x,y).x, App->map->MapToWorld(x,y).y, w, h };
-
-	if ((camera_position * speed - variation.x) / scale <= tile_to_print.x && (camera_position * speed - variation.y) / scale + camera_width >= tile_to_print.x)
-		ret = true;
-
-	else ret = false;
-
-	return ret;
-}
