@@ -85,11 +85,7 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 iPoint j1Map::MapToWorld(int x, int y) const
 {
 	iPoint ret(0, 0);
-	// TODO 8(old): Create a method that translates x,y coordinates from map positions to world positions
 
-
-
-	// TODO 1: Add isometric map to world coordinates
 	if (data.type == MAPTYPE_ISOMETRIC)
 		ret = { x * data.tile_width / 2 - y * data.tile_width / 2, y * data.tile_height / 2 + x * data.tile_height / 2 };
 	else if (data.type == MAPTYPE_ORTHOGONAL)
@@ -104,10 +100,6 @@ iPoint j1Map::MapToWorld(int x, int y) const
 iPoint j1Map::WorldToMap(int x, int y) const
 {
 	iPoint ret(0, 0);
-	// TODO 2: Add orthographic world to map coordinates
-
-	// TODO 3: Add the case for isometric maps to WorldToMap
-
 	if (data.type == MAPTYPE_ISOMETRIC)
 		ret = { (x / (data.tile_width / 2) + y / (data.tile_width / 2)) / 2, (y / (data.tile_height / 2) - (x / (data.tile_height / 2))) / 2 };
 	else if (data.type == MAPTYPE_ORTHOGONAL)

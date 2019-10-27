@@ -78,17 +78,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="j1FadeToBlack.cpp" />
     <ClCompile Include="j1Collisions.cpp" />
-    <ClCompile Include="j1Globals.cpp" />
     <ClCompile Include="j1Intro.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
     <ClCompile Include="j1Audio.cpp" />
     <ClCompile Include="j1Input.cpp" />
     <ClCompile Include="j1Map.cpp" />
-    <ClCompile Include="MAP.cpp" />
-    <ClCompile Include="j1Particles.cpp" />
     <ClCompile Include="j1Scene.cpp" />
     <ClCompile Include="j1Level1.cpp" />
     <ClCompile Include="j1Level2.cpp" />
@@ -102,16 +98,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Animation.h" />
-    <ClInclude Include="j1FadeToBlack.h" />
     <ClInclude Include="j1Collisions.h" />
-    <ClInclude Include="j1Globals.h" />
     <ClInclude Include="j1Intro.h" />
     <ClInclude Include="j1Map.h" />
-    <ClInclude Include="j1Particles.h" />
     <ClInclude Include="j1Scene.h" />
     <ClInclude Include="j1Level1.h" />
     <ClInclude Include="j1Level2.h" />
-    <ClInclude Include="MAP.h" />
     <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="j1Audio.h" />
     <ClInclude Include="j1Input.h" />
