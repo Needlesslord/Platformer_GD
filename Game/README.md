@@ -16,7 +16,7 @@
 
 
 
-![foto] _under construction_
+![61214840_879026369106457_8142223115980688694_n](https://user-images.githubusercontent.com/51851736/67637050-06f6b780-f8d7-11e9-8b8e-220f0fed8d5e.jpg)
 
 
 
@@ -24,14 +24,14 @@
 
 	GitHub: tomascarreras1000
 
-	Tomás has been in charge of the player (lead role), save/load
+	Tomás has been in charge of the base code, the player (lead role), save/load, map's collisions design, config, camera, music
 
 
 **Lead Design, Programmer and Management:** Núria Lamonja
 
 	GitHub:	 nurialp12
 
-	Núria has been in charge of the base code, the level design, music and sprites (choosing and arranging them)
+	Núria has been in charge of the base code, the level design and implementation, music and sprites (choosing and arranging them), implemented map's collisions, readme, web page
 
 
 
@@ -44,11 +44,10 @@ Art (Sprites and Tilesets):
 
 
 Music:
-	[Bensound](https://www.bensound.com/)
-		[Better Days](https://www.bensound.com/royalty-free-music/track/better-days)
-		[Funny Song](https://www.bensound.com/royalty-free-music/track/funny-song)
-		[Birth of a Hero](https://www.bensound.com/royalty-free-music/track/birth-of-a-hero)
-
+	[Patrick de Arteaga](https://patrickdearteaga.com/arcade-music/)
+		Intro: Resilience 
+		Scene 1 - Level 1: Battleship
+		Scene 2 - Level 2: Heroic Intrusion
 
 Design and Development: 
 	Tomás Carreras
@@ -59,8 +58,8 @@ Design and Development:
 
 ## Ninja Frog Against Gravity: The Game
 
-_under construction_
-
+Ninja Frog Against Gravity is a platformer where your goal is to find the way out. 
+The player is a Ninja Frog and find the exit it has to fall through holes where the gravity changes and walk downwards.
 
 
 ## Gameplay
@@ -99,33 +98,29 @@ CONTROLS:
 
 	PLAYER 
 	A move left
-	S crouch* 		*(it doesn't crouch)
+	X fall from the platform
 	D move right
-	W/SPACE jump
+	SPACE jump + double jump (only when going upwards)
 	
-	E to attack with particles
-
-	Enter to change screens
 	S to save
 	L to load
 	ESC to leave the game	
+	
+	+ - to control the volume
 
 
 
 DEBUG:
 
+	I Intro					//TO IMPLEMENT YET
+	F1 Level 1				//TO IMPLEMENT YET
+	F2 Level 2				//TO IMPLEMENT YET
+	F3 Start again (the same level)		//TO IMPLEMENT YET
+	F4 Logic/collisions			//TO IMPLEMENT YET
+	F5 direct win				//TO IMPLEMENT YET
+	F6 god mode				//TO IMPLEMENT YET
 
-	F1 Level 1
-	F2 Level 2
-	F3 Start again (the same level)
-	F4 direct tie (PLAYER 1 WINS)
-	F5 god mode (PLAYER 1)
-
-	F6 direct win (PLAYER 2)
-	F7 direct lose (PLAYER 2)
-	F8 god mode (PLAYER 2)
-
-	F9 mute/unmute sound
+	F9 mute/unmute sound			//TO IMPLEMENT YET
 
 	CAMERA
 	Keyboard arrows to move up, down, left and right
@@ -142,7 +137,7 @@ DEBUG:
 
 	### Innovation
 
-		_under construction_
+		Not implemented yet
 
 
 ## Disclosure
@@ -156,14 +151,13 @@ The game has been made using C++, using SDL and pugi libraries. The maps have be
 
 Developed by Nuto Studios:
 
-[Github](https://www.google.es/): _under construction_
+[Github](https://github.com/Needlesslord/Platformer_GD): https://github.com/Needlesslord/Platformer_GD
 
-[Releases of this game](https://www.google.es/): _under construction_
+[Releases of this game](https://github.com/Needlesslord/Platformer_GD/releases): https://github.com/Needlesslord/Platformer_GD/releases
 
 [All the studio's releases](https://www.google.es/): _under construction_
 
-[Our web page](https://www.google.es/): _under construction_
-
+[Our web page](https://needlesslord.github.io/Platformer_GD/): https://needlesslord.github.io/Platformer_GD/
 
 
 ## License
@@ -181,5 +175,4 @@ If you want to use this game or its content please do ask beforehand (email: nut
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
-
 
