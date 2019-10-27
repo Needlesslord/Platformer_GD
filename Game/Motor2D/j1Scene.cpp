@@ -30,15 +30,8 @@ bool j1Scene::Awake(pugi::xml_node& config) {
 
 // Called before the first frame
 bool j1Scene::Start() {
-
 	App->map->Load("NUTO-Level1-0_v2_col.tmx");
-	//App->audio->PlayMusic("audio/music/Scene1.ogg");//WORKS BUT IS NOW SILENCED
-
-	colliders[0] = App->collisions->AddCollider({   0, 200, 3930, 16 }, COLLIDER_PLATFORM);//THEY ALL NEED TO GO
-	colliders[1] = App->collisions->AddCollider({ 200,  64,   50, 16 }, COLLIDER_PLATFORM);
-	colliders[2] = App->collisions->AddCollider({ 100, 164,   50, 16 }, COLLIDER_PLATFORM);
-	colliders[3] = App->collisions->AddCollider({ 250, 364,   50, 16 }, COLLIDER_PLATFORM);
-	colliders[4] = App->collisions->AddCollider({ 200, 150,   16, 50 }, COLLIDER_WALL);	
+	App->audio->PlayMusic("audio/music/Scene1.ogg");//WORKS BUT IS NOW SILENCED	
 	return true;
 }
 
@@ -49,9 +42,9 @@ bool j1Scene::PreUpdate() {
 
 // Called each loop iteration
 bool j1Scene::Update(float dt) {
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) App->LoadRequest = true;
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) App->LoadRequest = true;
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) App->SaveRequest = true;
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) App->SaveRequest = true;
 
 	if (keys_enabled) {
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) App->render->camera.y -= 100;

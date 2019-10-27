@@ -22,7 +22,7 @@ j1Player::j1Player() : j1Module() {
 	player_idle.PushBack({ 23, 0, 23, 28 });
 	player_idle.PushBack({ 46, 0, 23, 28 });
 	player_idle.PushBack({ 69, 0, 23, 28 });
-	player_idle.speed = 0.2f;
+	player_idle.speed = 0.5f;
 	//jumping
 	player_jumping.PushBack({ 92, 0, 23, 28 });
 	//walking
@@ -38,9 +38,10 @@ j1Player::j1Player() : j1Module() {
 	player_walking.PushBack({  64,  96,  32, 32 });
 	player_walking.PushBack({  96,  96,  32, 32 });
 	player_walking.PushBack({ 128,  96,  32, 32 });
-	player_walking.speed = 0.05f;
-	//jumping
+	player_walking.speed = 0.7f;
+	//falling
 	player_falling.PushBack({ 192,  96,  32, 32 });
+
 
 }
 
@@ -51,8 +52,6 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	texture				= config.child("texture").attribute("source").as_string();
 	position.x			= config.child("position_scene_1").attribute("x").as_float();
 	position.y			= config.child("position_scene_1").attribute("y").as_float();
-	desiredPosition.x	= config.child("desired_position").attribute("x").as_float();
-	desiredPosition.y	= config.child("desired_position").attribute("y").as_float();
 	playerWidth			= config.child("size").attribute("w").as_int();
 	playerHeight		= config.child("size").attribute("h").as_int();
 	velocity.x			= config.child("velocity").attribute("x").as_float();
@@ -79,7 +78,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 bool j1Player::Start() {
 	LOG("Loading player");
 	current_state = PLAYER_ST_IDLE;
-	current_animation = &player_jumping;
+	current_animation = &player_falling;
 	col				= App->collisions->AddCollider({ originalPosition.x, originalPosition.y, playerWidth, playerHeight }, COLLIDER_PLAYER, this);
 	colFeet			= App->collisions->AddCollider(feet, COLLIDER_PLAYER, this);
 	colRightside	= App->collisions->AddCollider(rightside, COLLIDER_PLAYER, this);
@@ -128,7 +127,7 @@ bool j1Player::Update(float dt) {
 	position.x -= velocity.x;
 	position.y -= velocity.y;
 
-	velocity.y -= gravity;
+	if (!godMode) velocity.y -= gravity;
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		velocity.x = 2.5;
@@ -141,27 +140,40 @@ bool j1Player::Update(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) velocity.x = 0;
 
 	//DOUBLE JUMP
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !hasDoubleJumped && velocity.y > 0 && !grounded) {
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !hasDoubleJumped && velocity.y > 0 && !grounded && !godMode) {
 		velocity.y = 1.5 * speed;
 		hasDoubleJumped = true;
 	}
 
 	//JUMP
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && grounded && velocity.y > -1) {
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && grounded && velocity.y > -1 && !godMode) {
 		grounded = false;
 		velocity.y = 1.5 * speed;
 		hasDoubleJumped = false;
 	} 
-
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode) {
+		position.y -= speed;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode) {
+		position.y += speed;
+	}
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) {
 		X_Down = true;
 		grounded = false;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_UP) X_Down = false;
 
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		velocity.y = 0;
+		godMode = !godMode;
+	}
 	if (velocity.x == 0 && grounded) current_animation = &player_idle;
 	else if (!grounded) current_animation = &player_jumping;
 	else current_animation = &player_walking;
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
+		position.x = 4206;
+		position.y = 515;
+	}
 
 	/*			------------------------------------PARTICLES--------------------------------------------------
 
@@ -180,6 +192,7 @@ bool j1Player::Update(float dt) {
 	colFeet->SetPos(feet.x, feet.y);
 	colRightside->SetPos(rightside.x, rightside.y);
 	colLeftside->SetPos(leftside.x, leftside.y);
+	
 
 	//----------------------------------------- Draw everything --------------------------------------
 	App->render->Blit(img, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
@@ -225,8 +238,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		velocity.x = 0;
 		position.x = c2->rect.x + c2->rect.w;
 	}
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WIN) 
-		App->render->Blit(imgwin, App->render->camera.x, App->render->camera.y);
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WIN) {
+		position.x = originalPosition.x;
+		position.y = originalPosition.y;
+		App->render->Blit(imgwin, /*App->render->camera.x, App->render->camera.y,*/position.x, position.y, &(current_animation->GetCurrentFrame()));
+	}
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH) {
 		position.x = originalPosition.x;
 		position.y = originalPosition.y;

@@ -63,7 +63,6 @@ public:
 	iPoint originalPosition;
 	int playerHeight;
 	int playerWidth;
-	fPoint desiredPosition;
 	fPoint velocity;
 	float gravity;
 	Collider* col;
@@ -80,6 +79,7 @@ public:
 	bool grounded;
 	bool hasDoubleJumped;
 	bool alive;
+	bool godMode = false;
 	player_states current_state;
 	p2SString			folder;
 	p2SString			texture;
