@@ -61,6 +61,9 @@ Design and Development:
 Ninja Frog Against Gravity is a platformer where your goal is to find the way out. 
 The player is a Ninja Frog and find the exit it has to fall through holes where the gravity changes and walk downwards.
 
+You can also get trapped inside the quicksand; when that happens, use hold down X to get out!
+If a platform is too far or too high, try the double jump!
+
 
 ## Gameplay
 
