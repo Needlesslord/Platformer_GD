@@ -249,8 +249,14 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		position.x = c2->rect.x + c2->rect.w;
 	}
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WIN) {
-		position.x = originalPosition.x;
-		position.y = originalPosition.y;
+		if (App->scene->current_scene == 1) {
+			position.x = originalPosition_1.x;
+			position.y = originalPosition_1.y;
+		}
+		if (App->scene->current_scene == 2) {
+			position.x = originalPosition_2.x;
+			position.y = originalPosition_2.y;
+		}
 		App->render->Blit(imgwin, /*App->render->camera.x, App->render->camera.y,*/position.x, position.y, &(current_animation->GetCurrentFrame()));
 	}
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH) {
