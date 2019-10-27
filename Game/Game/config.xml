@@ -28,8 +28,9 @@
   
   <player>
     <position_scene_1 x="500" y="1112"/>
-    <position_scene_2 x="465" y="1400.0"/>
-    <desired_position x="0.0" y="0.0"/>
+
+    <position_scene_2 x="10" y="10.0"/>
+
     <size w="14" h="24"/>
     <velocity x="0" y="0"/>
     <gravity value="0.08"/>

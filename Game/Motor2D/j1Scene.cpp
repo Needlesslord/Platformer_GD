@@ -41,6 +41,7 @@ bool j1Scene::Start() {
 	}
 
 	//App->audio->PlayMusic("audio/music/Scene1.ogg");//WORKS BUT IS NOW SILENCED
+
 	return true;
 }
 
@@ -51,9 +52,9 @@ bool j1Scene::PreUpdate() {
 
 // Called each loop iteration
 bool j1Scene::Update(float dt) {
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) App->LoadRequest = true;
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) App->LoadRequest = true;
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) App->SaveRequest = true;
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) App->SaveRequest = true;
 
 	if (keys_enabled) {
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) App->render->camera.y -= 100;

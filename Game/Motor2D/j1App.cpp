@@ -63,7 +63,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
 	AddModule(map);
 	AddModule(collisions);
 	AddModule(player);
-	
 	//animation = new j1Animation();
 	//AddModule(animation);
 }
