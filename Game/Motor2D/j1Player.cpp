@@ -69,7 +69,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	hasDoubleJumped		= config.child("has_doublejumped").attribute("value").as_bool();
 	mirror				= config.child("mirror").attribute("value").as_bool();
 	alive				= config.child("alive").attribute("value").as_bool();
-
+	
 	return true;
 }
 
