@@ -72,6 +72,14 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	feet.y				= config.child("position").attribute("y").as_float() + config.child("size").attribute("h").as_int();	//PLAYER H + PLAYER Y
 	feet.w				= config.child("size").attribute("w").as_int();	//SAME AS PLAYER
 	feet.h				= config.child("feet").attribute("h").as_int();
+	rightside.x			= config.child("position").attribute("x").as_float() + config.child("size").attribute("w").as_int();
+	rightside.y			= config.child("position").attribute("y").as_float();
+	rightside.w			= config.child("right_side").attribute("w").as_int();
+	rightside.h			= config.child("size").attribute("h").as_int();
+	leftside.x			= config.child("position").attribute("x").as_float() - config.child("left_side").attribute("w").as_int();
+	leftside.y			= config.child("position").attribute("y").as_float();
+	leftside.w			= config.child("left_side").attribute("w").as_int();
+	leftside.h			= config.child("size").attribute("h").as_int();
 	S_Down				= config.child("s_down").attribute("value").as_bool();
 	grounded			= config.child("grounded").attribute("value").as_bool();
 	hasDoubleJumped		= config.child("has_doublejumped").attribute("value").as_bool();
@@ -86,10 +94,12 @@ bool j1Player::Start() {
 	LOG("Loading player");
 	current_state = PLAYER_ST_IDLE;
 	current_animation = &player_falling;
-
-	col		= App->collisions->AddCollider({ 0, 120, playerWidth, playerHeight }, COLLIDER_PLAYER, this);
-	colFeet = App->collisions->AddCollider(feet, COLLIDER_PLAYER, this);
-
+	originalPosition.x = position.x;
+	originalPosition.y = position.y;
+	col				= App->collisions->AddCollider({ originalPosition.x, originalPosition.y, playerWidth, playerHeight }, COLLIDER_PLAYER, this);
+	colFeet			= App->collisions->AddCollider(feet, COLLIDER_PLAYER, this);
+	colRightside	= App->collisions->AddCollider(rightside, COLLIDER_PLAYER, this);
+	colLeftside		= App->collisions->AddCollider(leftside, COLLIDER_PLAYER, this);
 	return true;
 }
 
@@ -177,8 +187,14 @@ bool j1Player::Update(float dt) {
 	*/
 	feet.x = position.x;
 	feet.y = position.y + playerHeight;
+	rightside.x = position.x + playerWidth;
+	rightside.y = position.y;
+	leftside.x = position.x - leftside.w;
+	leftside.y = position.y;
 	col->SetPos(position.x, position.y);
 	colFeet->SetPos(feet.x, feet.y);
+	colRightside->SetPos(rightside.x, rightside.y);
+	colLeftside->SetPos(leftside.x, leftside.y);
 	
 	//----------------------------------------- Draw everything --------------------------------------
 	if (mirror) App->render->Blit(img, position.x, position.y, &(current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL, -1.0);
@@ -212,15 +228,17 @@ bool j1Player::Save(pugi::xml_node& node) {
 
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_PLATFORM && velocity.y < 0 && (c1->rect.y + c1->rect.h) < c2->rect.y) {		//FLOOR COLLISION
+	if (c1->type == COLLIDER_PLAYER && (c2->type ==	COLLIDER_PLATFORM || c2->type == COLLIDER_WALL) && c1 != colLeftside && c1 != colRightside && velocity.y < 0 && !S_Down &&		(position.y + playerHeight) < c2->rect.y + 5) {
 		velocity.y = 0;
 		position.y = c2->rect.y - playerHeight;
 		grounded = true;
 	}
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_PLATFORM && velocity.y < 0 && !S_Down && (									//PLATFORM VERTICAL COLLISION
-		position.y + playerHeight) < c2->rect.y + 5) {
-		velocity.y = 0;
-		position.y = c2->rect.y - playerHeight;
-		grounded = true;
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL && velocity.x < 0 && (position.x + playerWidth) < c2->rect.x + 5) {//PLAYER'S RIGHTSIDE COLLISION
+		velocity.x = 0;
+		position.x = c2->rect.x - playerWidth;
+	}
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL && velocity.x > 0 && position.x - 5 > c2->rect.x + c1->rect.w) {//PLAYER'S LEFTSIDE COLLISION
+		velocity.x = 0;
+		position.x = c2->rect.x + c2->rect.w;
 	}
 }

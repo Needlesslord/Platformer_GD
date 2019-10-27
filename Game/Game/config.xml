@@ -32,9 +32,9 @@
     <size w="23" h="28"/>
     <velocity x="0" y="0"/>
     <gravity value="0.01"/>
-    <collider/>
     <feet h="1"/>
-    <feet_collider/>
+    <right_side w="1"/>
+    <left_side w="1"/>
     <s_down value="false"/>
     <grounded value="false"/>
     <has_doublejumped value="false"/>
