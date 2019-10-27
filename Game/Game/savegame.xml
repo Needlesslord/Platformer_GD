@@ -4,7 +4,7 @@
 	<input />
 	<window />
 	<renderer>
-	  <camera x="-446" y="-2459" />
+		<camera x="-4304" y="-320" />
 	</renderer>
 	<textures />
 	<audio>
@@ -13,10 +13,10 @@
 	<map />
 	<:anonymous />
 	<player>
-		<position_x value="465" />
-		<position_y value="1404.3999" />
+		<position_x value="2394" />
+		<position_y value="328" />
 		<velocity_x value="0" />
-		<velocity_Y value="-6.87999582" />
+		<velocity_Y value="-0.0799999982" />
 		<grounded value="true" />
 	</player>
 </save>

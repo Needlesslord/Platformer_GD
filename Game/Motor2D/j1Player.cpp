@@ -69,6 +69,10 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	originalPosition_1.y	= config.child("position_scene_1").attribute("y").as_int();
 	originalPosition_2.x	= config.child("position_scene_2").attribute("x").as_int();
 	originalPosition_2.y	= config.child("position_scene_2").attribute("y").as_int();
+	directWin_1.x			= config.child("win_position_1").attribute("x").as_int();
+	directWin_1.y			= config.child("win_position_1").attribute("y").as_int();
+	directWin_2.x			= config.child("win_position_2").attribute("x").as_int();
+	directWin_2.y			= config.child("win_position_2").attribute("y").as_int();
 	return true;
 }
 
@@ -167,10 +171,10 @@ bool j1Player::Update(float dt) {
 		hasDoubleJumped = false;
 	} 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode) {
-		position.y -= speed;
+		position.y -= 3 * speed;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode) {
-		position.y += speed;
+		position.y += 3 * speed;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) {
 		X_Down = true;
@@ -178,13 +182,27 @@ bool j1Player::Update(float dt) {
 	}
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_UP) X_Down = false;
 
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
+		if (current_map == 1) {
+			velocity.y = 0;
+			position.x = directWin_1.x;
+			position.y = directWin_1.y;
+		}
+		if (current_map == 2) {
+			velocity.y = 0;
+			position.x = directWin_2.x;
+			position.y = directWin_2.y;
+		}
+	}
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		velocity.y = 0;
 		godMode = !godMode;
 	}
+
 	if (velocity.x == 0 && grounded) current_animation = &player_idle;
 	else if (!grounded) current_animation = &player_jumping;
 	else current_animation = &player_walking;
+
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
 		position.x = 4206;
 		position.y = 515;
@@ -202,13 +220,7 @@ bool j1Player::Update(float dt) {
 
 
 
-	/*			------------------------------------PARTICLES--------------------------------------------------
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		App->particles->AddParticle(App->particles->laser, positionX + 20, positionY, COLLIDER_PLAYER_SHOT);
-	}
-	*/
 	feet.x = position.x;
 	feet.y = position.y + playerHeight;
 	rightside.x = position.x + playerWidth;
@@ -246,7 +258,7 @@ bool j1Player::Save(pugi::xml_node& node) {
 	node.append_child("position_y").append_attribute("value") = position.y;
 	node.append_child("velocity_x").append_attribute("value") = velocity.x;
 	node.append_child("velocity_Y").append_attribute("value") = velocity.y;
-	node.append_child("grounded").append_attribute("value") = grounded;//doens' work
+	node.append_child("grounded").append_attribute("value") = grounded;//doens't work
 	return true;
 }
 

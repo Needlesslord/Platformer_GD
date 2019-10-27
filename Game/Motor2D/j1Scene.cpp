@@ -32,16 +32,16 @@ bool j1Scene::Awake(pugi::xml_node& config) {
 bool j1Scene::Start() {
 	if (current_scene == 0) {
 		intro = App->tex->Load("textures/Start.png");
+		App->audio->PlayMusic("audio/music/intro.ogg");
 	}
 	if (current_scene == 1) {
 		App->map->Load("NUTO-Level1-0_v2_col.tmx");
+		App->audio->PlayMusic("audio/music/Scene1.ogg");
 	}
 	if (current_scene == 2) {
 		App->map->Load("NUTO-Level1-5_v1_col.tmx");
+		App->audio->PlayMusic("audio/music/intro.ogg");
 	}
-
-	//App->audio->PlayMusic("audio/music/Scene1.ogg");//WORKS BUT IS NOW SILENCED
-
 	return true;
 }
 
@@ -70,9 +70,30 @@ bool j1Scene::Update(float dt) {
 	
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 4;
 
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		if (current_scene != 1) {
+			App->scene->CleanUp();
+			App->player->CleanUp();
+			App->map->CleanUp();
+			current_scene = 1;
+			App->player->current_map = 1;
+			App->map->Start();
+			App->scene->Start();
+			App->player->Start();
+			App->player->velocity.y = 0;
+		}
+	}
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
 		if (current_scene != 2) {
+			App->scene->CleanUp();
+			App->player->CleanUp();
 			App->map->CleanUp();
+			current_scene = 2;
+			App->player->current_map = 2;
+			App->map->Start();
+			App->scene->Start();
+			App->player->Start();
+			App->player->velocity.y = 0;
 		}
 	}
 
@@ -114,6 +135,6 @@ bool j1Scene::CleanUp() {
 		App->player->CleanUp();
 	App->CleanUp();
 	App->tex->UnLoad(imgwin);
-
+	
 	return true;
 }

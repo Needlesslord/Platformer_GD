@@ -76,6 +76,8 @@ public:
 	SDL_Rect leftside;
 	Collider* colLeftside;
 	iPoint AnimationOffstet;
+	iPoint directWin_1;
+	iPoint directWin_2;
 
 	bool playerCanMove = false;
 	bool X_Down = false;

@@ -34,9 +34,6 @@
     <ClCompile Include="j1Level2.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="j1FadeToBlack.cpp">
-      <Filter>Desenvolupament  ========\Modules\Empty</Filter>
-    </ClCompile>
     <ClCompile Include="j1Intro.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
@@ -50,15 +47,6 @@
       <Filter>Desenvolupament  ========\Core</Filter>
     </ClCompile>
     <ClCompile Include="j1Map.cpp">
-      <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Particles.cpp">
-      <Filter>Desenvolupament  ========\Modules\Empty</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Globals.cpp">
-      <Filter>Desenvolupament  ========\Modules\Empty</Filter>
-    </ClCompile>
-    <ClCompile Include="MAP.cpp">
       <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
     </ClCompile>
     <ClCompile Include="j1Collisions.cpp">
@@ -117,9 +105,6 @@
     <ClInclude Include="j1Level2.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="j1FadeToBlack.h">
-      <Filter>Desenvolupament  ========\Modules\Empty</Filter>
-    </ClInclude>
     <ClInclude Include="j1Intro.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
@@ -133,15 +118,6 @@
       <Filter>Desenvolupament  ========\Core</Filter>
     </ClInclude>
     <ClInclude Include="j1Map.h">
-      <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Particles.h">
-      <Filter>Desenvolupament  ========\Modules\Empty</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Globals.h">
-      <Filter>Desenvolupament  ========\Modules\Empty</Filter>
-    </ClInclude>
-    <ClInclude Include="MAP.h">
       <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
     </ClInclude>
     <ClInclude Include="j1Collisions.h">
@@ -175,9 +151,6 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Core">
       <UniqueIdentifier>{1d96da78-36a4-49f4-a788-b9c331030719}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Empty">
-      <UniqueIdentifier>{e91bee6e-a3fd-4b4f-ab99-289dee8fa332}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
