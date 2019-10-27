@@ -72,6 +72,7 @@ public:
 	Collider* colRightside;
 	SDL_Rect leftside;
 	Collider* colLeftside;
+	iPoint AnimationOffstet;
 
 	bool S_Down = false;
 	bool grounded;

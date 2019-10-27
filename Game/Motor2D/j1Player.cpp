@@ -20,21 +20,13 @@ j1Player::j1Player() : j1Module() {
 	
 
 	//idle
-	player_idle.PushBack({   0,   0,  32, 32 });
-	player_idle.PushBack({  32,   0,  32, 32 });
-	player_idle.PushBack({  64,   0,  32, 32 });
-	player_idle.PushBack({  96,   0,  32, 32 });
-	player_idle.PushBack({ 128,   0,  32, 32 });
-	player_idle.PushBack({ 160,   0,  32, 32 });
-	player_idle.PushBack({ 192,   0,  32, 32 });
-	player_idle.PushBack({   0,  32,  32, 32 });
-	player_idle.PushBack({  32,  32,  32, 32 });
-	player_idle.PushBack({  64,  32,  32, 32 });
-	player_idle.PushBack({  96,  32,  32, 32 });
-	player_idle.loop = true;
-	player_idle.speed = 0.05f;
+	player_idle.PushBack({  0, 0, 23, 28 });
+	player_idle.PushBack({ 23, 0, 23, 28 });
+	player_idle.PushBack({ 46, 0, 23, 28 });
+	player_idle.PushBack({ 69, 0, 23, 28 });
+	player_idle.speed = 0.2f;
 	//jumping
-	player_jumping.PushBack({ 160,  32,  32, 32 });
+	player_jumping.PushBack({ 92, 0, 23, 28 });
 	//walking
 	player_walking.PushBack({ 0,    64,  32, 32 });
 	player_walking.PushBack({ 32,   64,  32, 32 });
@@ -100,6 +92,9 @@ bool j1Player::Start() {
 	colFeet			= App->collisions->AddCollider(feet, COLLIDER_PLAYER, this);
 	colRightside	= App->collisions->AddCollider(rightside, COLLIDER_PLAYER, this);
 	colLeftside		= App->collisions->AddCollider(leftside, COLLIDER_PLAYER, this);
+	AnimationOffstet.x = 4;
+	AnimationOffstet.y = 3;
+	img = App->tex->Load("textures/Ninja_Frog.png");
 	return true;
 }
 
@@ -141,8 +136,6 @@ bool j1Player::Update(float dt) {
 
 	position.y -= velocity.y;
 
-	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
-
 	velocity.y -= gravity;
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) velocity.x = 0.5;
@@ -150,8 +143,6 @@ bool j1Player::Update(float dt) {
 	
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) velocity.x = -0.5;
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) velocity.x = 0;
-
-	if (App->input->GetKey(SDL_SCANCODE_F12) == KEY_DOWN) position.y = 0;//DEBUG KEY
 
 	//DOUBLE JUMP
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !hasDoubleJumped && velocity.y > 0 && !grounded) {
@@ -171,11 +162,10 @@ bool j1Player::Update(float dt) {
 	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) S_Down = false;
 
-	Mirror();
+	//Mirror();
 
 	if (velocity.x == 0 && grounded) current_animation = &player_idle;
 	else if (!grounded) current_animation = &player_jumping;
-	//else if (hasDouobleJumped)  current_animation = &player_doublejumping;
 	else current_animation = &player_walking;
 
 	/*			------------------------------------PARTICLES--------------------------------------------------
@@ -197,8 +187,7 @@ bool j1Player::Update(float dt) {
 	colLeftside->SetPos(leftside.x, leftside.y);
 	
 	//----------------------------------------- Draw everything --------------------------------------
-	if (mirror) App->render->Blit(img, position.x, position.y, &(current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL, -1.0);
-	else if (alive == true) App->render->Blit(img, position.x, position.y, &(current_animation->GetCurrentFrame()), SDL_FLIP_NONE, -1.0);
+	if (alive == true) App->render->Blit(img, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()), SDL_FLIP_NONE, -1.0);
 
 	return true;
 }

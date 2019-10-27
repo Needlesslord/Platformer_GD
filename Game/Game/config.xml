@@ -29,7 +29,7 @@
   <player>
     <position x="10" y="10.0"/>
     <desired_position x="0.0" y="0.0"/>
-    <size w="23" h="28"/>
+    <size w="15" h="24"/>
     <velocity x="0" y="0"/>
     <gravity value="0.01"/>
     <feet h="1"/>
