@@ -82,6 +82,7 @@ bool j1Player::Start() {
 	colRightside	= App->collisions->AddCollider(rightside, COLLIDER_PLAYER, this);
 	colLeftside		= App->collisions->AddCollider(leftside, COLLIDER_PLAYER, this);
 	img = App->tex->Load("textures/Ninja_Frog.png");
+	img_m = App->tex->Load("textures/Ninja_Frog_m.png");
 	imgwin = App->tex->Load("textures/imgwin.png");
 	if (App->scene->current_scene == 1) {
 		position.x = originalPosition_1.x;
@@ -189,6 +190,18 @@ bool j1Player::Update(float dt) {
 		position.x = 4206;
 		position.y = 515;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+		if (App->scene->current_scene == 1) {
+			position.x = originalPosition_1.x;
+			position.y = originalPosition_1.y;
+		}
+		if (App->scene->current_scene == 2) {
+			position.x = originalPosition_2.x;
+			position.y = originalPosition_2.y;
+		}
+	}
+
+
 
 	/*			------------------------------------PARTICLES--------------------------------------------------
 
@@ -210,7 +223,7 @@ bool j1Player::Update(float dt) {
 	
 
 	//----------------------------------------- Draw everything --------------------------------------
-	if (mirror) App->render->Blit(img, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL, -1.0);
+	if (mirror) App->render->Blit(img_m, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
 	else App->render->Blit(img, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
 
 	return true;

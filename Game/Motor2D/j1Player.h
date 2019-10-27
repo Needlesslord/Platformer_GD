@@ -43,6 +43,8 @@ public:
 
 private:
 	SDL_Texture* img = nullptr;
+	SDL_Texture* img_m = nullptr;
+
 
 public:
 	SDL_Texture* graphics = nullptr;
