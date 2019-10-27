@@ -34,6 +34,8 @@
     <velocity x="0" y="0"/>
     <gravity value="0.01"/>
     <feet h="1"/>
+    <right_side w="1"/>
+    <left_side w="1"/>
     <s_down value="false"/>
     <grounded value="false"/>
     <has_doublejumped value="false"/>

@@ -4,13 +4,17 @@
 	<input />
 	<window />
 	<renderer>
-		<camera x="444" y="0" />
+		<camera x="0" y="0" />
 	</renderer>
 	<textures />
 	<audio>
 		<volume value="64" />
 	</audio>
 	<map />
-	<:anonymous />
-	<player />
+	<player>
+		<position_x value="274" />
+		<position_y value="336" />
+		<velocity_x value="0" />
+		<velocity_Y value="-0.00999999978" />
+	</player>
 </save>

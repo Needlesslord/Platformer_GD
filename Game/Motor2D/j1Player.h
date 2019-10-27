@@ -32,8 +32,8 @@ public:
 	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
-	//bool Loading();
-	//bool Save();
+	bool Load(pugi::xml_node& node);
+	bool Save(pugi::xml_node& node);
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
 /*	void DoubleJump()*/;
@@ -59,14 +59,19 @@ public:
 	j1Animation player_daeth;
 	
 	fPoint position;
+	iPoint originalPosition;
 	int playerHeight;
 	int playerWidth;
 	fPoint desiredPosition;
 	fPoint velocity;
 	float gravity;
-	SDL_Rect feet;
 	Collider* col;
+	SDL_Rect feet;
 	Collider* colFeet;
+	SDL_Rect rightside;
+	Collider* colRightside;
+	SDL_Rect leftside;
+	Collider* colLeftside;
 
 	bool playerCanMove = false;
 	bool S_Down = false;

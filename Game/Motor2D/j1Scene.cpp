@@ -38,8 +38,7 @@ bool j1Scene::Start() {
 	colliders[1] = App->collisions->AddCollider({ 200,  64,   50, 16 }, COLLIDER_PLATFORM);
 	colliders[2] = App->collisions->AddCollider({ 100, 164,   50, 16 }, COLLIDER_PLATFORM);
 	colliders[3] = App->collisions->AddCollider({ 250, 364,   50, 16 }, COLLIDER_PLATFORM);
-	
-
+	colliders[4] = App->collisions->AddCollider({ 200, 150,   16, 50 }, COLLIDER_WALL);	
 	return true;
 }
 
