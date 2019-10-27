@@ -31,7 +31,13 @@ bool j1Scene::Awake(pugi::xml_node& config) {
 // Called before the first frame
 bool j1Scene::Start() {
 
-	App->map->Load("NUTO-Level1-0_v2_col.tmx");
+	if (App->player->current_map == 1) App->map->Load("NUTO-Level1-0_v2_col.tmx");
+	if (App->player->current_map == 2) App->map->Load("NUTO-Level1-5_v1_col.tmx");
+	else {
+		img = App->tex->Load("textures/imgwin.png");
+		App->render->Blit(imgwin, App->render->camera.x, App->render->camera.y);
+	}
+
 	//App->audio->PlayMusic("audio/music/Scene1.ogg");//WORKS BUT IS NOW SILENCED
 
 	colliders[0] = App->collisions->AddCollider({   0, 200, 3930, 16 }, COLLIDER_PLATFORM);//THEY ALL NEED TO GO
@@ -107,6 +113,7 @@ bool j1Scene::CleanUp() {
 	if (App->player != nullptr)
 		App->player->CleanUp();
 	App->CleanUp();
+	App->tex->UnLoad(imgwin);
 
 	return true;
 }

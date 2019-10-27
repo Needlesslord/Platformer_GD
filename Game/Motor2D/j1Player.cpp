@@ -183,6 +183,18 @@ bool j1Player::Update(float dt) {
 	//----------------------------------------- Draw everything --------------------------------------
 	App->render->Blit(img, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
 
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		if (current_map ==1)
+		{
+			position.x = originalPosition.x;
+			position.y = originalPosition.y;
+
+		}
+
+	}
+
+
 	return true;
 }
 
@@ -231,6 +243,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		position.y = originalPosition.y;
 		velocity.x = 0;
 		velocity.y = 0;
-		grounded = true
+		grounded = true;
 	}
 }

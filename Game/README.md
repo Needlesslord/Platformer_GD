@@ -24,14 +24,14 @@
 
 	GitHub: tomascarreras1000
 
-	Tomás has been in charge of the base code, the player (lead role), save/load, map's collisions design, config, camera, music
+	Tomás has been in charge of the base code, the player (lead role), save/load, map's collisions design, config, camera, music, debug
 
 
 **Lead Design, Programmer and Management:** Núria Lamonja
 
 	GitHub:	 nurialp12
 
-	Núria has been in charge of the base code, the level design and implementation, music and sprites (choosing and arranging them), implemented map's collisions, readme, web page
+	Núria has been in charge of the base code, the level design and implementation, music and sprites (choosing and arranging them), implemented map's collisions, readme, web page, delivery
 
 
 
@@ -87,9 +87,6 @@ Instructions can be found in this same web page or in the readme.md file include
 [Releases](https://github.com/nurialp12/Platformer_GD/releases)
 
 
-[Release 0.5] _under construction_
-
-
 ## Usage
 
 CONTROLS:
@@ -116,11 +113,14 @@ DEBUG:
 	F1 Level 1				//TO IMPLEMENT YET
 	F2 Level 2				//TO IMPLEMENT YET
 	F3 Start again (the same level)		//TO IMPLEMENT YET
-	F4 Logic/collisions			//TO IMPLEMENT YET
-	F5 direct win				//TO IMPLEMENT YET
-	F6 god mode				//TO IMPLEMENT YET
 
-	F9 mute/unmute sound			//TO IMPLEMENT YET
+	F5 Save					//TO IMPLEMENT YET
+	F6 Load					//TO IMPLEMENT YET
+
+	F8 direct win				//TO IMPLEMENT YET
+	F9 Logic/collisions
+	F10 god mode				//TO IMPLEMENT YET
+
 
 	CAMERA
 	Keyboard arrows to move up, down, left and right
@@ -162,7 +162,13 @@ Developed by Nuto Studios:
 
 ## License
 
-Copyright (c) [2017] [Tomás Carreras Ugarte, Núria Lamonja Pujol]
+Copyright (c) [2019] [Tomás Carreras Ugarte, Núria Lamonja Pujol]
+
+**Summary:** 
+
+Under the MIT licence
+
+**In detail:**
 
 All rights reserved to the developers and publishers of the original release (Tomás Carreras and Núria Lamonja). 
 The aim of this project (link to the github project can be found above) and respectively wiki is only educational. 
@@ -175,4 +181,6 @@ If you want to use this game or its content please do ask beforehand (email: nut
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
+
+
 

@@ -25,6 +25,7 @@ public:
 	bool cullingView = false;
 	bool cameraMoving = true;
 	bool lateralMove = false;
+	SDL_Texture* imgwin = nullptr;
 
 private:
 	SDL_Texture* img;
