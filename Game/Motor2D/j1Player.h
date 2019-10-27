@@ -60,10 +60,10 @@ public:
 	j1Animation player_daeth;
 	
 	fPoint position;
-	iPoint originalPosition;
+	iPoint originalPosition_1;
+	iPoint originalPosition_2;
 	int playerHeight;
 	int playerWidth;
-	fPoint desiredPosition;
 	fPoint velocity;
 	float gravity;
 	Collider* col;

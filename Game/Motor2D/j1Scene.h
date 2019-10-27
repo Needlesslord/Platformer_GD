@@ -20,12 +20,9 @@ public:
 
 	Collider* colliders[50];
 
-	p2List<p2SString> maps;
-	//p2SString current_map;
-	bool cullingView = false;
-	bool cameraMoving = true;
-	bool lateralMove = false;
 	SDL_Texture* imgwin = nullptr;
+	SDL_Texture* intro;
+	int current_scene;
 
 private:
 	SDL_Texture* img;

@@ -48,6 +48,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
 			scene = new j1Scene();
 			AddModule(scene);
 		}
+		else if (strcmp(savenode.child("scene").attribute("current_scene").value(), "2") == 0) {
+			scene = new j1Scene();
+			AddModule(scene);
+		}
 	}
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
