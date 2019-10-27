@@ -46,6 +46,7 @@ private:
 
 public:
 	SDL_Texture* graphics = nullptr;
+	SDL_Texture* imgwin = nullptr;
 	j1Animation* current_animation;
 	j1Animation player_idle;
 	j1Animation player_walking;

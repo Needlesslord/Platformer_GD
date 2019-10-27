@@ -8,6 +8,7 @@
 #include "j1Map.h"
 #include "j1App.h"
 #include "j1Scene.h"
+#include "j1Input.h"
 #define VSYNC true
 
 j1Render::j1Render() : j1Module() {
@@ -48,6 +49,7 @@ bool j1Render::Awake(pugi::xml_node& config) {
 			camera.y = -App->player->position.y;
 		}
 
+	
 		//camera.x = App->player->position.x;
 		//camera.y = App->player->position.y;
 	}
@@ -75,9 +77,6 @@ bool j1Render::Update(float dt) {
 	camera.x = -(App->player->position.x + velocity.x) + App->win->width / 2;
 	camera.y = -(App->player->position.y + velocity.y) + App->win->height / 1.40;
 
-	camera.x = -(App->player->position.x + velocity.x) + App->win->width / 2;
-	camera.y = -(App->player->position.y + velocity.y) + App->win->height / 1.40;
-
 
 	/*if (camera.x > 0) {
 		camera.x = 0;
@@ -90,8 +89,31 @@ bool j1Render::Update(float dt) {
 		camera.y = 0;
 	}
 
+	//limites inferiores faltan
+
 	velocity.x = App->player->velocity.x;
 	velocity.y = App->player->velocity.y;
+
+	//float speed = 1.7F;
+	//if (App->input->GetKey(SDL_SCANCODE_7) == KEY_REPEAT) camera.x += speed;
+	//if (App->input->GetKey(SDL_SCANCODE_8) == KEY_REPEAT) camera.x -= speed;
+	//if (App->input->GetKey(SDL_SCANCODE_9) == KEY_REPEAT) camera.y += speed;
+	//if (App->input->GetKey(SDL_SCANCODE_0) == KEY_REPEAT) camera.y -= speed;
+
+	//if (App->player->velocity.x<0 || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	//	if (camera.x < 0 &&	App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT) camera.x -= -speed;
+
+	//if (App->player->velocity.x > 0 || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	//	if (camera.x < 1000 && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT) camera.x += +speed;
+
+	//if (App->player->velocity.y < 0 || App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+	//	if (camera.y > 0) camera.y -= speed;
+
+	//if (App->player->velocity.y > 0 || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	//	if (camera.y < 0) camera.y += speed;
+
+
+
 	return true;
 }
 

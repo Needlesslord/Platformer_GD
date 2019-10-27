@@ -59,7 +59,7 @@ void j1Map::Draw(int camera_position)
 				}
 
 
-				if (App->render->CameraCulling(x, y, data.tile_width, data.tile_height, camera_position))
+				/*if (App->render->CameraCulling(x, y, data.tile_width, data.tile_height, camera_position))
 				{
 					int tile_id = item->data->data[tile_num];
 					if (tile_id > 0)
@@ -75,7 +75,7 @@ void j1Map::Draw(int camera_position)
 						}
 					}
 				}
-				tile_num++;
+				tile_num++;*/
 
 
 			}
@@ -458,7 +458,7 @@ void j1Map::CollidersMap()
 		{
 			for (int j = 0; j < objectg->num_objects; j++)
 			{
-				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_WALL);
+				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_PLATFORM);
 			}
 		}
 		else if (objectg->name == "Salida")
