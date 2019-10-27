@@ -112,15 +112,14 @@ DEBUG:
 	I Intro					//TO IMPLEMENT YET
 	F1 Level 1				//TO IMPLEMENT YET
 	F2 Level 2				//TO IMPLEMENT YET
-	F3 Start again (the same level)		//TO IMPLEMENT YET
+	F3 Start again (the same level)	
 
-	F5 Save					//TO IMPLEMENT YET
-	F6 Load					//TO IMPLEMENT YET
+	F5 Save					
+	F6 Load					
 
-	F8 direct win				//TO IMPLEMENT YET
+	F8 direct win				
 	F9 Logic/collisions
-	F10 god mode				//TO IMPLEMENT YET
-
+	F10 god mode				
 
 	CAMERA
 	Keyboard arrows to move up, down, left and right
