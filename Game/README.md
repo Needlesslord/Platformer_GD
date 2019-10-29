@@ -29,7 +29,7 @@
 
 **Lead Design, Programmer and Management:** Núria Lamonja
 
-	GitHub:	 nurialp12
+	GitHub:	 needlesslord
 
 	Núria has been in charge of the base code, the level design and implementation, music and sprites (choosing and arranging them), implemented map's collisions, readme, web page, delivery
 
