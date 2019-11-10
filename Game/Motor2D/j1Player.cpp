@@ -342,12 +342,12 @@ void j1Player::LoadInfo()
 	pugi::xml_node nodePlayer;
 	nodePlayer = config.child("player");
 
-	if (App->scene1->tutorial_active) 
+	if (App->scene1->level1_active) 
 	{
 		position.x = nodePlayer.child("posTuto").attribute("x").as_int();
 		position.y = nodePlayer.child("posTuto").attribute("y").as_int();
 	}
-	else if (App->scene1->level1_active) 
+	else if (App->scene1->level1_5_active) 
 	{
 		if (App->scene1->midlevel_completed) 
 		{
@@ -360,7 +360,7 @@ void j1Player::LoadInfo()
 			position.y = nodePlayer.child("posLvl1").attribute("y").as_int();
 		}
 	}
-	else if (App->scene1->midlevel_active) 
+	else if (App->scene1->level2_active) 
 	{
 		position.x = nodePlayer.child("posMidLvl").attribute("x").as_int();
 		position.y = nodePlayer.child("posMidLvl").attribute("y").as_int();

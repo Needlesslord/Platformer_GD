@@ -41,8 +41,8 @@ bool j1Scene1::Start()
 	LoadSceneInfo();
 
 	// TUTORIAL
-	if (tutorial_active) {
-		App->map->Load("Map1_Tutorial.tmx");
+	if (level1_active) {
+		App->map->Load("NUTO-Level1-0_v2_col.tmx");
 
 		keys = App->tex->Load("textures/keys.png");
 
@@ -54,9 +54,9 @@ bool j1Scene1::Start()
 	}
 
 	// LEVEL 1
-	else if (level1_active) {
+	else if (level1_5_active) {
 		
-		App->map->Load("Map2_Level1.tmx");
+		App->map->Load("NUTO-Level1-5_v1_col.tmx");
 		
 		if (App->entity_manager->player != nullptr)
 			App->entity_manager->player->doorOpened = false;
@@ -78,8 +78,8 @@ bool j1Scene1::Start()
 	}
 
 	// MID-LEVEL
-	else if (midlevel_active) {
-		App->map->Load("Map3_MidLevel.tmx");
+	else if (level2_active) {
+		App->map->Load("NUTO-Level1-5_v1_col.tmx");
 
 		if (App->entity_manager->player != nullptr)
 			App->entity_manager->player->doorOpened = false;
@@ -141,58 +141,58 @@ bool j1Scene1::Update(float dt)
 	if (App->entity_manager->player->touchingWin) {
 
 		// Wins from tutorial & goes to level 1
-		if (tutorial_active) {
+		if (level1_active) {
 			App->entity_manager->player->touchingWin = false;
 			
 			midlevel_completed = false;
 
-			tutorial_active = false;
-			level1_active = true;
-			midlevel_active = false;
+			level1_active = false;
+			level1_5_active = true;
+			level2_active = false;
 		}
 		
-		else if (level1_active) {
+		else if (level1_5_active) {
 			// Crosses the door & goes to mid level
 			if (!midlevel_completed) {
 				App->entity_manager->player->touchingWin = false;
 
-				tutorial_active = false;
 				level1_active = false;
-				midlevel_active = true;
+				level1_5_active = false;
+				level2_active = true;
 			}
 
 			// Wins the game
 			else {
 				App->entity_manager->player->touchingWin = false;
 
-				tutorial_active = true;
-				level1_active = false;
-				midlevel_active = false;
+				level1_active = true;
+				level1_5_active = false;
+				level2_active = false;
 				App->transitions->SquaresAppearing(3, Black, 4.0F);
 			}
 		}
 
 		// Wins from midlevel & returns to level1
-		else if (midlevel_active) {
+		else if (level2_active) {
 			App->entity_manager->player->touchingWin = false;
 
 			midlevel_completed = true;
 
-			tutorial_active = false;
-			level1_active = true;
-			midlevel_active = false;
+			level1_active = false;
+			level1_5_active = true;
+			level2_active = false;
 		}
 
-		if (!tutorial_active)
+		if (!level1_active)
 			App->transitions->LinesAppearing();
 	}
 
 	// Loads tutorial
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		tutorial_active = true;
-		level1_active = false;
-		midlevel_active = false;
+		level1_active = true;
+		level1_5_active = false;
+		level2_active = false;
 
 		App->transitions->LinesAppearing();
 	}
@@ -202,9 +202,9 @@ bool j1Scene1::Update(float dt)
 	{
 		midlevel_completed = false;
 
-		tutorial_active = false;
-		level1_active = true;
-		midlevel_active = false;
+		level1_active = false;
+		level1_5_active = true;
+		level2_active = false;
 		
 		App->transitions->LinesAppearing();
 	}
@@ -212,9 +212,9 @@ bool j1Scene1::Update(float dt)
 	// Loads mid-level
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-		tutorial_active = false;
 		level1_active = false;
-		midlevel_active = true;
+		level1_5_active = false;
+		level2_active = true;
 		
 		App->transitions->LinesAppearing();
 	}
@@ -224,9 +224,9 @@ bool j1Scene1::Update(float dt)
 	{
 		midlevel_completed = true;
 
-		tutorial_active = false;
-		level1_active = true;
-		midlevel_active = false;
+		level1_active = false;
+		level1_5_active = true;
+		level2_active = false;
 
 		App->transitions->LinesAppearing();
 	}
@@ -277,7 +277,7 @@ bool j1Scene1::Update(float dt)
 	App->map->Draw(-App->render->camera.x);
 
 	//keys animations manager
-	if (tutorial_active)
+	if (level1_active)
 	{
 		// a
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
@@ -353,9 +353,9 @@ bool j1Scene1::PostUpdate()
 // Load Game State
 bool j1Scene1::Load(pugi::xml_node& data)
 {
-	tutorial_active = data.child("tutorialActive").attribute("active").as_bool();
-	level1_active= data.child("level1Active").attribute("active").as_bool();
-	midlevel_active = data.child("midLevelActive").attribute("active").as_bool();
+	level1_active = data.child("tutorialActive").attribute("active").as_bool();
+	level1_5_active= data.child("level1Active").attribute("active").as_bool();
+	level2_active = data.child("midLevelActive").attribute("active").as_bool();
 	midlevel_completed = data.child("midLevelCompleted").attribute("active").as_bool();
 
 	LoadNewLevel();
@@ -375,13 +375,13 @@ bool j1Scene1::Save(pugi::xml_node& data) const
 	playerPos.append_attribute("y") = App->entity_manager->player->position.y;
 
 	pugi::xml_node tutorial = data.append_child("tutorialActive");
-	tutorial.append_attribute("active") = tutorial_active;
+	tutorial.append_attribute("active") = level1_active;
 
 	pugi::xml_node level1 = data.append_child("level1Active");
-	level1.append_attribute("active") = level1_active;
+	level1.append_attribute("active") = level1_5_active;
 
 	pugi::xml_node midlevel = data.append_child("midLevelActive");
-	midlevel.append_attribute("active") = midlevel_active;
+	midlevel.append_attribute("active") = level2_active;
 
 	pugi::xml_node midcompleted = data.append_child("midLevelCompleted");
 	midcompleted.append_attribute("active") = midlevel_completed;
@@ -413,7 +413,7 @@ void j1Scene1::LoadNewLevel() {
 		App->entity_manager->player->Start();
 
 
-	if (level1_active && midlevel_completed) {
+	if (level1_5_active && midlevel_completed) {
 		lateralMove = true;
 		App->render->camera.x = cameraPositionMoving;
 	}
@@ -436,7 +436,7 @@ void j1Scene1::LoadSceneInfo()
 
 	cameraPositionMoving = nodeScene.child("cameraPositionMoving").attribute("x").as_int();
 
-	if (tutorial_active) 
+	if (level1_active) 
 	{
 		cameraLimit.x = nodeScene.child("cameraLimit1").attribute("x").as_int();
 		cameraLimit.y = nodeScene.child("cameraLimit1").attribute("y").as_int();
@@ -444,7 +444,7 @@ void j1Scene1::LoadSceneInfo()
 		obstacle1 = { nodeScene.child("obstacle1").attribute("x").as_int() , nodeScene.child("obstacle1").attribute("y").as_int() };
 	}
 
-	else if (level1_active) 
+	else if (level1_5_active) 
 	{
 		doorPosition.x = nodeScene.child("doorPosition1").attribute("x").as_int();
 		doorPosition.y = nodeScene.child("doorPosition1").attribute("y").as_int();
@@ -467,7 +467,7 @@ void j1Scene1::LoadSceneInfo()
 		}
 	}
 
-	else if (midlevel_active) 
+	else if (level2_active) 
 	{
 		doorPosition.x = nodeScene.child("doorPosition2").attribute("x").as_int();
 		doorPosition.y = nodeScene.child("doorPosition2").attribute("y").as_int();

@@ -418,11 +418,11 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 		// load convertor values from xml
 		float convertor;
 
-		if (App->scene1->tutorial_active)
+		if (App->scene1->level1_active)
 			convertor = convertor1;
-		else if (App->scene1->level1_active)
+		else if (App->scene1->level1_5_active)
 			convertor = convertor2;
-		else if (App->scene1->midlevel_active)
+		else if (App->scene1->level2_active)
 			convertor = convertor3;
 
 

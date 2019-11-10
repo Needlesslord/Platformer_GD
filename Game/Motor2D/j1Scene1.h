@@ -49,9 +49,9 @@ public:
 	bool death = false;
 	bool win1 = false;
 
-	bool tutorial_active = true;
-	bool level1_active = false;
-	bool midlevel_active = false;
+	bool level1_active = true;
+	bool level1_5_active = false;
+	bool level2_active = false;
 
 	bool midlevel_completed = false;
 
