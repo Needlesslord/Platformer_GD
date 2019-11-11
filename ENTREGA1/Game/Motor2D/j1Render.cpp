@@ -48,10 +48,6 @@ bool j1Render::Awake(pugi::xml_node& config) {
 			camera.x = -App->player->position.x;
 			camera.y = -App->player->position.y;
 		}
-
-	
-		//camera.x = App->player->position.x;
-		//camera.y = App->player->position.y;
 	}
 
 	return ret;

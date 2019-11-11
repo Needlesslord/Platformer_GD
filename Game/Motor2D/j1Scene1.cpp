@@ -44,13 +44,12 @@ bool j1Scene1::Start()
 	if (level1_active) {
 		App->map->Load("NUTO-Level1-0_v2_col.tmx");
 
-		keys = App->tex->Load("textures/keys.png");
-
-		App->entity_manager->AddEnemy(obstacle1.x, obstacle1.y, OBSTACLE);
+		//keys = App->tex->Load("textures/keys.png");
+		//App->entity_manager->AddEnemy(obstacle1.x, obstacle1.y, OBSTACLE);
 
 		App->entity_manager->CreateEntity(PLAYER);
 
-		App->audio->PlayMusic("audio/music/loading.ogg");
+		//App->audio->PlayMusic("audio/music/loading.ogg");//TODO
 	}
 
 	// LEVEL 1
@@ -100,8 +99,8 @@ bool j1Scene1::Start()
 		App->entity_manager->CreateEntity(PLAYER);
 	}
 	
-	cameraLimitX = cameraLimit.x;
-	cameraLimitY = cameraLimit.y;
+	//cameraLimitX = cameraLimit.x;		//NOT USED
+	//cameraLimitY = cameraLimit.y;		//NOT USED
 		
 	return true;
 }
@@ -232,47 +231,47 @@ bool j1Scene1::Update(float dt)
 	}
 
 	// CAMERA FOLLOWING PLAYER
-	if (App->entity_manager->player != nullptr) 
-	{
-		if (lateralMove) {
-			if (App->render->camera.x >= -App->entity_manager->player->position.x * App->win->GetScale() + App->win->width / 2) {
-				App->render->camera.x -= 3.5f;
-				App->entity_manager->player->playerCanMove = false;
-			}
-			else {
-				lateralMove = false;
-				App->entity_manager->player->playerCanMove = true;
-			}
-		}
-		else
-			App->render->camera.x = -App->entity_manager->player->position.x * App->win->GetScale() + App->win->width / 2;
-		
-		// LIMITING X CAMERA
-		if (- App->render->camera.x < 0) 
-			App->render->camera.x = 0;
-		else if (App->render->camera.x < cameraLimitX) 
-			App->render->camera.x = cameraLimitX;
-		
-		if (cameraMoving)
-		{
-			if (App->render->camera.y >= -App->entity_manager->player->position.y * App->win->GetScale() + App->win->height / 2) {
-				App->render->camera.y -= 2.0f;
-				App->entity_manager->player->playerCanMove = false;
-			}
-			else {
-				cameraMoving = false;
-				App->entity_manager->player->playerCanMove = true;
-			}
-		}
-		else
-			App->render->camera.y = -App->entity_manager->player->position.y * App->win->GetScale() + App->win->height / 2;
-		
-		// LIMITING Y CAMERA
-		if (App->render->camera.y > 0)
-			App->render->camera.y = 0;
-		else if (App->render->camera.y < cameraLimitY)
-			App->render->camera.y = cameraLimitY;
-	}
+	//if (App->entity_manager->player != nullptr) 
+	//{
+	//	if (lateralMove) {
+	//		if (App->render->camera.x >= -App->entity_manager->player->position.x * App->win->GetScale() + App->win->width / 2) {
+	//			App->render->camera.x -= 3.5f;
+	//			App->entity_manager->player->playerCanMove = false;
+	//		}
+	//		else {
+	//			lateralMove = false;
+	//			App->entity_manager->player->playerCanMove = true;
+	//		}
+	//	}
+	//	else
+	//		App->render->camera.x = -App->entity_manager->player->position.x * App->win->GetScale() + App->win->width / 2;
+	//	
+	//	// LIMITING X CAMERA
+	//	if (- App->render->camera.x < 0) 
+	//		App->render->camera.x = 0;
+	//	else if (App->render->camera.x < cameraLimitX) 
+	//		App->render->camera.x = cameraLimitX;
+	//	
+	//	if (cameraMoving)
+	//	{
+	//		if (App->render->camera.y >= -App->entity_manager->player->position.y * App->win->GetScale() + App->win->height / 2) {
+	//			App->render->camera.y -= 2.0f;
+	//			App->entity_manager->player->playerCanMove = false;
+	//		}
+	//		else {
+	//			cameraMoving = false;
+	//			App->entity_manager->player->playerCanMove = true;
+	//		}
+	//	}
+	//	else
+	//		App->render->camera.y = -App->entity_manager->player->position.y * App->win->GetScale() + App->win->height / 2;
+	//	
+	//	// LIMITING Y CAMERA
+	//	if (App->render->camera.y > 0)
+	//		App->render->camera.y = 0;
+	//	else if (App->render->camera.y < cameraLimitY)
+	//		App->render->camera.y = cameraLimitY;
+	//}
 
 	App->map->Draw(-App->render->camera.x);
 

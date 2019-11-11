@@ -48,6 +48,7 @@ public:
 public:
 	fPoint position;	
 	fPoint speed;
+	iPoint hitbox;
 
 	float jumpForce;
 	float jetForce;
@@ -83,7 +84,6 @@ private:
 	float jumpForce_xml;
 	float jetForce_xml;
 
-	iPoint hitbox;
 };
 
 #endif // __j1PLAYER_H__

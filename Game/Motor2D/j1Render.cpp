@@ -65,6 +65,10 @@ bool j1Render::Start()
 	LOG("render start");
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
+
+	scale = App->win->scale;
+	camera.x = -(App->entity_manager->player->position.x + App->entity_manager->player->hitbox.x) * scale + camera.w / scale;
+	camera.y = -(App->entity_manager->player->position.y + App->entity_manager->player->hitbox.y) * scale + camera.h / scale;
 	return true;
 }
 
@@ -77,6 +81,8 @@ bool j1Render::PreUpdate()
 
 bool j1Render::Update(float dt)
 {
+	camera.x = -(App->entity_manager->player->position.x + App->entity_manager->player->hitbox.x) * scale + camera.w / scale;
+	camera.y = -(App->entity_manager->player->position.y + App->entity_manager->player->hitbox.y) * scale + camera.h / scale;
 	return true;
 }
 

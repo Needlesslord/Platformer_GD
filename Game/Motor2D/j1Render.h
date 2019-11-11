@@ -32,6 +32,8 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
+	int	scale;
+
 	// Blit
 	bool CameraCulling(int x, int y, int w, int h, int camera_position);
 	void SetViewPort(const SDL_Rect& rect);
