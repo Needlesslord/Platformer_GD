@@ -24,14 +24,16 @@
 
 	GitHub: tomascarreras1000
 
-	Tomás has been in charge of the base code, the player (lead role), save/load, map's collisions design, config, camera, music
+	Tomás has been in charge of:
+		1st Delivery: the base code, the player (lead role), save/load, map's collisions design, config, camera, music
 
 
 **Lead Design, Programmer and Management:** Núria Lamonja
 
 	GitHub:	 nurialp12
 
-	Núria has been in charge of the base code, the level design and implementation, music and sprites (choosing and arranging them), implemented map's collisions, readme, web page
+	Núria has been in charge of:
+		1st Delivery: the base code, the level design and implementation, music and sprites (choosing and arranging them), mirror, implemented map's collisions, readme, web page
 
 
 
@@ -49,9 +51,17 @@ Music:
 		Scene 1 - Level 1: Battleship
 		Scene 2 - Level 2: Heroic Intrusion
 
+
 Design and Development: 
 	Tomás Carreras
 	Núria Lamonja
+
+
+We have taken code with permission from our collegues:
+	
+	Pol Casaú and Xavi Marín developing ["Thalassa"](https://github.com/xavimarin35/Thalassa). (Find the commit we took [here!](https://github.com/xavimarin35/Thalassa/tree/7cfb7e09fb4b7088d2c26a71125b6eb57c845073))
+
+	Eric-G. Durán and Alex Lopex developing ["Angel Falls"](https://github.com/EnricGDV/Game_Development_Platformer). (Find the commit we took [here!](https://github.com/EnricGDV/Game_Development_Platformer/tree/b9a577e1ea92afc45792edbb4a5602b030f33ef1))
 
 
 
