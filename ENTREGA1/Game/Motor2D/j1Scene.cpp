@@ -89,6 +89,7 @@ bool j1Scene::Update(float dt) {
 			App->player->position.y = App->player->originalPosition_1.y;
 			App->player->velocity.y = 0;
 			App->map->Start();
+			App->scene->Start();
 		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
@@ -101,6 +102,7 @@ bool j1Scene::Update(float dt) {
 			App->player->position.x = App->player->originalPosition_2.x;
 			App->player->position.y = App->player->originalPosition_2.y;
 			App->player->velocity.y = 0;
+			App->scene->Start();
 			App->map->Start();
 		}
 	}
