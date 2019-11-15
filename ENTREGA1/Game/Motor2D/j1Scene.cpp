@@ -31,8 +31,8 @@ bool j1Scene::Awake(pugi::xml_node& config) {
 // Called before the first frame
 bool j1Scene::Start() {
 
-	fondo1_small = App->tex->Load("maps/fondo1_small.png");
-	fondo2_small = App->tex->Load("maps/fondo2_small.png");
+	background1_small = App->tex->Load("maps/fondo1_small.png");
+	background2_small = App->tex->Load("maps/fondo2_small.png");
 
 	if (current_scene == 0) {
 		intro = App->tex->Load("textures/Start.png");
@@ -79,7 +79,6 @@ bool j1Scene::Update(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 4;
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
-
 		if (current_scene != 1) {
 			App->map->CleanUp();
 			App->collisions->CleanUp();
@@ -93,7 +92,6 @@ bool j1Scene::Update(float dt) {
 		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
-
 		if (current_scene != 2) {
 			App->map->CleanUp();
 			App->collisions->CleanUp();
@@ -107,11 +105,9 @@ bool j1Scene::Update(float dt) {
 		}
 	}
 
-	if (current_scene == 1) App->render->Blit(fondo1_small, App->player->position.x - 250, App->player->position.y - 200);
+	if (current_scene == 1) App->render->Blit(background1_small, App->player->position.x - 250, App->player->position.y - 200);
 	
-	if (current_scene == 2) App->render->Blit(fondo2_small, App->player->position.x - 250, App->player->position.y - 200);
-
-
+	if (current_scene == 2) App->render->Blit(background2_small, App->player->position.x - 250, App->player->position.y - 200);
 
 	App->map->Draw(-App->render->camera.x);
 	App->map->CollidersMap();
@@ -120,10 +116,10 @@ bool j1Scene::Update(float dt) {
 	App->input->GetMousePosition(x, y);
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
 	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
-		App->map->data.width, App->map->data.height,
-		App->map->data.tile_width, App->map->data.tile_height,
-		App->map->data.tilesets.count(),
-		map_coordinates.x, map_coordinates.y);
+					App->map->data.width, App->map->data.height,
+					App->map->data.tile_width, App->map->data.tile_height,
+					App->map->data.tilesets.count(),
+					map_coordinates.x, map_coordinates.y);
 
 	App->win->SetTitle(title.GetString());
 
@@ -144,8 +140,8 @@ bool j1Scene::PostUpdate() {
 // Called before quitting
 bool j1Scene::CleanUp() {
 	LOG("Freeing scene");
-	App->tex->UnLoad(fondo1_small);
-	App->tex->UnLoad(fondo2_small);
+	App->tex->UnLoad(background1_small);
+	App->tex->UnLoad(background2_small);
 	App->map->CleanUp();
 	App->collisions->CleanUp();
 	if (App->player != nullptr)
