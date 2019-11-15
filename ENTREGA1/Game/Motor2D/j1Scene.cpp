@@ -30,17 +30,20 @@ bool j1Scene::Awake(pugi::xml_node& config) {
 
 // Called before the first frame
 bool j1Scene::Start() {
+
 	fondo1_small = App->tex->Load("maps/fondo1_small.png");
+	fondo2_small = App->tex->Load("maps/fondo2_small.png");
+
 	if (current_scene == 0) {
 		intro = App->tex->Load("textures/Start.png");
 		App->audio->PlayMusic("audio/music/intro.ogg");
 	}
 	if (current_scene == 1) {
-		App->map->Load("NUTO-Level1-0_v3.tmx");
+		App->map->Load("Level1-0_v3.tmx");
 		App->audio->PlayMusic("audio/music/Scene1.ogg");
 	}
 	if (current_scene == 2) {
-		App->map->Load("NUTO-Level1-5_v1_col.tmx");
+		App->map->Load("Level2-0_v2.tmx");
 		App->audio->PlayMusic("audio/music/intro.ogg");
 	}
 	return true;
@@ -53,7 +56,8 @@ bool j1Scene::PreUpdate() {
 
 // Called each loop iteration
 bool j1Scene::Update(float dt) {
-	App->render->Blit(fondo1_small, App->player->position.x - 250, App->player->position.y - 200);
+
+
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) App->LoadRequest = true;
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) App->SaveRequest = true;
@@ -75,6 +79,9 @@ bool j1Scene::Update(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 4;
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+
+		//App->render->Blit(fondo1_small, App->player->position.x - 250, App->player->position.y - 200);
+
 		if (current_scene != 1) {
 			current_scene = 1;
 			App->player->current_map = 1;
@@ -86,6 +93,9 @@ bool j1Scene::Update(float dt) {
 		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+
+		//App->render->Blit(fondo2_small, App->player->position.x - 250, App->player->position.y - 200);
+
 		if (current_scene != 2) {
 			current_scene = 2;
 			App->player->current_map = 2;
@@ -96,6 +106,13 @@ bool j1Scene::Update(float dt) {
 			App->map->Start();
 		}
 	}
+
+
+	if (current_scene == 1) App->render->Blit(fondo1_small, App->player->position.x - 250, App->player->position.y - 200);
+	
+	if (current_scene == 2) App->render->Blit(fondo2_small, App->player->position.x - 250, App->player->position.y - 200);
+
+
 
 	App->map->Draw(-App->render->camera.x);
 	App->map->CollidersMap();
@@ -128,7 +145,8 @@ bool j1Scene::PostUpdate() {
 // Called before quitting
 bool j1Scene::CleanUp() {
 	LOG("Freeing scene");
-
+	App->tex->UnLoad(fondo1_small);
+	App->tex->UnLoad(fondo2_small);
 	App->map->CleanUp();
 	App->collisions->CleanUp();
 	if (App->player != nullptr)
