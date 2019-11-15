@@ -22,6 +22,7 @@ public:
 
 	SDL_Texture* imgwin = nullptr;
 	SDL_Texture* intro;
+	SDL_Texture* fondo1_small;
 	int current_scene;
 
 private:
