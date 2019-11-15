@@ -5,6 +5,7 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
+#include "j1Collisions.h"
 #include "SDL/include/SDL.h"
 
 // ----------------------------------------------------
@@ -114,7 +115,8 @@ public:
 	// Coordinate translation methods
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
-
+	Collider* colliderNum[MAX_COLLIDERS];
+	int colliderCount = 0;
 private:
 
 	bool LoadMap();

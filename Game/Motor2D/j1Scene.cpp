@@ -72,9 +72,9 @@ bool j1Scene::Update(float dt) {
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		if (current_scene != 1) {
+			App->map->CleanUp();
 			App->scene->CleanUp();
 			App->player->CleanUp();
-			App->map->CleanUp();
 			current_scene = 1;
 			App->player->current_map = 1;
 			App->map->Start();
@@ -85,9 +85,9 @@ bool j1Scene::Update(float dt) {
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
 		if (current_scene != 2) {
+			App->map->CleanUp();
 			App->scene->CleanUp();
 			App->player->CleanUp();
-			App->map->CleanUp();
 			current_scene = 2;
 			App->player->current_map = 2;
 			App->map->Start();
@@ -99,7 +99,7 @@ bool j1Scene::Update(float dt) {
 
 	App->map->Draw(-App->render->camera.x);
 	App->map->CollidersMap();
-
+	
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
