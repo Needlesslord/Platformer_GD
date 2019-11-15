@@ -8,7 +8,7 @@
 #include "j1Collisions.h"
 #include "SDL/include/SDL.h"
 
-// ----------------------------------------------------
+
 struct MapLayer
 {
 	p2SString	name;
@@ -24,27 +24,8 @@ struct MapLayer
 		RELEASE(data);
 	}
 
-	// TODO 6 (old): Short function to get the value of x,y
-	inline uint Get(int x, int y) const
-	{
-		return data[x + y * width];
-	}
-};
-
-// ----------------------------------------------------
-struct MapObjectsToCollide
-{
-	p2SString	name;
-	SDL_Rect*   objects_col;
-	int         num_objects;
-
-	MapObjectsToCollide() : objects_col(NULL)
-	{}
-
-	~MapObjectsToCollide()
-	{
-		RELEASE(objects_col);
-	}
+	// Short function to get the value of x,y
+	inline uint Get(int x, int y) const;
 };
 
 // ----------------------------------------------------
@@ -65,6 +46,7 @@ struct TileSet
 	int					num_tiles_height;
 	int					offset_x;
 	int					offset_y;
+	Animation*			tmxAnim = nullptr;
 };
 
 enum MapTypes
@@ -85,7 +67,6 @@ struct MapData
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
-	p2List<MapObjectsToCollide*> object_groups;
 };
 
 // ----------------------------------------------------
@@ -103,14 +84,12 @@ public:
 
 	// Called each loop iteration
 	void Draw(int player_pos);
-	void CollidersMap();
 
 	// Called before quitting
 	bool CleanUp();
 
 	// Load new map
 	bool Load(const char* path);
-
 
 	// Coordinate translation methods
 	iPoint MapToWorld(int x, int y) const;
@@ -123,20 +102,32 @@ private:
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
-	bool LoadMapColliders(pugi::xml_node& node, MapObjectsToCollide* objectg);
+	bool LoadColliders();
+
+	void LoadInfo();
 
 	TileSet* GetTilesetFromTileId(int id) const;
 
 public:
 
 	MapData data;
+
+	bool draw_grid = false;
+	
 	float parallax_speed = 0.057F;
+	iPoint culling_variation;
+	iPoint culling_view;
 
 private:
+
 
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
+	SDL_Texture*		grid = nullptr;
+
+	float parallax1, parallax2, parallax3, parallax4, parallaxBg, parallaxNormal;
+	float convertor1, convertor2, convertor3;
 };
 
 #endif // __j1MAP_H__

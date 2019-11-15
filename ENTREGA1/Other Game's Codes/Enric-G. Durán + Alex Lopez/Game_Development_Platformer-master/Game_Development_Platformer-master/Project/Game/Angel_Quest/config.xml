@@ -1,0 +1,81 @@
+<!-- Config file for the game -->
+
+<config>
+  <app>
+    <title>Game Development Testbed</title>
+    <organization>UPC</organization>
+    <savefile file = "save_game.xml"/>
+  </app>
+	
+  <renderer>
+    <vsync value="false"/>
+  </renderer>
+
+  <window>
+    <resolution width="1024" height="768" scale="1"/>
+    <fullscreen value="false"/>
+    <borderless value="false"/>
+    <resizable value="false"/>
+    <fullscreen_window value="false"/>
+  </window>
+  
+  <file_system>
+    <path>data.zip</path>
+  </file_system>
+
+  <map>
+    <folder>maps/</folder>
+  </map>
+
+  <player>
+    <acceleration x="1" y="1"/>
+    <jumpSpeed x="0" y="18"/>
+    <initPos x ="120" y="2000"/>
+    <col w="32" h="32"/>
+    <map value= "1"/>
+    <maxSpeed x="1" y="1"/>
+    <offSet x="0" y="0"/>
+    <spritesheetS name="textures/spritesheet.png"/>
+    <animations>
+      <animation name="angel_idle" loop="true" speed="0.03">
+        <frame height="24" width="25" y="131" x="0"/>
+        <frame height="24" width="25" y="131" x="29"/>
+      </animation>
+      <animation name="angel_moving" loop="true" speed="0.04">
+        <frame height="24" width="25" y="4" x="0"/>
+        <frame height="24" width="25" y="4" x="29"/>
+        <frame height="24" width="25" y="4" x="57"/>
+      </animation>
+      <animation name="angel_jumping" loop="false" speed="0.03">
+        <frame height="24" width="25" y="4" x="116"/>
+        <frame height="24" width="25" y="4" x="143"/>
+        <frame height="24" width="25" y="4" x="169"/>
+      </animation>
+      <animation name="angel_falling" loop="false" speed="0.03">
+        <frame height="24" width="25" y="4" x="196"/>
+        <frame height="24" width="25" y="4" x="223"/>
+        <frame height="24" width="25" y="4" x="251"/>
+      </animation>
+      <animation name="angel_idle_M" loop="true" speed="0.03">
+        <frame height="24" width="25" y="63" x="0"/>
+        <frame height="24" width="25" y="63" x="29"/>
+      </animation>
+      <animation name="angel_moving_M" loop="true" speed="0.03">
+        <frame height="24" width="25" y="95" x="251"/>
+        <frame height="24" width="25" y="95" x="223"/>
+        <frame height="24" width="25" y="95" x="194"/>
+      </animation>
+      <animation name="angel_jumping_M" loop="false" speed="0.03">
+        <frame height="24" width="25" y="95" x="137"/>
+        <frame height="24" width="25" y="95" x="111"/>
+        <frame height="24" width="25" y="95" x="83"/>
+      </animation>
+      <animation name="angel_falling_M" loop="false" speed="0.03">
+        <frame height="24" width="25" y="95" x="56"/>
+        <frame height="24" width="25" y="95" x="29"/>
+        <frame height="24" width="25" y="95" x="0"/>
+      </animation>
+    </animations>
+  </player>
+  
+</config>

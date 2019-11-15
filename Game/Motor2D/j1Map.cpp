@@ -3,9 +3,11 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Textures.h"
+#include "j1Window.h"
 #include "j1Map.h"
+#include "j1Player.h"
 #include "j1Collisions.h"
-#include "j1App.h"
+#include "j1Scene1.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false) {
@@ -21,32 +23,74 @@ bool j1Map::Awake(pugi::xml_node& config) {
 	LOG("Loading Map Parser");
 	bool ret = true;
 
+	LoadInfo();
+
 	folder.create(config.child("folder").child_value());
 
 	return ret;
 }
 
-
 void j1Map::Draw(int camera_position) {
 	if (map_loaded == false) return;
 
-	p2List_item<MapLayer*>* item = data.layers.start;
-	int tile_num;
+
+	p2List_item<MapLayer*>* layer;
+
+
 	int tiles_painted = 0;
-
-	for (; item != NULL; item = item->next)	{
-		MapLayer* layer = item->data;
+	int tile_num;
+	for (layer = data.layers.start; layer != nullptr; layer = layer->next)
+	{
 		tile_num = 0;
+		for (int y = 0; y < data.height; ++y)
+		{
+			for (int x = 0; x < data.width; ++x)
+			{
+				if (layer->data->name == "Decor" || layer->data->name == "Capa de Patrones 1" || layer->data->name == "anim")
+					parallax_speed = parallaxNormal;
+				else if (layer->data->name == "parallax")
+					parallax_speed = parallax1;
+				else if (layer->data->name == "parallax2")
+					parallax_speed = parallax2;
+				else if (layer->data->name == "parallax3")
+					parallax_speed = parallax3;
+				else if (layer->data->name == "parallax4")
+					parallax_speed = parallax4;
+				else if (layer->data->name == "bg")
+					parallax_speed = parallaxBg;
 
-		for (int y = 0; y < layer->height; ++y)	{
-			for (int x = 0; x < layer->width; ++x) {
-				int tile_id = layer->Get(x, y);
-				if (tile_id > 0) {
-					TileSet* tileset = GetTilesetFromTileId(tile_id);
-					SDL_Rect r = tileset->GetTileRect(tile_id);
-					iPoint pos = MapToWorld(x, y);
-					App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+				if (App->render->CameraCulling(x, y, data.tile_width, data.tile_height, camera_position)) 
+				{
+					int tile_id = layer->data->data[tile_num];
+					if (tile_id > 0)
+					{
+						TileSet* tileset = GetTilesetFromTileId(tile_id);
+						if (tileset != nullptr)
+						{
+							tiles_painted++;
+							SDL_Rect r = tileset->GetTileRect(tile_id);
+							iPoint pos = MapToWorld(x, y);
+
+							if (layer->data->name == "anim")
+								App->render->Blit(tileset->texture, pos.x, pos.y, &tileset->tmxAnim->GetCurrentFrame(), SDL_FLIP_NONE, parallax_speed); //animations layer
+							else
+								App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, parallax_speed);
+						}
+					}
 				}
+				tile_num++;
+			}
+		}
+	}
+
+	static char title[200];
+	sprintf_s(title, 200, " Thalassa");
+	App->win->SetTitle(title);
+
+	if (draw_grid) {
+		for (uint i = 0; i < data.width; ++i) {
+			for (uint j = 0; j < data.height; ++j) {
+				App->render->Blit(grid, MapToWorld(i, j).x, MapToWorld(i, j).y);
 			}
 		}
 	}
@@ -56,8 +100,11 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const {
 	p2List_item<TileSet*>* item = data.tilesets.start;
 	TileSet* set = item->data;
 
-	while (item) {
-		if (id < item->data->firstgid) {
+
+	while (item != NULL)
+	{
+		if (id < item->data->firstgid)
+		{
 			set = item->prev->data;
 			break;
 		}
@@ -68,34 +115,40 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const {
 	return set;
 }
 
-//---------
 
-iPoint j1Map::MapToWorld(int x, int y) const {
+iPoint j1Map::MapToWorld(int x, int y) const
+{
 	iPoint ret(0, 0);
 
-	if (data.type == MAPTYPE_ISOMETRIC)	ret = { x * data.tile_width / 2 - y * data.tile_width / 2, y * data.tile_height / 2 + x * data.tile_height / 2 };
-	else if (data.type == MAPTYPE_ORTHOGONAL) {
+	if (data.type == MapTypes::MAPTYPE_ORTHOGONAL) {
 		ret.x = x * data.tile_width;
 		ret.y = y * data.tile_height;
 	}
+	else if (data.type == MapTypes::MAPTYPE_ISOMETRIC) {
+		ret.x = (x - y) * (data.tile_width / 2);
+		ret.y = (x + y) * (data.tile_height / 2);
+	}
+
 	return ret;
 }
 
 
 iPoint j1Map::WorldToMap(int x, int y) const {
 	iPoint ret(0, 0);
-	if (data.type == MAPTYPE_ISOMETRIC)
-		ret = { (x / (data.tile_width / 2) + y / (data.tile_width / 2)) / 2, (y / (data.tile_height / 2) - (x / (data.tile_height / 2))) / 2 };
-	else if (data.type == MAPTYPE_ORTHOGONAL)
-	{
+
+	if (data.type == MapTypes::MAPTYPE_ORTHOGONAL) {
 		ret.x = x / data.tile_width;
 		ret.y = y / data.tile_height;
-	};
+	}
 
+	else if (data.type == MapTypes::MAPTYPE_ISOMETRIC) {
+		ret.x = (x / (data.tile_width / 2) + y / (data.tile_height / 2)) / 2;
+		ret.y = (y / (data.tile_height / 2) - x / (data.tile_width / 2)) / 2;
+	}
 	return ret;
 }
 
-SDL_Rect TileSet::GetTileRect(int id) const {
+	SDL_Rect TileSet::GetTileRect(int id) const {
 	id -= firstgid;
 	int x = id % num_tiles_width;
 	int y = id / num_tiles_width;
@@ -105,6 +158,7 @@ SDL_Rect TileSet::GetTileRect(int id) const {
 
 // Called before quitting
 bool j1Map::CleanUp() {
+
 	LOG("Unloading map");
 
 	// Remove all tilesets
@@ -183,6 +237,7 @@ bool j1Map::Load(const char* file_name) {
 	}
 
 	if (ret == true) {
+
 		LOG("Successfully parsed map XML file: %s", file_name);
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
@@ -207,8 +262,11 @@ bool j1Map::Load(const char* file_name) {
 		}
 	}
 
-	CollidersMap();
-	
+
+	grid = App->tex->Load("maps/Quad_Ortho.png");
+
+	LoadColliders();
+
 	map_loaded = ret;
 
 	return ret;
@@ -310,6 +368,34 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set) {
 		set->num_tiles_height = set->tex_height / set->tile_height;
 	}
 
+	// animations from tmx 
+	if (tileset_node.child("tile").child("animation")) {
+
+		set->tmxAnim = new Animation;
+
+		pugi::xml_node tileAnim;
+		pugi::xml_node durationAnim;
+
+		// load convertor values from xml
+		float convertor;
+
+		if (App->scene1->level1_active)
+			convertor = convertor1;
+		else if (App->scene1->level1_5_active)
+			convertor = convertor2;
+		else if (App->scene1->level2_active)
+			convertor = convertor3;
+
+
+		for (tileAnim = tileset_node.child("tile").child("animation").child("frame"); tileAnim; tileAnim = tileAnim.next_sibling()) 
+		{
+			set->tmxAnim->PushBack(set->GetTileRect(tileAnim.attribute("tileid").as_int() + set->firstgid));
+		}
+
+		durationAnim = tileset_node.child("tile").child("animation").child("frame");
+		set->tmxAnim->speed = durationAnim.attribute("duration").as_float() * convertor;
+	}
+
 	return ret;
 }
 
@@ -329,7 +415,6 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer) {
 	else {
 		layer->data = new uint[layer->width * layer->height];
 		memset(layer->data, 0, layer->width * layer->height);
-
 		int i = 0;
 		for (pugi::xml_node tile = layer_data.child("tile"); tile; tile = tile.next_sibling("tile")) {
 			layer->data[i++] = tile.attribute("gid").as_int(0);
@@ -339,67 +424,68 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer) {
 	return ret;
 }
 
-void j1Map::CollidersMap() {
-	if (map_loaded == false) return;
-
-	for (uint i = 0; i < data.object_groups.count(); i++) {
-		MapObjectsToCollide* objectg = data.object_groups[i];
-		if (objectg->name == "Wall_col") {
-			for (int j = 0; j < objectg->num_objects; j++) {
-				colliderNum[colliderCount] = App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_WALL);
-				colliderCount++;
-			}
-		}
-		if (objectg->name == "Platform_col") {
-			for (int j = 0; j < objectg->num_objects; j++) {
-				colliderNum[colliderCount] = App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_PLATFORM);
-				colliderCount++;
-			}
-		}
-		else if (objectg->name == "Salida")	{
-			for (int j = 0; j < objectg->num_objects; j++) {
-				colliderNum[colliderCount] = App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_WIN);
-				colliderCount++;
-			}
-		}
-		else if (objectg->name == "Muerte_limites")	{
-			for (int j = 0; j < objectg->num_objects; j++) {
-				colliderNum[colliderCount] = App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_DEATH);
-				colliderCount++;
-			}
-		}
-		else if (objectg->name == "Muerte_temporal") {
-			for (int j = 0; j < objectg->num_objects; j++) {
-				colliderNum[colliderCount] = App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_DEATH);
-				colliderCount++;
-			}
-		}
-	}
+uint MapLayer::Get(int x, int y) const
+{
+	return (y * width) + x;
 }
 
-bool j1Map::LoadMapColliders(pugi::xml_node& node, MapObjectsToCollide* objectg) {
+bool j1Map::LoadColliders()
+{
 	bool ret = true;
 
-	objectg->name = node.attribute("name").as_string();
-	int i = 0;
-	if (node.child("object") == NULL) {
-		LOG("Error parsing map xml file: Cannot find 'objectgroup/object' tag.");
-		ret = false;
-		RELEASE(objectg);
-	}
-	else {
-		for (pugi::xml_node object = node.child("object"); object; object = object.next_sibling("object"), i++)	{
+	pugi::xml_node objectgroup;
+	pugi::xml_node object;
+	const char* name;
+
+	for (objectgroup = map_file.child("map").child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup")) 
+	{
+		name = objectgroup.attribute("name").as_string();
+
+		for (object = objectgroup.child("object"); object && ret; object = object.next_sibling("object")) 
+		{
+			if (strcmp(name, "wall_collider") == 0)
+				App->collisions->AddCollider({ object.attribute("x").as_int(), object.attribute("y").as_int(), object.attribute("width").as_int(), object.attribute("height").as_int() }, COLLIDER_WALL);
+
+			if (strcmp(name, "death_collider") == 0)
+				App->collisions->AddCollider({ object.attribute("x").as_int(), object.attribute("y").as_int(), object.attribute("width").as_int(), object.attribute("height").as_int() }, COLLIDER_DEATH);
+
+			if (strcmp(name, "chest_collider") == 0)
+				App->collisions->AddCollider({ object.attribute("x").as_int(), object.attribute("y").as_int(), object.attribute("width").as_int(), object.attribute("height").as_int() }, COLLIDER_OPENCHEST);
+
+			if (strcmp(name, "win_collider") == 0)
+				App->collisions->AddCollider({ object.attribute("x").as_int(), object.attribute("y").as_int(), object.attribute("width").as_int(), object.attribute("height").as_int() }, COLLIDER_WIN);
+
+			if (strcmp(name, "opendoor_collider") == 0)
+				App->collisions->AddCollider({ object.attribute("x").as_int(), object.attribute("y").as_int(), object.attribute("width").as_int(), object.attribute("height").as_int() }, COLLIDER_OPENDOOR);
 
 		}
-		objectg->num_objects = i;
-		objectg->objects_col = new SDL_Rect[objectg->num_objects];
-		i = 0;
-		for (pugi::xml_node object = node.child("object"); object; object = object.next_sibling("object"), i++)	{
-			SDL_Rect rect = { object.attribute("x").as_int(), object.attribute("y").as_int(), object.attribute("width").as_int(), object.attribute("height").as_int() };
-			objectg->objects_col[i] = rect;
-		}
 	}
 
-	return ret;
+	return true;
 }
 
+void j1Map::LoadInfo()
+{
+	pugi::xml_document config_file;
+	config_file.load_file("config.xml");
+
+	pugi::xml_node config;
+	config = config_file.child("config");
+
+	pugi::xml_node nodeMap;
+	nodeMap = config.child("mapInfo");
+
+	parallaxNormal = nodeMap.child("speednormal").attribute("value").as_float();
+	parallax1 = nodeMap.child("parallax1").attribute("value").as_float();
+	parallax2 = nodeMap.child("parallax2").attribute("value").as_float();
+	parallax3 = nodeMap.child("parallax3").attribute("value").as_float();
+	parallax4 = nodeMap.child("parallax4").attribute("value").as_float();
+	parallaxBg = nodeMap.child("parallaxBg").attribute("value").as_float();
+
+	culling_variation = { nodeMap.child("cullingVariation").attribute("x").as_int(), nodeMap.child("cullingVariation").attribute("y").as_int() };
+	culling_view = { nodeMap.child("cullingDebug").attribute("x").as_int(), nodeMap.child("cullingDebug").attribute("y").as_int() };
+
+	convertor1 = nodeMap.child("convertor").attribute("value").as_float();
+	convertor2 = nodeMap.child("convertor2").attribute("value").as_float();
+	convertor3 = nodeMap.child("convertor3").attribute("value").as_float();
+}
