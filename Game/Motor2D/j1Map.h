@@ -27,6 +27,22 @@ struct MapLayer
 };
 
 // ----------------------------------------------------
+struct MapObjectG
+{
+	p2SString	name;
+	SDL_Rect*   objects;
+	int         num_objects;
+
+	MapObjectG() : objects(NULL)
+	{}
+
+	~MapObjectG()
+	{
+		RELEASE(objects);
+	}
+};
+
+// ----------------------------------------------------
 struct TileSet
 {
 	SDL_Rect GetTileRect(int id) const;
@@ -65,6 +81,8 @@ struct MapData
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
+	p2List<MapObjectG*> object_groups;
+
 };
 
 // ----------------------------------------------------
@@ -82,6 +100,7 @@ public:
 
 	// Called each loop iteration
 	void Draw(int player_pos);
+	void DrawObjects();
 
 	// Called before quitting
 	bool CleanUp();
@@ -100,6 +119,7 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadColliders();
+	bool LoadObjectGroup(pugi::xml_node& node, MapObjectG* objectg);
 
 	void LoadInfo();
 

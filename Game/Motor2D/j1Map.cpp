@@ -117,6 +117,41 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 	return set;
 }
 
+void j1Map::DrawObjects()
+{
+	if (map_loaded == false)
+		return;
+
+	for (uint i = 0; i < data.object_groups.count(); i++)
+	{
+		MapObjectG* objectg = data.object_groups[i];
+
+		if (objectg->name == "Ground")
+		{
+			for (int j = 0; j < objectg->num_objects; j++)
+			{
+				App->collisions->AddCollider(objectg->objects[j], COLLIDER_WALL);
+			}
+		}
+		else if (objectg->name == "Win")
+		{
+			for (int j = 0; j < objectg->num_objects; j++)
+			{
+				App->collisions->AddCollider(objectg->objects[j], COLLIDER_WALL);
+			}
+		}
+		else if (objectg->name == "Death")
+		{
+			for (int j = 0; j < objectg->num_objects; j++)
+			{
+				App->collisions->AddCollider(objectg->objects[j], COLLIDER_WALL);
+			}
+		}
+	}
+}
+
+
+
 iPoint j1Map::MapToWorld(int x, int y) const
 {
 	iPoint ret(0, 0);
@@ -189,6 +224,17 @@ bool j1Map::CleanUp()
 	}
 	data.layers.clear();
 
+	// Remove all objects
+	p2List_item<MapObjectG*>* item3;
+	item3 = data.object_groups.start;
+
+	while (item3 != NULL)
+	{
+		RELEASE(item3->data);
+		item3 = item3->next;
+	}
+	data.object_groups.clear();
+
 	// Clean up the pugui tree
 	map_file.reset();
 
@@ -244,6 +290,18 @@ bool j1Map::Load(const char* file_name)
 
 		if (ret == true)
 			data.layers.add(lay);
+	}
+
+	// Load object info ----------------------------------------------
+	pugi::xml_node objectg;
+	for (objectg = map_file.child("map").child("objectgroup"); objectg && ret; objectg = objectg.next_sibling("objectgroup"))
+	{
+		MapObjectG* objg = new MapObjectG();
+
+		ret = LoadObjectGroup(objectg, objg);
+
+		if (ret == true)
+			data.object_groups.add(objg);
 	}
 
 	if (ret == true)
@@ -471,6 +529,39 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 uint MapLayer::Get(int x, int y) const
 {
 	return (y * width) + x;
+}
+
+
+bool j1Map::LoadObjectGroup(pugi::xml_node& node, MapObjectG* objectg)
+{
+	bool ret = true;
+
+	objectg->name = node.attribute("name").as_string();
+	int i = 0;
+	if (node.child("object") == NULL)
+	{
+		LOG("Error parsing map xml file: Cannot find 'objectgroup/object' tag.");
+		ret = false;
+		RELEASE(objectg);
+	}
+	else
+	{
+		for (pugi::xml_node object = node.child("object"); object; object = object.next_sibling("object"), i++)
+		{
+
+		}
+		objectg->num_objects = i;
+		objectg->objects = new SDL_Rect[objectg->num_objects];
+		i = 0;
+		for (pugi::xml_node object = node.child("object"); object; object = object.next_sibling("object"), i++)
+		{
+			SDL_Rect rect = { object.attribute("x").as_int(), object.attribute("y").as_int(), object.attribute("width").as_int(), object.attribute("height").as_int() };
+			objectg->objects[i] = rect;
+		}
+
+	}
+
+	return ret;
 }
 
 bool j1Map::LoadColliders()
