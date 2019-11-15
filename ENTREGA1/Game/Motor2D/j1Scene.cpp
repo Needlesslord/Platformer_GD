@@ -80,10 +80,9 @@ bool j1Scene::Update(float dt) {
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 
-		//App->render->Blit(fondo1_small, App->player->position.x - 250, App->player->position.y - 200);
-
 		if (current_scene != 1) {
 			App->map->CleanUp();
+			App->collisions->CleanUp();
 			current_scene = 1;
 			App->player->current_map = 1;
 			App->player->position.x = App->player->originalPosition_1.x;
@@ -94,10 +93,9 @@ bool j1Scene::Update(float dt) {
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
 
-		//App->render->Blit(fondo2_small, App->player->position.x - 250, App->player->position.y - 200);
-
 		if (current_scene != 2) {
 			App->map->CleanUp();
+			App->collisions->CleanUp();
 			current_scene = 2;
 			App->player->current_map = 2;
 			App->player->position.x = App->player->originalPosition_2.x;
@@ -106,7 +104,6 @@ bool j1Scene::Update(float dt) {
 			App->map->Start();
 		}
 	}
-
 
 	if (current_scene == 1) App->render->Blit(fondo1_small, App->player->position.x - 250, App->player->position.y - 200);
 	
