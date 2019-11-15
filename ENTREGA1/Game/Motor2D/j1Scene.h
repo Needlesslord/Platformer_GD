@@ -16,7 +16,7 @@ public:
 	bool Load();
 	bool Save();
 	bool CleanUp();
-	bool keys_enabled = true;
+	bool keys_enabled = false;
 
 	Collider* colliders[50];
 
