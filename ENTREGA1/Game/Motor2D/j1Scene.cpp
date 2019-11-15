@@ -56,14 +56,16 @@ bool j1Scene::Update(float dt) {
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) App->SaveRequest = true;
 
+	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) keys_enabled = !keys_enabled;
+
 	if (keys_enabled) {
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) App->render->camera.y -= 100;
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) App->render->camera.y += 100;
 		
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) App->render->camera.y += 100;
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) App->render->camera.y -= 100;
 		
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) App->render->camera.x -= 100;
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) App->render->camera.x += 100;
 		
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) App->render->camera.x += 100;
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) App->render->camera.x -= 100;
 	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && App->audio->volume < 128) App->audio->volume += 4;
@@ -72,34 +74,32 @@ bool j1Scene::Update(float dt) {
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		if (current_scene != 1) {
-			App->scene->CleanUp();
-			App->player->CleanUp();
 			App->map->CleanUp();
 			current_scene = 1;
 			App->player->current_map = 1;
-			App->map->Start();
-			App->scene->Start();
-			App->player->Start();
+			App->player->position.x = App->player->originalPosition_1.x;
+			App->player->position.y = App->player->originalPosition_1.y;
 			App->player->velocity.y = 0;
+			App->map->Start();
 		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
 		if (current_scene != 2) {
-			App->scene->CleanUp();
-			App->player->CleanUp();
 			App->map->CleanUp();
+	
 			current_scene = 2;
 			App->player->current_map = 2;
-			App->map->Start();
-			App->scene->Start();
-			App->player->Start();
+			App->player->position.x = App->player->originalPosition_2.x;
+			App->player->position.y = App->player->originalPosition_2.y;
 			App->player->velocity.y = 0;
+			App->map->Start();
+			
 		}
 	}
 
 	App->map->Draw(-App->render->camera.x);
 	App->map->CollidersMap();
-
+	
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);

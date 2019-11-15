@@ -203,10 +203,6 @@ bool j1Player::Update(float dt) {
 	else if (!grounded) current_animation = &player_jumping;
 	else current_animation = &player_walking;
 
-	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
-		position.x = 4206;
-		position.y = 515;
-	}
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		if (App->scene->current_scene == 1) {
 			position.x = originalPosition_1.x;
