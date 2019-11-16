@@ -42,7 +42,7 @@ public:
 	//bool CameraOnPlayer();
 
 private:
-	SDL_Texture* img = nullptr;
+	SDL_Texture* player_textures = nullptr;
 	SDL_Texture* img_m = nullptr;
 
 
@@ -80,11 +80,17 @@ public:
 	iPoint directWin_2;
 
 	bool playerCanMove = false;
-	bool X_Down = false;
+	bool S_Down = false;
+
 	bool grounded;
+	bool againstRightSide;
+	bool againstLeftSide;
+	bool againstRoof;
+
 	bool hasDoubleJumped;
 	bool alive;
 	bool godMode = false;
+	bool win = false;
 	player_states current_state;
 	p2SString			folder;
 	p2SString			texture;

@@ -40,7 +40,7 @@ bool j1Scene::Start() {
 	}
 	if (current_scene == 1) {
 		App->map->Load("Level1-0_v3.tmx");
-		App->audio->PlayMusic("audio/music/Scene1.ogg");
+		//App->audio->PlayMusic("audio/music/Scene1.ogg");
 	}
 	if (current_scene == 2) {
 		App->map->Load("Level2-0_v2.tmx");
