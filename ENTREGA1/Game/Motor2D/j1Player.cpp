@@ -22,7 +22,7 @@ j1Player::j1Player() : j1Module() {
 	player_idle.PushBack({ 23, 0, 23, 28 });
 	player_idle.PushBack({ 46, 0, 23, 28 });
 	player_idle.PushBack({ 69, 0, 23, 28 });
-	player_idle.speed = 0.5f;
+	player_idle.speed = 0.25f;
 	//jumping
 	player_jumping.PushBack({ 92, 0, 23, 28 });
 	//walking
@@ -37,7 +37,7 @@ j1Player::j1Player() : j1Module() {
 	player_walking.PushBack({ 184,  37,  25, 28 });
 	player_walking.PushBack({ 171,  65,  25, 28 });
 	player_walking.PushBack({ 196,  65,  25, 28 });
-	player_walking.speed = 0.7f;
+	player_walking.speed = 0.5f;
 	//falling
 	player_falling.PushBack({ 192,  96,  32, 32 });
 
@@ -146,17 +146,22 @@ bool j1Player::Update(float dt) {
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		velocity.x = 2.5;
+		mirror = true;
 	
 	}
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) {
 		velocity.x = 0;
-
+		mirror = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		velocity.x = -2.5;
+		mirror = false;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) velocity.x = 0;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {
+		velocity.x = 0;
+		mirror = false;
+	}
 
 	//DOUBLE JUMP
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !hasDoubleJumped && velocity.y > 0 && !grounded && !godMode) {
@@ -231,7 +236,8 @@ bool j1Player::Update(float dt) {
 
 	//----------------------------------------- Draw everything --------------------------------------
 	//if (mirror) App->render->Blit(img_m, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
-	App->render->Blit(img, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
+	if (!mirror) App->render->Blit(img, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
+	if (mirror) App->render->Blit(img, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
 
 	return true;
 }

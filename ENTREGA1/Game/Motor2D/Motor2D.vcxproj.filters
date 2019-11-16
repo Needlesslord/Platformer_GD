@@ -10,24 +10,6 @@
     <ClCompile Include="PugiXml\src\pugixml.cpp">
       <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
     </ClCompile>
-    <ClCompile Include="j1Audio.cpp">
-      <Filter>Desenvolupament  ========\Modules\j1</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Input.cpp">
-      <Filter>Desenvolupament  ========\Modules\j1</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Render.cpp">
-      <Filter>Desenvolupament  ========\Modules\j1</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Textures.cpp">
-      <Filter>Desenvolupament  ========\Modules\j1</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Window.cpp">
-      <Filter>Desenvolupament  ========\Modules\j1</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Player.cpp">
-      <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
-    </ClCompile>
     <ClCompile Include="j1Level1.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
@@ -46,11 +28,47 @@
     <ClCompile Include="j1Main.cpp">
       <Filter>Desenvolupament  ========\Core</Filter>
     </ClCompile>
-    <ClCompile Include="j1Map.cpp">
-      <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
+    <ClCompile Include="j1Audio.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
     <ClCompile Include="j1Collisions.cpp">
-      <Filter>Desenvolupament  ========\Modules\j1</Filter>
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Input.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Map.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Render.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Textures.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Window.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1AirEnemy.cpp">
+      <Filter>Desenvolupament  ========\Entities\Dynamic</Filter>
+    </ClCompile>
+    <ClCompile Include="j1LandEnemy.cpp">
+      <Filter>Desenvolupament  ========\Entities\Dynamic</Filter>
+    </ClCompile>
+    <ClCompile Include="j1NPC.cpp">
+      <Filter>Desenvolupament  ========\Entities\Static</Filter>
+    </ClCompile>
+    <ClCompile Include="j1SceneEntity.cpp">
+      <Filter>Desenvolupament  ========\Entities\ChangeScene</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Exit.cpp">
+      <Filter>Desenvolupament  ========\Entities\ChangeScene</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Entity.cpp">
+      <Filter>Desenvolupament  ========\Entities\EntityManager</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Player.cpp">
+      <Filter>Desenvolupament  ========\Entities\Dynamic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -81,24 +99,6 @@
     <ClInclude Include="PugiXml\src\pugixml.hpp">
       <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
     </ClInclude>
-    <ClInclude Include="j1Audio.h">
-      <Filter>Desenvolupament  ========\Modules\j1</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Input.h">
-      <Filter>Desenvolupament  ========\Modules\j1</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Render.h">
-      <Filter>Desenvolupament  ========\Modules\j1</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Textures.h">
-      <Filter>Desenvolupament  ========\Modules\j1</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Window.h">
-      <Filter>Desenvolupament  ========\Modules\j1</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Player.h">
-      <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
-    </ClInclude>
     <ClInclude Include="j1Level1.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
@@ -117,11 +117,47 @@
     <ClInclude Include="j1Animation.h">
       <Filter>Desenvolupament  ========\Core</Filter>
     </ClInclude>
-    <ClInclude Include="j1Map.h">
-      <Filter>Desenvolupament  ========\Modules\SubModules</Filter>
+    <ClInclude Include="j1Audio.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1Collisions.h">
-      <Filter>Desenvolupament  ========\Modules\j1</Filter>
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Input.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Map.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Render.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Textures.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Window.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1AirEnemy.h">
+      <Filter>Desenvolupament  ========\Entities\Dynamic</Filter>
+    </ClInclude>
+    <ClInclude Include="j1LandEnemy.h">
+      <Filter>Desenvolupament  ========\Entities\Dynamic</Filter>
+    </ClInclude>
+    <ClInclude Include="j1NPC.h">
+      <Filter>Desenvolupament  ========\Entities\Static</Filter>
+    </ClInclude>
+    <ClInclude Include="j1SceneEntity.h">
+      <Filter>Desenvolupament  ========\Entities\ChangeScene</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Exit.h">
+      <Filter>Desenvolupament  ========\Entities\ChangeScene</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Entity.h">
+      <Filter>Desenvolupament  ========\Entities\EntityManager</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Player.h">
+      <Filter>Desenvolupament  ========\Entities\Dynamic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -143,14 +179,23 @@
     <Filter Include="Desenvolupament  ========\Tools\PuguiXML">
       <UniqueIdentifier>{7cb78d67-17cc-45eb-af97-e2106becce7b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\j1">
-      <UniqueIdentifier>{61985952-61a8-46c4-a3cc-645f515788c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\SubModules">
-      <UniqueIdentifier>{306ae99c-3b83-4169-8689-2cabb97b7114}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Desenvolupament  ========\Core">
       <UniqueIdentifier>{1d96da78-36a4-49f4-a788-b9c331030719}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Entities">
+      <UniqueIdentifier>{223f4ecc-ab0f-4ace-a7b5-29ac1b58d6fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Entities\ChangeScene">
+      <UniqueIdentifier>{2dd25f00-4fe7-4cdd-86f8-9bcafeb3ee2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Entities\EntityManager">
+      <UniqueIdentifier>{953d81ee-3c43-4cce-b4d2-8c0da153cf74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Entities\Dynamic">
+      <UniqueIdentifier>{26f52eda-32e2-4c9d-865d-f76507d30177}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Entities\Static">
+      <UniqueIdentifier>{40d566e7-4d2f-48f0-82c2-205ddf6f3956}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
