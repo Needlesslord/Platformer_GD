@@ -80,8 +80,13 @@ bool j1Scene::Update(float dt) {
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		if (current_scene != 1) {
+			//ChangeColliders();
 			App->map->CleanUp();
-			App->collisions->CleanUp();
+
+			App->map->Load("Level1-0_v3.tmx");
+			App->audio->PlayMusic("audio/music/Scene1.ogg");
+			App->map->CollidersMap();
+
 			current_scene = 1;
 			App->player->current_map = 1;
 			App->player->position.x = App->player->originalPosition_1.x;
@@ -93,8 +98,13 @@ bool j1Scene::Update(float dt) {
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
 		if (current_scene != 2) {
+			//ChangeColliders();
 			App->map->CleanUp();
-			App->collisions->CleanUp();
+
+			App->map->Load("Level2-0_v2.tmx");
+			App->audio->PlayMusic("audio/music/intro.ogg");
+			App->map->CollidersMap();
+
 			current_scene = 2;
 			App->player->current_map = 2;
 			App->player->position.x = App->player->originalPosition_2.x;
@@ -104,6 +114,7 @@ bool j1Scene::Update(float dt) {
 			App->map->Start();
 		}
 	}
+
 
 	if (current_scene == 1) App->render->Blit(background1_small, App->player->position.x - 250, App->player->position.y - 200);
 	
@@ -149,5 +160,23 @@ bool j1Scene::CleanUp() {
 	App->CleanUp();
 	App->tex->UnLoad(imgwin);
 	
+	return true;
+}
+
+bool j1Scene::ChangeColliders()
+{
+	App->map->CollidersChange();
+
+	if (current_scene == 1) {
+		App->map->Load("Level1-0_v3.tmx");
+		App->audio->PlayMusic("audio/music/Scene1.ogg");
+	}
+	if (current_scene == 2) {
+		App->map->Load("Level2-0_v2.tmx");
+		App->audio->PlayMusic("audio/music/intro.ogg");
+	}
+
+	App->map->CollidersMap();
+
 	return true;
 }

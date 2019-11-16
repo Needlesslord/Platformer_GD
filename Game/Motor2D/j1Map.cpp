@@ -578,3 +578,11 @@ void j1Map::LoadInfo()
 	convertor2 = nodeMap.child("convertor2").attribute("value").as_float();
 	convertor3 = nodeMap.child("convertor3").attribute("value").as_float();
 }
+
+bool j1Map::UnloadMapColliders()
+{
+	App->collision->CleanUp();
+	CleanUp();
+
+	return true;
+}
