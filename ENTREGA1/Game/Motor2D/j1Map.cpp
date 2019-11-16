@@ -411,8 +411,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 void j1Map::CollidersMap()
 {
-	if (map_loaded == false)
-		return;
+	if (map_loaded == false) return;
 
 	for (uint i = 0; i < data.object_groups.count(); i++)
 	{
@@ -487,3 +486,10 @@ bool j1Map::LoadMapColliders(pugi::xml_node& node, MapObjectsToCollide* objectg)
 	return ret;
 }
 
+bool j1Map::CollidersChange()
+{
+	App->collisions->CleanUp();
+	CleanUp();
+
+	return true;
+}

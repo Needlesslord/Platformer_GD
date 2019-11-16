@@ -110,6 +110,7 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
+	bool CollidersChange();
 
 	// Coordinate translation methods
 	iPoint MapToWorld(int x, int y) const;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="150" tilewidth="16" tileheight="16" nextobjectid="367">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="150" tilewidth="16" tileheight="16" nextobjectid="370">
  <tileset firstgid="1" name="Tiles_Sand_Mud_Ice_16" tilewidth="16" tileheight="16" tilecount="55" columns="11">
   <image source="Tiles_Sand_Mud_Ice_16.png" width="176" height="80"/>
   <terraintypes>
@@ -45291,10 +45291,11 @@
   <object id="239" x="4192" y="577.333" width="16" height="43.3333"/>
   <object id="240" x="4145.33" y="608.667" width="14" height="46"/>
   <object id="246" x="720" y="1472.5" width="15" height="29.5"/>
-  <object id="359" x="1343.88" y="1073.4" width="16" height="45.7273"/>
+  <object id="359" x="1343.88" y="1073.01" width="16" height="46.1186"/>
   <object id="361" x="1328" y="1073" width="15.875" height="46.5"/>
   <object id="364" x="928.25" y="1120" width="16" height="62.5"/>
   <object id="365" x="1007.75" y="1120.75" width="16" height="60.75"/>
+  <object id="367" x="4096" y="640.313" width="15.8125" height="32.5625"/>
  </objectgroup>
  <objectgroup color="#00ff00" name="Salida">
   <object id="72" x="4232.67" y="489.33" width="46" height="52"/>
@@ -45311,18 +45312,18 @@
   <object id="328" x="6" y="2368.67" width="4789.33" height="25.3333"/>
  </objectgroup>
  <objectgroup color="#ff0000" name="Muerte_temporal">
-  <object id="316" x="1824" y="1280" width="159.333" height="15.3333"/>
-  <object id="317" x="1279.33" y="1280" width="128" height="16"/>
-  <object id="318" x="16.6667" y="1280" width="430.667" height="16"/>
-  <object id="319" x="2464" y="1280.67" width="126.667" height="14"/>
-  <object id="320" x="2718.67" y="1279.33" width="338" height="16"/>
-  <object id="321" x="3007.33" y="1071.33" width="16" height="255.333"/>
-  <object id="322" x="3232" y="960" width="160" height="15.3333"/>
-  <object id="323" x="3807.33" y="959.333" width="128" height="16.6667"/>
-  <object id="324" x="4272.67" y="959.333" width="520.667" height="16"/>
+  <object id="316" x="1869" y="1242" width="70.333" height="111.333"/>
+  <object id="317" x="1308.33" y="1297" width="72" height="154"/>
+  <object id="318" x="16.6667" y="1231" width="404.667" height="115"/>
+  <object id="319" x="2510" y="1060.67" width="36.667" height="234"/>
+  <object id="320" x="2749.67" y="1233.33" width="307" height="125"/>
+  <object id="321" x="3007.33" y="1115.33" width="90" height="211.333"/>
+  <object id="322" x="3277.25" y="928" width="68.25" height="79.5833"/>
+  <object id="323" x="3854.2" y="880.958" width="34.875" height="95.0417"/>
+  <object id="324" x="4316.67" y="720.833" width="476.667" height="254.5"/>
  </objectgroup>
- <objectgroup name="Gravedad" visible="0">
-  <object id="86" x="1854.5" y="1258" width="104.5" height="11.5"/>
-  <object id="91" x="3259.5" y="971" width="102.5" height="8.5"/>
+ <objectgroup name="Gravedad">
+  <object id="86" x="1864.5" y="1217" width="78.5" height="105.5"/>
+  <object id="91" x="3278" y="910.5" width="67.5" height="113"/>
  </objectgroup>
 </map>

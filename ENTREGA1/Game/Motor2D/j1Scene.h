@@ -16,6 +16,8 @@ public:
 	bool Load();
 	bool Save();
 	bool CleanUp();
+	bool ChangeColliders();
+
 	bool keys_enabled = false;
 
 	SDL_Texture* imgwin = nullptr;

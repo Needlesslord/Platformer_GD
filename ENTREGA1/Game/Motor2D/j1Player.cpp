@@ -22,7 +22,8 @@ j1Player::j1Player() : j1Module() {
 	player_idle.PushBack({ 23, 0, 23, 28 });
 	player_idle.PushBack({ 46, 0, 23, 28 });
 	player_idle.PushBack({ 69, 0, 23, 28 });
-	player_idle.speed = 0.2f;
+	player_idle.speed = 0.25f;
+
 	//jumping
 	player_jumping.PushBack({ 92, 0, 23, 28 });
 	//walking
@@ -145,6 +146,7 @@ bool j1Player::Update(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !againstRightSide) {
 		position.x += velocity.x;
 		if (grounded) current_animation = &player_walking;
+
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) player_walking.Reset();
 
@@ -159,6 +161,7 @@ bool j1Player::Update(float dt) {
 	colFeet->SetPos(feet.x, feet.y);
 	colRightside->SetPos(rightside.x, rightside.y);
 	colLeftside->SetPos(leftside.x, leftside.y);
+
 
 	//DOUBLE JUMP
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !hasDoubleJumped && velocity.y > 0 && !grounded && !godMode) {
@@ -219,6 +222,7 @@ bool j1Player::Update(float dt) {
 	App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
 	if (win)
 		App->render->Blit(imgwin, originalPosition_1.x - 175, originalPosition_1.y - 150);
+
 	return true;
 }
 
