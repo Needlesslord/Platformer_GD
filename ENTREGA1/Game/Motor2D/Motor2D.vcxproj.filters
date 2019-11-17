@@ -70,6 +70,9 @@
     <ClCompile Include="j1Player.cpp">
       <Filter>Desenvolupament  ========\Entities\Dynamic</Filter>
     </ClCompile>
+    <ClCompile Include="j1EntityManager.cpp">
+      <Filter>Desenvolupament  ========\Entities\EntityManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -158,6 +161,9 @@
     </ClInclude>
     <ClInclude Include="j1Player.h">
       <Filter>Desenvolupament  ========\Entities\Dynamic</Filter>
+    </ClInclude>
+    <ClInclude Include="j1EntityManager.h">
+      <Filter>Desenvolupament  ========\Entities\EntityManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
