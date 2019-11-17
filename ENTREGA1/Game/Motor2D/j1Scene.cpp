@@ -54,44 +54,73 @@ bool j1Scene::PreUpdate() {
 }
 
 // Called each loop iteration
-bool j1Scene::Update(float dt) {
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
-		if (current_scene != 1) {
-			changeSceneTo(1);
-			//TODO Insert sound in an else to say you can't load lvl1
+bool j1Scene::Update(float dt) {	
+	{//DEBUG KEYS
+		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) { //CHANGE TO SCENE 1
+			if (current_scene != 1) {
+				changeSceneTo(1);
+				//TODO Insert sound in an else to say you can't load lvl1
+			}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) { //CHANGE TO SCENE 2
+			if (current_scene != 2) {
+				changeSceneTo(2);
+				//TODO Insert sound in an else to say you can't load lvl1
+			}
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) { //BACK TO BEGINING
+			if (current_scene == 1) {
+				App->player->position.x = App->player->originalPosition_1.x;
+				App->player->position.y = App->player->originalPosition_1.y;
+			}
+			if (current_scene == 2) {
+				App->player->position.x = App->player->originalPosition_2.x;
+				App->player->position.y = App->player->originalPosition_2.y;
+			}
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) App->SaveRequest = true; //SAVE
+
+		if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) App->LoadRequest = true; //LOAD
+
+		if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) keys_enabled = !keys_enabled; //ENABLE/DISABLE FREE CAMERA MOVEMENT
+
+		if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) { //GO TO VICTORY POSITION
+			if (App->player->current_map == 1) {
+				App->player->velocity.y = 0;
+				App->player->position.x = App->player->directWin_1.x;
+				App->player->position.y = App->player->directWin_1.y;
+			}
+			if (App->player->current_map == 2) {
+				App->player->velocity.y = 0;
+				App->player->position.x = App->player->directWin_2.x;
+				App->player->position.y = App->player->directWin_2.y;
+			}
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) { //ENABLE/DISABLE GODMODE
+			App->player->velocity.y = 0;
+			App->player->godMode = !App->player->godMode;
+		}
+
+		if (keys_enabled) { //IF ENABLED, FREE MOVE CAMERA
+			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) App->render->camera.y += 100;
+
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) App->render->camera.y -= 100;
+
+			if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) App->render->camera.x += 100;
+
+			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) App->render->camera.x -= 100;
 		}
 	}
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
-		if (current_scene != 2) {
-			changeSceneTo(2);
-			//TODO Insert sound in an else to say you can't load lvl1
-		}
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) App->SaveRequest = true;
-
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) App->LoadRequest = true;
-
-	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) keys_enabled = !keys_enabled;
-
-	if (keys_enabled) {
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) App->render->camera.y += 100;
-		
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) App->render->camera.y -= 100;
-		
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) App->render->camera.x += 100;
-		
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) App->render->camera.x -= 100;
-	}
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && App->audio->volume < 128) App->audio->volume += 4; //INCRESE VOLUME
 	
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && App->audio->volume < 128) App->audio->volume += 4;
-	
-	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 4;
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 4; //DECREASE VOLUME
 
 
 	if (current_scene == 1) App->render->Blit(background1_small, App->player->position.x - 250, App->player->position.y - 200);
-	
-	if (current_scene == 2) App->render->Blit(background2_small, App->player->position.x - 250, App->player->position.y - 200);
+	else if (current_scene == 2) App->render->Blit(background2_small, App->player->position.x - 250, App->player->position.y - 200);
 
 	App->map->Draw(-App->render->camera.x);
 	App->map->CollidersMap();
@@ -114,7 +143,7 @@ bool j1Scene::Update(float dt) {
 bool j1Scene::PostUpdate() {
 	bool ret = true;
 	
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
+	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false; //QUIT
 
 	return ret;
 }
@@ -168,5 +197,18 @@ bool j1Scene::changeSceneTo(int scene) {
 }
 	else return false;
 
+	return true;
+}
+
+bool j1Scene::Save(pugi::xml_node& node) {
+	node.append_child("current_scene").append_attribute("value") = current_scene;
+	return true;
+}
+
+bool j1Scene::Load(pugi::xml_node& node) {
+	if (node.child("current_scene").attribute("value").as_int() != current_scene) {
+		current_scene = node.child("current_scene").attribute("value").as_int();
+		changeSceneTo(current_scene);
+	}
 	return true;
 }

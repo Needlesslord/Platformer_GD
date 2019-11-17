@@ -13,8 +13,8 @@ public:
 	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
-	bool Load();
-	bool Save();
+	bool Load(pugi::xml_node& node);
+	bool Save(pugi::xml_node& node);
 	bool CleanUp();
 	bool changeSceneTo(int scene);
 	bool keys_enabled = false;

@@ -41,8 +41,6 @@ j1Player::j1Player() : j1Module() {
 	player_walking.speed = 0.5f;
 	//falling
 	player_falling.PushBack({ 192,  96,  32, 32 });
-
-
 }
 
 j1Player::~j1Player() {}
@@ -188,37 +186,7 @@ bool j1Player::Update(float dt) {
 		grounded = false;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) S_Down = false;
-
-	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
-		if (current_map == 1) {
-			velocity.y = 0;
-			position.x = directWin_1.x;
-			position.y = directWin_1.y;
-		}
-		if (current_map == 2) {
-			velocity.y = 0;
-			position.x = directWin_2.x;
-			position.y = directWin_2.y;
-		}
-	}
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-		velocity.y = 0;
-		godMode = !godMode;
-	}
-
 	
-
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-		if (App->scene->current_scene == 1) {
-			position.x = originalPosition_1.x;
-			position.y = originalPosition_1.y;
-		}
-		if (App->scene->current_scene == 2) {
-			position.x = originalPosition_2.x;
-			position.y = originalPosition_2.y;
-		}
-	}
-
 	//----------------------------------------- Draw everything --------------------------------------
 	//SDL_RenderCopyEx(App->render->renderer, player_textures, &(current_animation->GetCurrentFrame()), &playerRect, NULL, NULL, SDL_FLIP_HORIZONTAL);
 	App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
@@ -235,18 +203,16 @@ bool j1Player::PostUpdate() {
 	return true;
 }
 
-bool j1Player::Load(pugi::xml_node& node) {
-	position.x = node.child("position_x").attribute("value").as_float();
-	position.y = node.child("position_y").attribute("value").as_float();
-	return true;
-}
-
 bool j1Player::Save(pugi::xml_node& node) {
 	node.append_child("position_x").append_attribute("value") = position.x;
 	node.append_child("position_y").append_attribute("value") = position.y;
 	return true;
 }
-
+bool j1Player::Load(pugi::xml_node& node) {
+	position.x = node.child("position_x").attribute("value").as_float();
+	position.y = node.child("position_y").attribute("value").as_float() - 5;
+	return true;
+}
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c1->type == COLLIDER_PLAYER && !godMode) {
