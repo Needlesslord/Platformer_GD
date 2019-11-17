@@ -236,8 +236,7 @@ bool j1Collisions::PostUpdate() {
 }
 
 // Called before quitting
-bool j1Collisions::CleanUp()
-{
+bool j1Collisions::CleanUp() {
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if (colliders[i] != nullptr)

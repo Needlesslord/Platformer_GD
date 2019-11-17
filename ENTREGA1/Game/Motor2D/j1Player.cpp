@@ -49,31 +49,33 @@ j1Player::~j1Player() {}
 
 bool j1Player::Awake(pugi::xml_node& config) {
 	folder.create(config.child("folder").child_value());
-	texture					= config.child("texture").attribute("source").as_string();
-	playerWidth				= config.child("size").attribute("w").as_int();
-	playerHeight			= config.child("size").attribute("h").as_int();
-	velocity.x				= config.child("velocity").attribute("x").as_float();
-	velocity.y				= config.child("velocity").attribute("y").as_float();
-	gravity					= config.child("gravity").attribute("value").as_float();
-	feet.x					= config.child("position_scene_1").attribute("x").as_float();
-	feet.y					= config.child("position_scene_1").attribute("y").as_float() + config.child("size").attribute("h").as_int();	//PLAYER H + PLAYER Y
-	feet.w					= config.child("size").attribute("w").as_int();	//SAME AS PLAYER
-	feet.h					= config.child("feet").attribute("h").as_int();
-	S_Down					= config.child("s_down").attribute("value").as_bool();
-	grounded				= config.child("grounded").attribute("value").as_bool();
-	hasDoubleJumped			= config.child("has_doublejumped").attribute("value").as_bool();
-	mirror					= config.child("mirror").attribute("value").as_bool();
-	alive					= config.child("alive").attribute("value").as_bool();
-	AnimationOffstet.x		= config.child("animation_offset").attribute("x").as_int();
-	AnimationOffstet.y		= config.child("animation_offset").attribute("y").as_int(); 
-	originalPosition_1.x	= config.child("position_scene_1").attribute("x").as_int();
-	originalPosition_1.y	= config.child("position_scene_1").attribute("y").as_int();
-	originalPosition_2.x	= config.child("position_scene_2").attribute("x").as_int();
-	originalPosition_2.y	= config.child("position_scene_2").attribute("y").as_int();
-	directWin_1.x			= config.child("win_position_1").attribute("x").as_int();
-	directWin_1.y			= config.child("win_position_1").attribute("y").as_int();
-	directWin_2.x			= config.child("win_position_2").attribute("x").as_int();
-	directWin_2.y			= config.child("win_position_2").attribute("y").as_int();
+	texture						= config.child("texture").attribute("source").as_string();
+	playerWidth					= config.child("size").attribute("w").as_int();
+	playerHeight				= config.child("size").attribute("h").as_int();
+	velocity.x					= config.child("velocity").attribute("x").as_float();
+	velocity.y					= config.child("velocity").attribute("y").as_float();
+	gravity						= config.child("gravity").attribute("value").as_float();
+	feet.x						= config.child("position_scene_1").attribute("x").as_float();
+	feet.y						= config.child("position_scene_1").attribute("y").as_float() + config.child("size").attribute("h").as_int();	//PLAYER H + PLAYER Y
+	feet.w						= config.child("size").attribute("w").as_int();	//SAME AS PLAYER
+	feet.h						= config.child("feet").attribute("h").as_int();
+	S_Down						= config.child("s_down").attribute("value").as_bool();
+	grounded					= config.child("grounded").attribute("value").as_bool();
+	hasDoubleJumped				= config.child("has_doublejumped").attribute("value").as_bool();
+	mirror						= config.child("mirror").attribute("value").as_bool();
+	alive						= config.child("alive").attribute("value").as_bool();
+	AnimationOffstet.x			= config.child("animation_offset").attribute("x").as_int();
+	AnimationOffstet.y			= config.child("animation_offset").attribute("y").as_int(); 
+	originalPosition_1.x		= config.child("position_scene_1").attribute("x").as_int();
+	originalPosition_1.y		= config.child("position_scene_1").attribute("y").as_int();
+	originalPosition_2.x		= config.child("position_scene_2").attribute("x").as_int();
+	originalPosition_2.y		= config.child("position_scene_2").attribute("y").as_int();
+	originalPosition_tutorial.x = config.child("position_scene_tutorial").attribute("x").as_int();
+	originalPosition_tutorial.y = config.child("position_scene_tutorial").attribute("y").as_int();
+	directWin_1.x				= config.child("win_position_1").attribute("x").as_int();
+	directWin_1.y				= config.child("win_position_1").attribute("y").as_int();
+	directWin_2.x				= config.child("win_position_2").attribute("x").as_int();
+	directWin_2.y				= config.child("win_position_2").attribute("y").as_int();
 	return true;
 }
 
@@ -281,8 +283,14 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			win = true;
 		}
 		if (c2->type == COLLIDER_DEATH) {
-			position.x = originalPosition_1.x;
-			position.y = originalPosition_1.y;
+			if (App->scene->current_scene == 1) {
+				position.x = originalPosition_1.x;
+				position.y = originalPosition_1.y;
+			}
+			if (App->scene->current_scene == 2) {
+				position.x = originalPosition_2.x;
+				position.y = originalPosition_2.y;
+			}		
            	velocity.y = 0;
 			grounded = true;
 			againstLeftSide = false;

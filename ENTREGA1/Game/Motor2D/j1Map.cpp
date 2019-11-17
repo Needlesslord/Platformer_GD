@@ -111,9 +111,7 @@ iPoint j1Map::WorldToMap(int x, int y) const
 	return ret;
 }
 
-SDL_Rect TileSet::GetTileRect(int id) const
-{
-	// TODO 7(old): Create a method that receives a tile id and returns it's Recttile_id -= firstgid;
+SDL_Rect TileSet::GetTileRect(int id) const {
 	id -= firstgid;
 	int x = id % num_tiles_width;
 	int y = id / num_tiles_width;
@@ -484,12 +482,4 @@ bool j1Map::LoadMapColliders(pugi::xml_node& node, MapObjectsToCollide* objectg)
 	}
 
 	return ret;
-}
-
-bool j1Map::CollidersChange()
-{
-	App->collisions->CleanUp();
-	CleanUp();
-
-	return true;
 }

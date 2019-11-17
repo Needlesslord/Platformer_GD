@@ -55,7 +55,6 @@ private:
 	bool DoUpdate();
 	// Call modules after each loop iteration
 	bool PostUpdate();
-	// TODO 2: Create the functions for Loading / Saving the game state (leave those empty for now)
 	bool Save();
 	bool Load();
 

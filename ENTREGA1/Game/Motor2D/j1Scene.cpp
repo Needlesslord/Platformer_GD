@@ -21,9 +21,9 @@ j1Scene::~j1Scene() {}
 
 // Called before render is available
 bool j1Scene::Awake(pugi::xml_node& config) {
+	bool ret = true;
 	LOG("Loading Scene");
 	current_scene = config.attribute("current_scene").as_int();
-	bool ret = true;
 
 	return ret;
 }
@@ -31,20 +31,19 @@ bool j1Scene::Awake(pugi::xml_node& config) {
 // Called before the first frame
 bool j1Scene::Start() {
 
-	background1_small = App->tex->Load("maps/fondo1_small.png");
-	background2_small = App->tex->Load("maps/fondo2_small.png");
-
 	if (current_scene == 0) {
 		intro = App->tex->Load("textures/Start.png");
 		App->audio->PlayMusic("audio/music/intro.ogg");
 	}
 	if (current_scene == 1) {
+		background1_small = App->tex->Load("maps/fondo1_small.png");
 		App->map->Load("Level1-0_v3.tmx");
 		//App->audio->PlayMusic("audio/music/Scene1.ogg");
 	}
 	if (current_scene == 2) {
+		background2_small = App->tex->Load("maps/fondo2_small.png");
 		App->map->Load("Level2-0_v2.tmx");
-		App->audio->PlayMusic("audio/music/intro.ogg");
+		//App->audio->PlayMusic("audio/music/intro.ogg");
 	}
 	return true;
 }
@@ -56,11 +55,22 @@ bool j1Scene::PreUpdate() {
 
 // Called each loop iteration
 bool j1Scene::Update(float dt) {
-
-
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) App->LoadRequest = true;
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		if (current_scene != 1) {
+			changeSceneTo(1);
+			//TODO Insert sound in an else to say you can't load lvl1
+		}
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+		if (current_scene != 2) {
+			changeSceneTo(2);
+			//TODO Insert sound in an else to say you can't load lvl1
+		}
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) App->SaveRequest = true;
+
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) App->LoadRequest = true;
 
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) keys_enabled = !keys_enabled;
 
@@ -77,43 +87,6 @@ bool j1Scene::Update(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && App->audio->volume < 128) App->audio->volume += 4;
 	
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 4;
-
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
-		if (current_scene != 1) {
-			//ChangeColliders();
-			App->map->CleanUp();
-
-			App->map->Load("Level1-0_v3.tmx");
-			App->audio->PlayMusic("audio/music/Scene1.ogg");
-			App->map->CollidersMap();
-
-			current_scene = 1;
-			App->player->current_map = 1;
-			App->player->position.x = App->player->originalPosition_1.x;
-			App->player->position.y = App->player->originalPosition_1.y;
-			App->player->velocity.y = 0;
-			App->map->Start();
-			App->scene->Start();
-		}
-	}
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
-		if (current_scene != 2) {
-			//ChangeColliders();
-			App->map->CleanUp();
-
-			App->map->Load("Level2-0_v2.tmx");
-			App->audio->PlayMusic("audio/music/intro.ogg");
-			App->map->CollidersMap();
-
-			current_scene = 2;
-			App->player->current_map = 2;
-			App->player->position.x = App->player->originalPosition_2.x;
-			App->player->position.y = App->player->originalPosition_2.y;
-			App->player->velocity.y = 0;
-			App->scene->Start();
-			App->map->Start();
-		}
-	}
 
 
 	if (current_scene == 1) App->render->Blit(background1_small, App->player->position.x - 250, App->player->position.y - 200);
@@ -140,43 +113,60 @@ bool j1Scene::Update(float dt) {
 // Called each loop iteration
 bool j1Scene::PostUpdate() {
 	bool ret = true;
-	pugi::xml_node config;
 	
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false;
 
 	return ret;
 }
 
-
 // Called before quitting
 bool j1Scene::CleanUp() {
 	LOG("Freeing scene");
-	App->tex->UnLoad(background1_small);
-	App->tex->UnLoad(background2_small);
-	App->map->CleanUp();
-	App->collisions->CleanUp();
-	if (App->player != nullptr)
-		App->player->CleanUp();
-	App->CleanUp();
+	if (current_scene == 1) App->tex->UnLoad(background1_small);
+	if (current_scene == 2) App->tex->UnLoad(background2_small);
 	App->tex->UnLoad(imgwin);
-	
 	return true;
 }
 
-bool j1Scene::ChangeColliders()
-{
-	App->map->CollidersChange();
-
-	if (current_scene == 1) {
-		App->map->Load("Level1-0_v3.tmx");
-		App->audio->PlayMusic("audio/music/Scene1.ogg");
-	}
-	if (current_scene == 2) {
-		App->map->Load("Level2-0_v2.tmx");
-		App->audio->PlayMusic("audio/music/intro.ogg");
+bool j1Scene::changeSceneTo(int scene) {
+	if (scene == 0) { //CHANGE TO TUTORIAL			(  )
+		
 	}
 
-	App->map->CollidersMap();
+	else if (scene == 1) { //CHANGE TO SCENE 1		(F1)
+		App->collisions->CleanUp();
+		App->map->CleanUp();
+		current_scene = scene;
+
+		App->player->CleanUp();
+		App->player->Start(); 
+		App->player->win = false;
+		App->player->position.x = App->player->originalPosition_1.x;
+		App->player->position.y = App->player->originalPosition_1.y;
+		App->player->velocity.y = 0;
+		App->player->current_map = 1;
+
+		App->scene->CleanUp();
+		App->scene->Start();
+	}
+
+	else if (scene == 2) { //CHANGE TO SCENE 2		(F2)
+		App->collisions->CleanUp(); 
+		App->map->CleanUp();
+		current_scene = scene;
+
+		App->player->CleanUp();
+		App->player->Start();
+		App->player->win = false;
+		App->player->position.x = App->player->originalPosition_2.x;
+		App->player->position.y = App->player->originalPosition_2.y;
+		App->player->velocity.y = 0;
+		App->player->current_map = 2;
+
+		App->scene->CleanUp();
+		App->scene->Start();
+}
+	else return false;
 
 	return true;
 }

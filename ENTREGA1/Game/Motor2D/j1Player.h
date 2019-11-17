@@ -35,16 +35,12 @@ public:
 	bool Load(pugi::xml_node& node);
 	bool Save(pugi::xml_node& node);
 	bool CleanUp();
-	void OnCollision(Collider* c1, Collider* c2);
-/*	void DoubleJump()*/;
 	bool Mirror();
-	//void RestartPlayer();
-	//bool CameraOnPlayer();
+	void OnCollision(Collider* c1, Collider* c2);
 
 private:
 	SDL_Texture* player_textures = nullptr;
 	SDL_Texture* img_m = nullptr;
-
 
 public:
 	SDL_Texture* graphics = nullptr;
@@ -64,6 +60,8 @@ public:
 	fPoint position;
 	iPoint originalPosition_1;
 	iPoint originalPosition_2;
+	iPoint originalPosition_tutorial;
+
 	int playerHeight;
 	int playerWidth;
 	fPoint velocity;

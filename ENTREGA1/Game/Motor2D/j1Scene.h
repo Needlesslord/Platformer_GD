@@ -16,8 +16,7 @@ public:
 	bool Load();
 	bool Save();
 	bool CleanUp();
-	bool ChangeColliders();
-
+	bool changeSceneTo(int scene);
 	bool keys_enabled = false;
 
 	SDL_Texture* imgwin = nullptr;
@@ -28,9 +27,6 @@ public:
 
 private:
 	SDL_Texture* img;
-
-	int cameraLimitX;
-	int cameraLimitY;
 };
 
 #endif // __j1SCENE_H__
