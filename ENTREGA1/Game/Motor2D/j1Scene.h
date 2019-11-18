@@ -13,22 +13,20 @@ public:
 	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
-	bool Load();
-	bool Save();
+	bool Load(pugi::xml_node& node);
+	bool Save(pugi::xml_node& node);
 	bool CleanUp();
-	bool keys_enabled = true;
-
-	Collider* colliders[50];
+	bool changeSceneTo(int scene);
+	bool keys_enabled = false;
 
 	SDL_Texture* imgwin = nullptr;
 	SDL_Texture* intro;
+	SDL_Texture* background1_small;
+	SDL_Texture* background2_small;
 	int current_scene;
 
 private:
 	SDL_Texture* img;
-
-	int cameraLimitX;
-	int cameraLimitY;
 };
 
 #endif // __j1SCENE_H__

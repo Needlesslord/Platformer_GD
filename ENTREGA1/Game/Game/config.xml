@@ -27,12 +27,13 @@
   </map>
   
   <player>
+    <position_turorial x="0" y="0"/>
     <position_scene_1 x="500" y="1112"/>
     <position_scene_2 x="394" y="3544.0"/>
     <win_position_1 x="4206" y="515"/>
     <win_position_2 x="2394" y="328"/>
     <size w="14" h="24"/>
-    <velocity x="0" y="0"/>
+    <velocity x="2.5" y="0"/>
     <gravity value="0.08"/>
     <feet h="1"/>
     <right_side w="1"/>

@@ -23,7 +23,6 @@ struct MapLayer
 		RELEASE(data);
 	}
 
-	// TODO 6 (old): Short function to get the value of x,y
 	inline uint Get(int x, int y) const
 	{
 		return data[x + y * width];
@@ -109,7 +108,6 @@ public:
 
 	// Load new map
 	bool Load(const char* path);
-
 
 	// Coordinate translation methods
 	iPoint MapToWorld(int x, int y) const;

@@ -1,0 +1,42 @@
+#include "j1Entity.h"
+#include "j1Render.h"
+#include "j1App.h"
+
+j1Entity::j1Entity(int x, int y, ENTITY_TYPE type) : position(x, y), type(type)
+{
+}
+
+bool j1Entity::Start()
+{
+	return true;
+}
+
+bool j1Entity::Update(float dt)
+{
+	return true;
+}
+
+bool j1Entity::PostUpdate()
+{
+	return true;
+}
+
+bool j1Entity::PreUpdate()
+{
+	return true;
+}
+
+bool j1Entity::CleanUp()
+{
+	return true;
+}
+
+bool j1Entity::Load()
+{
+	return true;
+}
+
+bool j1Entity::Save()
+{
+	return true;
+}

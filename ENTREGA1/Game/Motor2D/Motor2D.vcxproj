@@ -78,16 +78,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="j1AirEnemy.cpp" />
     <ClCompile Include="j1Collisions.cpp" />
+    <ClCompile Include="j1Entity.cpp" />
+    <ClCompile Include="j1EntityManager.cpp" />
+    <ClCompile Include="j1Exit.cpp" />
     <ClCompile Include="j1Intro.cpp" />
+    <ClCompile Include="j1LandEnemy.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
     <ClCompile Include="j1Audio.cpp" />
     <ClCompile Include="j1Input.cpp" />
     <ClCompile Include="j1Map.cpp" />
+    <ClCompile Include="j1NPC.cpp" />
     <ClCompile Include="j1Scene.cpp" />
     <ClCompile Include="j1Level1.cpp" />
     <ClCompile Include="j1Level2.cpp" />
+    <ClCompile Include="j1SceneEntity.cpp" />
     <ClCompile Include="MemLeaks.cpp" />
     <ClCompile Include="p2Log.cpp" />
     <ClCompile Include="j1Render.cpp" />
@@ -97,13 +104,20 @@
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="j1AirEnemy.h" />
     <ClInclude Include="j1Animation.h" />
     <ClInclude Include="j1Collisions.h" />
+    <ClInclude Include="j1Entity.h" />
+    <ClInclude Include="j1EntityManager.h" />
+    <ClInclude Include="j1Exit.h" />
     <ClInclude Include="j1Intro.h" />
+    <ClInclude Include="j1LandEnemy.h" />
     <ClInclude Include="j1Map.h" />
+    <ClInclude Include="j1NPC.h" />
     <ClInclude Include="j1Scene.h" />
     <ClInclude Include="j1Level1.h" />
     <ClInclude Include="j1Level2.h" />
+    <ClInclude Include="j1SceneEntity.h" />
     <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="j1Audio.h" />
     <ClInclude Include="j1Input.h" />

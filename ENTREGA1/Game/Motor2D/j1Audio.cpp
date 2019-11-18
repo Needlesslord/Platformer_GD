@@ -146,14 +146,12 @@ bool j1Audio::PlayFx(unsigned int id, int repeat) {
 	return ret;
 }
 
-// TODO 6: Create the load method on the renderer. For now load camera's x and y
 bool j1Audio::Load(pugi::xml_node& saved) {
-	volume = saved.child("volume").attribute("value").as_int();								//This I don't understand: why "volume" if it's camera?
+	volume = saved.child("volume").attribute("value").as_int();								
 
 	return true;
 }
 
-// TODO 8: Create the save method on the renderer. Fill the camera's data
 // using append_child and append_attribute
 bool j1Audio::Save(pugi::xml_node& data) {
 	pugi::xml_node vol = data.append_child("volume");

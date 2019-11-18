@@ -48,10 +48,6 @@ bool j1Render::Awake(pugi::xml_node& config) {
 			camera.x = -App->player->position.x;
 			camera.y = -App->player->position.y;
 		}
-
-	
-		//camera.x = App->player->position.x;
-		//camera.y = App->player->position.y;
 	}
 
 	return ret;
@@ -77,8 +73,10 @@ bool j1Render::PreUpdate() {
 }
 
 bool j1Render::Update(float dt) {
-	camera.x = -(App->player->position.x + App->player->playerWidth) * scale + camera.w / scale;
-	camera.y = -(App->player->position.y + App->player->playerHeight) * scale + camera.h / scale;
+	if (!App->scene->keys_enabled) {
+		camera.x = -(App->player->position.x + App->player->playerWidth) * scale + camera.w / scale;
+		camera.y = -(App->player->position.y + App->player->playerHeight) * scale + camera.h / scale;
+	}
 	return true;
 }
 
@@ -98,7 +96,6 @@ bool j1Render::CleanUp() {
 }
 
 
-// TODO 6: Create the load method on the renderer. For now load camera's x and y
 bool j1Render::Load(pugi::xml_node& saved)
 {
 	camera.x = saved.child("camera").attribute("x").as_int();
@@ -108,7 +105,6 @@ bool j1Render::Load(pugi::xml_node& saved)
 	return true;
 }
 
-// TODO 8: Create the save method on the renderer. Fill the camera's data
 // using append_child and append_attribute
 bool j1Render::Save(pugi::xml_node& data) {
 	pugi::xml_node cam = data.append_child("camera");
