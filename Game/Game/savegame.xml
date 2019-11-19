@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <save>
 	<scene>
-		<current_scene value="2" />
+		<current_scene value="1" />
 	</scene>
 	<input />
 	<window />
 	<renderer>
-		<camera x="-549" y="-6526" />
+		<camera x="-2076" y="-1950" />
 	</renderer>
 	<textures />
 	<audio>
@@ -15,7 +15,7 @@
 	<map />
 	<:anonymous />
 	<player>
-		<position_x value="516.5" />
-		<position_y value="3431.08008" />
+		<position_x value="1280" />
+		<position_y value="1143.07996" />
 	</player>
 </save>
