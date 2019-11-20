@@ -180,7 +180,7 @@ bool j1Scene::changeSceneTo(int scene) {
 	}
 
 	else if (scene == 2) { //CHANGE TO SCENE 2		(F2)
-		App->collisions->CleanUp(); 
+		App->collisions->CleanUp();
 		App->map->CleanUp();
 		current_scene = scene;
 
@@ -194,7 +194,7 @@ bool j1Scene::changeSceneTo(int scene) {
 
 		App->scene->CleanUp();
 		App->scene->Start();
-}
+	}	
 	else return false;
 
 	return true;
