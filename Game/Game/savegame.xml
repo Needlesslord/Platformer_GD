@@ -6,7 +6,7 @@
 	<input />
 	<window />
 	<renderer>
-		<camera x="-2076" y="-1950" />
+		<camera x="-2206" y="-2062" />
 	</renderer>
 	<textures />
 	<audio>
@@ -15,7 +15,7 @@
 	<map />
 	<:anonymous />
 	<player>
-		<position_x value="1280" />
-		<position_y value="1143.07996" />
+		<position_x value="1345" />
+		<position_y value="1202.28003" />
 	</player>
 </save>

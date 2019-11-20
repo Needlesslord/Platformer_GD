@@ -37,7 +37,7 @@ bool j1Scene::Start() {
 	}
 	if (current_scene == 1) {
 		background1_small = App->tex->Load("maps/fondo1_small.png");
-		App->map->Load("Level1-0_v3.tmx");
+		App->map->Load("Level1-0_v3 - Tomás.tmx");
 		//App->audio->PlayMusic("audio/music/Scene1.ogg");
 	}
 	if (current_scene == 2) {
@@ -180,7 +180,7 @@ bool j1Scene::changeSceneTo(int scene) {
 	}
 
 	else if (scene == 2) { //CHANGE TO SCENE 2		(F2)
-		App->collisions->CleanUp(); 
+		App->collisions->CleanUp();
 		App->map->CleanUp();
 		current_scene = scene;
 
@@ -194,7 +194,7 @@ bool j1Scene::changeSceneTo(int scene) {
 
 		App->scene->CleanUp();
 		App->scene->Start();
-}
+	}	
 	else return false;
 
 	return true;

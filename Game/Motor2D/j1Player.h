@@ -34,6 +34,8 @@ public:
 	bool PostUpdate();
 	bool Load(pugi::xml_node& node);
 	bool Save(pugi::xml_node& node);
+	void MoveEverything(bool swapped);
+	bool ChangeGravity();
 	bool CleanUp();
 	bool Mirror();
 	void OnCollision(Collider* c1, Collider* c2);
@@ -89,6 +91,11 @@ public:
 	bool alive;
 	bool godMode = false;
 	bool win = false;
+
+	bool gravitySwapped = false;
+	bool justSwapped = false;
+	int swapTimer = 0;
+
 	player_states current_state;
 	p2SString			folder;
 	p2SString			texture;
