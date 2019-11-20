@@ -449,6 +449,13 @@ void j1Map::CollidersMap()
 				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_DEATH);
 			}
 		}
+		else if (objectg->name == "Gravedad")
+		{
+			for (int j = 0; j < objectg->num_objects; j++)
+			{
+				App->collisions->AddCollider(objectg->objects_col[j], COLLIDER_GRAVITY);
+			}
+		}
 	}
 }
 
