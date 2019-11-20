@@ -68,13 +68,15 @@ public:
 	int playerWidth;
 	fPoint velocity;
 	float gravity;
-	Collider* col;
+		Collider* col;
 	SDL_Rect feet;
-	Collider* colFeet;
+		Collider* colFeet;
 	SDL_Rect rightside;
-	Collider* colRightside;
+		Collider* colRightside;
 	SDL_Rect leftside;
-	Collider* colLeftside;
+		Collider* colLeftside;
+	SDL_Rect head;
+		Collider* colHead;
 	iPoint AnimationOffstet;
 	iPoint directWin_1;
 	iPoint directWin_2;
@@ -92,7 +94,7 @@ public:
 	bool godMode = false;
 	bool win = false;
 
-	bool gravitySwapped = false;
+	bool gravitySwapped;
 	bool justSwapped = false;
 	int swapTimer = 0;
 

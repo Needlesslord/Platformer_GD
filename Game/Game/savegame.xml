@@ -6,16 +6,16 @@
 	<input />
 	<window />
 	<renderer>
-		<camera x="-2206" y="-2062" />
+		<camera x="-3116" y="-1952" />
 	</renderer>
 	<textures />
 	<audio>
 		<volume value="64" />
 	</audio>
 	<map />
-	<:anonymous />
 	<player>
-		<position_x value="1345" />
-		<position_y value="1202.28003" />
+		<position_x value="1800" />
+		<position_y value="1144.07996" />
+		<gravity value="0" />
 	</player>
 </save>

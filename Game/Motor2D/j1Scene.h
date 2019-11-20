@@ -23,6 +23,10 @@ public:
 	SDL_Texture* intro;
 	SDL_Texture* background1_small;
 	SDL_Texture* background2_small;
+
+	Collider* ball;
+	bool goingRight;
+
 	int current_scene;
 
 private:
