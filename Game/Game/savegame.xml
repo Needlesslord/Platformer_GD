@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<save>
+	<scene>
+		<current_scene value="1" />
+	</scene>
+	<input />
+	<window />
+	<renderer>
+		<camera x="-2206" y="-2062" />
+	</renderer>
+	<textures />
+	<audio>
+		<volume value="64" />
+	</audio>
+	<map />
+	<:anonymous />
+	<player>
+		<position_x value="1345" />
+		<position_y value="1202.28003" />
+	</player>
+</save>
