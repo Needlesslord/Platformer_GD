@@ -18,9 +18,11 @@
 #include "j1Particles.h"
 #include "j1Player.h"
 #include "j1Map.h"
-//#include "j1Globals.h"
-
-//#include "MAP.h"
+#include "j1Entity.h"
+#include "j1EntityManager.h"
+#include "j1Enemy.h"
+#include "j1Enemy_Air1.h"
+#include "j1Enemy_Land.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
@@ -33,6 +35,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
 	map = new j1Map();
 	collisions = new j1Collisions();
 	player = new j1Player();
+	entity_manager = new j1EntityManager();
 
 	{//Intro or Scene
 		pugi::xml_document save_file;
@@ -63,6 +66,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
 	AddModule(map);
 	AddModule(collisions);
 	AddModule(player);
+	AddModule(entity_manager);
 	//animation = new j1Animation();
 	//AddModule(animation);
 }

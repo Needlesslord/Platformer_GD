@@ -10,6 +10,12 @@
 #include "j1Map.h"
 #include "j1Collisions.h"
 #include "j1Player.h"
+#include "j1EntityManager.h"
+#include "j1Enemy_Air1.h"
+#include "j1Enemy_Land.h"
+#include "j1Exit.h"
+#include "j1SceneEntity.h"
+#include "j1NPC.h"
 
 
 j1Scene::j1Scene() : j1Module() {
@@ -45,6 +51,10 @@ bool j1Scene::Start() {
 		App->map->Load("Level2-0_v2.tmx");
 		//App->audio->PlayMusic("audio/music/intro.ogg");
 	}
+
+	App->entity_manager->AddEntity(ENTITY_TYPE::ENTITY_TYPE_ENEMY_AIR1, 600, 600);
+
+
 	return true;
 }
 

@@ -15,6 +15,8 @@ class j1Intro;
 class j1Collisions;
 class j1Player;
 class j1Map;
+class j1Entity;
+class j1EntityManager;
 
 //Missing other classes
 
@@ -75,6 +77,8 @@ public:
 	//j1Level2*			l2;
 	//j1Particles*		particle;
 	j1Player*			player;
+	//j1Entity*			entity;
+	j1EntityManager*	entity_manager;
 	bool SaveRequest = false;
 	bool LoadRequest = false;
 

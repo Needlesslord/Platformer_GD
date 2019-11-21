@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __ModulePlayer_H__
 #define __ModulePlayer_H__
 #include "j1Module.h"
