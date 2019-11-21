@@ -73,17 +73,17 @@ j1Player::j1Player() : j1Module() {
 	player_walking_gravitySwapped.PushBack({ 161,  377,  23, 32 });
 	player_walking_gravitySwapped.PushBack({ 184,  377,  25, 32 });
 	player_walking_gravitySwapped.PushBack({   0,  349,  25, 32 });
-	player_walking_gravitySwapped.PushBack({  23,  349,  25, 32 });
+	player_walking_gravitySwapped.PushBack({  25,  349,  25, 32 });
 	player_walking_gravitySwapped.speed = 0.3f;
 
-	player_walking.PushBack({ 92,  37,  23, 28 });
-	player_walking.PushBack({ 115,  37,  23, 28 });
-	player_walking.PushBack({ 138,  37,  23, 28 });
-	player_walking.PushBack({ 161,  37,  23, 28 });
-	player_walking.PushBack({ 184,  37,  25, 28 });
-	player_walking.PushBack({ 171,  65,  25, 28 });
-	player_walking.PushBack({ 196,  65,  25, 28 });
-	player_walking.speed = 0.3f;
+	player_walking_mirror_gravitySwapped.PushBack({ 325,  377,  23, 32 });
+	player_walking_mirror_gravitySwapped.PushBack({ 302,  377,  23, 32 });
+	player_walking_mirror_gravitySwapped.PushBack({ 279,  377,  23, 32 });
+	player_walking_mirror_gravitySwapped.PushBack({ 256,  377,  23, 32 });
+	player_walking_mirror_gravitySwapped.PushBack({ 231,  377,  25, 32 });
+	player_walking_mirror_gravitySwapped.PushBack({ 415,  349,  25, 32 });
+	player_walking_mirror_gravitySwapped.PushBack({ 390,  349,  25, 32 });
+	player_walking_mirror_gravitySwapped.speed = 0.3f;
 
 	//falling
 	player_falling.PushBack({ 192,  96,  32, 32 });
@@ -242,6 +242,7 @@ bool j1Player::Update(float dt) {
 				againstRoof = false;
 				velocity.y = -3;
 				hasDoubleJumped = false;
+				//TODO: Play an Fx for jumping
 			}
 		}
 		else {
@@ -314,13 +315,13 @@ void j1Player::MoveEverything(bool swapped) {
 bool j1Player::ChangeGravity() {
 	if (!gravitySwapped) { //NORMAL CASE
 		gravity = gravity * (-1);
-		velocity.y = -6;
+		velocity.y = -8;
 		gravitySwapped = true;
 		return true; //Gravity WILL be different from the original state
 	}
 	else { //GRAVITY HAS ALREADY BEEN CHANGED
 		gravity = gravity * (-1);
-		velocity.y = 6;
+		velocity.y = 8;
 		gravitySwapped = false;
 		return false; //Gravity WILL NOT be different from the original state
 	}
@@ -409,6 +410,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				position.y = originalPosition_2.y;
 			}
 			win = true;
+			gravitySwapped = false;
+			gravity = 0.08;
 		}
 		if (c2->type == COLLIDER_DEATH) {
 			if (App->scene->current_scene == 1) {
