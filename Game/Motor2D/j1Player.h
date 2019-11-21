@@ -45,7 +45,6 @@ private:
 	SDL_Texture* img_m = nullptr;
 
 public:
-	SDL_Texture* graphics = nullptr;
 	SDL_Texture* imgwin = nullptr;
 	j1Animation* current_animation;
 

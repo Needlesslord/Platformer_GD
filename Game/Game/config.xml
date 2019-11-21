@@ -36,6 +36,7 @@
     <velocity x="2.5" y="0"/>
     <gravity value="0.08"/>
     <feet h="1"/>
+    <head h="1"/>
     <right_side w="1"/>
     <left_side w="1"/>
     <s_down value="false"/>

@@ -24,25 +24,30 @@ j1Player::j1Player() : j1Module() {
 	player_idle.PushBack({ 69, 0, 23, 28 });
 	player_idle.speed = 0.125f;
 
-	player_idle_mirror.PushBack({ 348, 0, 23, 28 });
+	player_idle_mirror.PushBack({ 417, 0, 23, 28 });
+	player_idle_mirror.PushBack({ 394, 0, 23, 28 });	
 	player_idle_mirror.PushBack({ 371, 0, 23, 28 });
-	player_idle_mirror.PushBack({ 394, 0, 23, 28 });
-	player_idle_mirror.PushBack({ 317, 0, 23, 28 });
+	player_idle_mirror.PushBack({ 348, 0, 23, 28 });
 	player_idle_mirror.speed = 0.125f;
 
-	player_idle_gravitySwapped.PushBack({  0, 0, 23, 28 });
-	player_idle_gravitySwapped.PushBack({ 23, 0, 23, 28 });
-	player_idle_gravitySwapped.PushBack({ 46, 0, 23, 28 });
-	player_idle_gravitySwapped.PushBack({ 69, 0, 23, 28 });
+	player_idle_gravitySwapped.PushBack({  0, 416, 23, 32 });
+	player_idle_gravitySwapped.PushBack({ 23, 416, 23, 32 });
+	player_idle_gravitySwapped.PushBack({ 46, 416, 23, 32 });
+	player_idle_gravitySwapped.PushBack({ 69, 416, 23, 32 });
 	player_idle_gravitySwapped.speed = 0.125f;
 
-	player_idle_mirror_gravitySwapped.PushBack({  0, 0, 23, 28 });
-	player_idle_mirror_gravitySwapped.PushBack({ 23, 0, 23, 28 });
-	player_idle_mirror_gravitySwapped.PushBack({ 46, 0, 23, 28 });
-	player_idle_mirror_gravitySwapped.PushBack({ 69, 0, 23, 28 });
+	player_idle_mirror_gravitySwapped.PushBack({ 417, 416, 23, 32 });
+	player_idle_mirror_gravitySwapped.PushBack({ 394, 416, 23, 32 });
+	player_idle_mirror_gravitySwapped.PushBack({ 371, 416, 23, 32 });
+	player_idle_mirror_gravitySwapped.PushBack({ 348, 416, 23, 32 });
 	player_idle_mirror_gravitySwapped.speed = 0.125f;
+
 	//jumping
 	player_jumping.PushBack({ 92, 0, 23, 28 });
+	player_jumping_mirror.PushBack({ 325, 0, 23, 28 });
+	player_jumping_gravitySwapped.PushBack({ 92, 416, 23, 32 });
+	player_jumping_mirror_gravitySwapped.PushBack({ 325, 416, 23, 32 });
+
 	//walking
 	player_walking.PushBack({  92,  37,  23, 28 });
 	player_walking.PushBack({ 115,  37,  23, 28 });
@@ -50,8 +55,36 @@ j1Player::j1Player() : j1Module() {
 	player_walking.PushBack({ 161,  37,  23, 28 });
 	player_walking.PushBack({ 184,  37,  25, 28 });
 	player_walking.PushBack({ 171,  65,  25, 28 });
+	player_walking.PushBack({ 196,  65,  24, 28 });
+	player_walking.speed = 0.3f;
+
+	player_walking_mirror.PushBack({ 325,  37,  23, 28 });
+	player_walking_mirror.PushBack({ 302,  37,  23, 28 });
+	player_walking_mirror.PushBack({ 279,  37,  23, 28 });
+	player_walking_mirror.PushBack({ 256,  37,  23, 28 });
+	player_walking_mirror.PushBack({ 231,  37,  25, 28 });
+	player_walking_mirror.PushBack({ 244,  65,  25, 28 });
+	player_walking_mirror.PushBack({ 220,  65,  24, 28 });
+	player_walking_mirror.speed = 0.3f;
+
+	player_walking_gravitySwapped.PushBack({  92,  377,  23, 32 });
+	player_walking_gravitySwapped.PushBack({ 115,  377,  23, 32 });
+	player_walking_gravitySwapped.PushBack({ 138,  377,  23, 32 });
+	player_walking_gravitySwapped.PushBack({ 161,  377,  23, 32 });
+	player_walking_gravitySwapped.PushBack({ 184,  377,  25, 32 });
+	player_walking_gravitySwapped.PushBack({   0,  349,  25, 32 });
+	player_walking_gravitySwapped.PushBack({  23,  349,  25, 32 });
+	player_walking_gravitySwapped.speed = 0.3f;
+
+	player_walking.PushBack({ 92,  37,  23, 28 });
+	player_walking.PushBack({ 115,  37,  23, 28 });
+	player_walking.PushBack({ 138,  37,  23, 28 });
+	player_walking.PushBack({ 161,  37,  23, 28 });
+	player_walking.PushBack({ 184,  37,  25, 28 });
+	player_walking.PushBack({ 171,  65,  25, 28 });
 	player_walking.PushBack({ 196,  65,  25, 28 });
 	player_walking.speed = 0.3f;
+
 	//falling
 	player_falling.PushBack({ 192,  96,  32, 32 });
 
@@ -75,10 +108,10 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	feet.y						= config.child("position_scene_1").attribute("y").as_float() + config.child("size").attribute("h").as_int();	//PLAYER H + PLAYER Y
 	feet.w						= config.child("size").attribute("w").as_int();	//SAME AS PLAYER
 	feet.h						= config.child("feet").attribute("h").as_int();
-	head.x = position.x;
-	head.y = position.y-1;
-	head.w = playerWidth;
-	head.h = 1;
+	head.x						= config.child("position_scene_1").attribute("x").as_float();
+	head.y						= config.child("position_scene_1").attribute("y").as_float() - 1;
+	head.w						= config.child("size").attribute("w").as_int();;
+	head.h						= config.child("head").attribute("h").as_int();;
 	S_Down						= config.child("s_down").attribute("value").as_bool();
 	grounded					= config.child("grounded").attribute("value").as_bool();
 	hasDoubleJumped				= config.child("has_doublejumped").attribute("value").as_bool();
@@ -112,7 +145,6 @@ bool j1Player::Start() {
 	gravitySwapped = false;
 
 	player_textures = App->tex->Load("textures/Ninja_Frog.png");
-	//img_m = App->tex->Load("textures/Ninja_Frog_m.png");
 	imgwin = App->tex->Load("textures/imgwin.png");
 	if (App->scene->current_scene == 1) {
 		position.x = originalPosition_1.x;
@@ -129,12 +161,12 @@ bool j1Player::Start() {
 bool j1Player::CleanUp() {
 	LOG("Unloading player");
 
-	App->tex->UnLoad(graphics);
 	App->tex->UnLoad(player_textures);
 	App->tex->UnLoad(imgwin);
 
 	if (col != nullptr)col->to_delete = true;
 	if (colFeet != nullptr)colFeet->to_delete = true;
+	if (colHead != nullptr)colHead->to_delete = true;
 	if (colRightside != nullptr) colRightside->to_delete = true;
 	if (colLeftside != nullptr) colLeftside->to_delete = true;
 
@@ -147,23 +179,16 @@ bool j1Player::PreUpdate() {
 
 // Update: draw background
 bool j1Player::Update(float dt) {
-	if (mirror) {
-		if (gravitySwapped)current_animation = &player_idle_mirror_gravitySwapped;
-		else current_animation = &player_idle_mirror;
-	}
-	else {
-		if (gravitySwapped) current_animation = &player_idle_gravitySwapped;
-		else current_animation = &player_idle;
-	}
+	if(mirror && gravitySwapped)		current_animation = &player_idle_mirror_gravitySwapped;
+	else if (mirror && !gravitySwapped)	current_animation = &player_idle_mirror;
+	else if(!mirror && gravitySwapped)	current_animation = &player_idle_gravitySwapped;
+	else								current_animation = &player_idle;
+
 	if (!grounded && !againstRoof) {
-		if (mirror) {
-			if (gravitySwapped)current_animation = &player_jumping_mirror_gravitySwapped;
-			else current_animation = &player_jumping_mirror;
-		}
-		else {
-			if (gravitySwapped) current_animation = &player_jumping_gravitySwapped;
-			else current_animation = &player_jumping;
-		}
+		if (mirror && gravitySwapped)		current_animation = &player_jumping_mirror_gravitySwapped;
+		else if (mirror && !gravitySwapped)	current_animation = &player_jumping_mirror;
+		else if (!mirror && gravitySwapped)	current_animation = &player_jumping_gravitySwapped;
+		else								current_animation = &player_jumping;
 	}
 
 	if (!godMode) velocity.y -= gravity;
@@ -174,7 +199,7 @@ bool j1Player::Update(float dt) {
 		else if (!gravitySwapped && grounded)current_animation = &player_walking_mirror;
 		mirror = true;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) /*RESET*/ { player_walking_mirror_gravitySwapped.Reset(); player_walking_mirror.Reset(); player_walking_gravitySwapped.Reset(); player_walking.Reset(); }
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) /*RESET*/ { player_walking_mirror_gravitySwapped.Reset(); player_walking_mirror.Reset(); }
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !againstRightSide) {
 		position.x += velocity.x;
@@ -182,7 +207,7 @@ bool j1Player::Update(float dt) {
 		else if (!gravitySwapped && grounded)current_animation = &player_walking;
 		mirror = false;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) player_walking.Reset();
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) /*RESET*/ { player_walking_gravitySwapped.Reset(); player_walking.Reset(); }
 
 	MoveEverything(gravitySwapped);
 
@@ -239,13 +264,14 @@ bool j1Player::Update(float dt) {
 		grounded = false;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) S_Down = false;
-	
+
 	DrawPlayer();
 
 	return true;
 }
 
 bool j1Player::PostUpdate() {
+	grounded			= false;
 	againstLeftSide		= false;
 	againstRightSide	= false;
 	againstRoof			= false;
