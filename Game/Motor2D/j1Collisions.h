@@ -50,7 +50,7 @@ public:
 	j1Collisions();
 	virtual ~j1Collisions();
 
-	bool Awake();
+	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool PreUpdate();
 	bool Update(float dt);
@@ -65,7 +65,8 @@ private:
 
 	Collider* colliders[MAX_COLLIDERS] = { nullptr };
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
-	bool debug = false;		
+	int getDebug;
+	bool debug;		
 };
 
 #endif // __ModuleCollision_H__
