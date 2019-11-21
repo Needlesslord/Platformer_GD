@@ -30,7 +30,6 @@ bool j1Scene::Awake(pugi::xml_node& config) {
 
 // Called before the first frame
 bool j1Scene::Start() {
-	ball = App->collisions->AddCollider({ 2800, 1500, 20, 20 }, COLLIDER_ENEMY, App->player);
 	if (current_scene == 0) {
 		intro = App->tex->Load("textures/Start.png");
 		App->audio->PlayMusic("audio/music/intro.ogg");
@@ -55,14 +54,6 @@ bool j1Scene::PreUpdate() {
 
 // Called each loop iteration
 bool j1Scene::Update(float dt) {	
-	if (ball->rect.x >= 3000) goingRight = false;
-	else if (ball->rect.x <= 2600) goingRight = true;
-
-	if (App->player->againstRoof) {
-		if (goingRight) ball->rect.x += 3;
-		else ball->rect.x -= 3;
-	}
-
 	{//DEBUG KEYS
 		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) { //CHANGE TO SCENE 1
 			if (current_scene != 1) {

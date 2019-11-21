@@ -53,4 +53,7 @@
 
   <scene current_scene ="1"/>
 
+  <collisions>
+    <debug value="0"/>
+  </collisions>
 </config>

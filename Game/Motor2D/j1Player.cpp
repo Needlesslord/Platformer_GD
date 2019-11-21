@@ -22,15 +22,28 @@ j1Player::j1Player() : j1Module() {
 	player_idle.PushBack({ 23, 0, 23, 28 });
 	player_idle.PushBack({ 46, 0, 23, 28 });
 	player_idle.PushBack({ 69, 0, 23, 28 });
-	player_idle.speed = 0.25f;
+	player_idle.speed = 0.125f;
 
+	player_idle_mirror.PushBack({ 348, 0, 23, 28 });
+	player_idle_mirror.PushBack({ 371, 0, 23, 28 });
+	player_idle_mirror.PushBack({ 394, 0, 23, 28 });
+	player_idle_mirror.PushBack({ 317, 0, 23, 28 });
+	player_idle_mirror.speed = 0.125f;
+
+	player_idle_gravitySwapped.PushBack({  0, 0, 23, 28 });
+	player_idle_gravitySwapped.PushBack({ 23, 0, 23, 28 });
+	player_idle_gravitySwapped.PushBack({ 46, 0, 23, 28 });
+	player_idle_gravitySwapped.PushBack({ 69, 0, 23, 28 });
+	player_idle_gravitySwapped.speed = 0.125f;
+
+	player_idle_mirror_gravitySwapped.PushBack({  0, 0, 23, 28 });
+	player_idle_mirror_gravitySwapped.PushBack({ 23, 0, 23, 28 });
+	player_idle_mirror_gravitySwapped.PushBack({ 46, 0, 23, 28 });
+	player_idle_mirror_gravitySwapped.PushBack({ 69, 0, 23, 28 });
+	player_idle_mirror_gravitySwapped.speed = 0.125f;
 	//jumping
 	player_jumping.PushBack({ 92, 0, 23, 28 });
 	//walking
-	player_walking.PushBack({   0,  37,  23, 28 });
-	player_walking.PushBack({  23,  37,  23, 28 });
-	player_walking.PushBack({  46,  37,  23, 28 });
-	player_walking.PushBack({  69,  37,  23, 28 });
 	player_walking.PushBack({  92,  37,  23, 28 });
 	player_walking.PushBack({ 115,  37,  23, 28 });
 	player_walking.PushBack({ 138,  37,  23, 28 });
@@ -38,7 +51,7 @@ j1Player::j1Player() : j1Module() {
 	player_walking.PushBack({ 184,  37,  25, 28 });
 	player_walking.PushBack({ 171,  65,  25, 28 });
 	player_walking.PushBack({ 196,  65,  25, 28 });
-	player_walking.speed = 0.5f;
+	player_walking.speed = 0.3f;
 	//falling
 	player_falling.PushBack({ 192,  96,  32, 32 });
 
@@ -90,7 +103,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 bool j1Player::Start() {
 	LOG("Loading player");
 	current_state = PLAYER_ST_IDLE;
-	current_animation = &player_jumping;
+	current_animation = &player_idle;
 	colFeet			= App->collisions->AddCollider(feet, COLLIDER_PLAYER, this);
 	colHead			= App->collisions->AddCollider(head, COLLIDER_PLAYER, this);
 	colRightside	= App->collisions->AddCollider(rightside, COLLIDER_PLAYER, this);
@@ -128,32 +141,46 @@ bool j1Player::CleanUp() {
 	return true;
 }
 
-bool j1Player::Mirror() {
-	
-	return mirror;
-}
-
 bool j1Player::PreUpdate() {
 	return true;
 }
 
 // Update: draw background
 bool j1Player::Update(float dt) {
-	if(grounded) current_animation = &player_idle;
-	else current_animation = &player_jumping;
+	if (mirror) {
+		if (gravitySwapped)current_animation = &player_idle_mirror_gravitySwapped;
+		else current_animation = &player_idle_mirror;
+	}
+	else {
+		if (gravitySwapped) current_animation = &player_idle_gravitySwapped;
+		else current_animation = &player_idle;
+	}
+	if (!grounded && !againstRoof) {
+		if (mirror) {
+			if (gravitySwapped)current_animation = &player_jumping_mirror_gravitySwapped;
+			else current_animation = &player_jumping_mirror;
+		}
+		else {
+			if (gravitySwapped) current_animation = &player_jumping_gravitySwapped;
+			else current_animation = &player_jumping;
+		}
+	}
 
 	if (!godMode) velocity.y -= gravity;
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !againstLeftSide) {
 		position.x -= velocity.x;
-		if(grounded) current_animation = &player_walking;
+		if (gravitySwapped && againstRoof)current_animation = &player_walking_mirror_gravitySwapped;
+		else if (!gravitySwapped && grounded)current_animation = &player_walking_mirror;
+		mirror = true;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) player_walking.Reset();
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) /*RESET*/ { player_walking_mirror_gravitySwapped.Reset(); player_walking_mirror.Reset(); player_walking_gravitySwapped.Reset(); player_walking.Reset(); }
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !againstRightSide) {
 		position.x += velocity.x;
-		if (grounded) current_animation = &player_walking;
-
+		if (gravitySwapped && againstRoof) current_animation = &player_walking_gravitySwapped;
+		else if (!gravitySwapped && grounded)current_animation = &player_walking;
+		mirror = false;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) player_walking.Reset();
 
@@ -213,10 +240,7 @@ bool j1Player::Update(float dt) {
 	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) S_Down = false;
 	
-	//----------------------------------------- Draw everything --------------------------------------
-	//SDL_RenderCopyEx(App->render->renderer, player_textures, &(current_animation->GetCurrentFrame()), &playerRect, NULL, NULL, SDL_FLIP_HORIZONTAL);
-	App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
-	if (win) App->render->Blit(imgwin, originalPosition_1.x - 175, originalPosition_1.y - 150);
+	DrawPlayer();
 
 	return true;
 }
@@ -231,20 +255,16 @@ bool j1Player::PostUpdate() {
 bool j1Player::Save(pugi::xml_node& node) {
 	node.append_child("position_x").append_attribute("value") = position.x;
 	node.append_child("position_y").append_attribute("value") = position.y;
-	if(gravitySwapped) 
-		node.append_child("gravity").append_attribute("value") = 1;
-	else if(!gravitySwapped)
-		node.append_child("gravity").append_attribute("value") = 0;
+	if(gravitySwapped) node.append_child("gravity").append_attribute("value") = 1;
+	else if(!gravitySwapped) node.append_child("gravity").append_attribute("value") = 0;
 	return true;
 }
 bool j1Player::Load(pugi::xml_node& node) {
 	position.x = node.child("position_x").attribute("value").as_float();
 	position.y = node.child("position_y").attribute("value").as_float() - 5;
 	int gravity = node.child("gravity").attribute("value").as_int();
-	if (gravity == 0) 
-		gravitySwapped = false;
-	else if(gravity == 1)
-		gravitySwapped = true;
+	if (gravity == 0) gravitySwapped = false;
+	else if(gravity == 1) gravitySwapped = true;
 	return true;
 }
 
@@ -280,23 +300,40 @@ bool j1Player::ChangeGravity() {
 	}
 }
 
+bool j1Player::DrawPlayer() {
+	if (!gravitySwapped && !mirror)
+		App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
+	else if (!gravitySwapped && mirror)
+		App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
+	else if (gravitySwapped && !mirror)
+		App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
+	else if (gravitySwapped && mirror)
+		App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
+	else {
+		LOG("Couldn't draw player");
+		return false;
+	}
+	return true;
+}
+
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c1->type == COLLIDER_PLAYER && !godMode) {
 		if (!gravitySwapped) {
-			if ((c2->type == COLLIDER_PLATFORM || c2->type == COLLIDER_WALL) && 
-				c1 != colRightside && c1 != colLeftside && velocity.y < 0 && 
+			if ((c2->type == COLLIDER_PLATFORM || c2->type == COLLIDER_WALL) && c1 != colRightside && c1 != colLeftside && velocity.y < 0 && 
 				!S_Down && position.y + playerHeight < c2->rect.y + 6) {
 				velocity.y = 0;
 				position.y = c2->rect.y - playerHeight;
 				grounded = true;
 			}
 
-			if (c2->type == COLLIDER_WALL && c1->rect.y <= c2->rect.y + c2->rect.h && c1->rect.y + playerHeight >= c2->rect.y && c1->rect.x + playerWidth >= c2->rect.x && c1->rect.x <= c2->rect.x) {
+			if (c2->type == COLLIDER_WALL && position.y < c2->rect.y + c2->rect.h && position.y + playerHeight > c2->rect.y && 
+				position.x + playerWidth >= c2->rect.x && position.x <= c2->rect.x) {
 				againstRightSide = true;
 				againstLeftSide = false;
 			}
 
-			if (c2->type == COLLIDER_WALL && c1->rect.y <= c2->rect.y + c2->rect.h && c1->rect.y + playerHeight >= c2->rect.y && c1->rect.x <= c2->rect.x + c2->rect.w && c1->rect.x + playerWidth >= c2->rect.x + c2->rect.w) {
+			if (c2->type == COLLIDER_WALL && position.y < c2->rect.y + c2->rect.h && position.y + playerHeight > c2->rect.y &&
+				position.x <= c2->rect.x + c2->rect.w && position.x + playerWidth >= c2->rect.x + c2->rect.w) {
 				againstLeftSide = true;
 				againstRightSide = false;
 			}

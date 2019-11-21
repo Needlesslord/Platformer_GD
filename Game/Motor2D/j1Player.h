@@ -37,7 +37,7 @@ public:
 	void MoveEverything(bool swapped);
 	bool ChangeGravity();
 	bool CleanUp();
-	bool Mirror();
+	bool DrawPlayer();
 	void OnCollision(Collider* c1, Collider* c2);
 
 private:
@@ -48,16 +48,29 @@ public:
 	SDL_Texture* graphics = nullptr;
 	SDL_Texture* imgwin = nullptr;
 	j1Animation* current_animation;
+
 	j1Animation player_idle;
+	j1Animation player_idle_mirror;
+	j1Animation player_idle_gravitySwapped;
+	j1Animation player_idle_mirror_gravitySwapped;
+
 	j1Animation player_walking;
+	j1Animation player_walking_mirror;
+	j1Animation player_walking_gravitySwapped;
+	j1Animation player_walking_mirror_gravitySwapped;
+
 	j1Animation player_jumping;
+	j1Animation player_jumping_mirror;
+	j1Animation player_jumping_gravitySwapped;
+	j1Animation player_jumping_mirror_gravitySwapped;
+
 	j1Animation player_doublejumping;
 	j1Animation player_falling;
 	j1Animation player_appearing;
 	j1Animation player_disappearing;
 	j1Animation player_hit;
 	j1Animation player_dashing;
-	j1Animation player_daeth;
+	j1Animation player_death;
 	
 	fPoint position;
 	iPoint originalPosition_1;

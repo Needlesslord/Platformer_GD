@@ -3,8 +3,8 @@
 #include "j1Render.h"
 #include "j1Collisions.h"
 
-j1Collisions::j1Collisions() : j1Module()
-{
+j1Collisions::j1Collisions() : j1Module() {
+	name.create("collisions");
 	matrix[COLLIDER_PLATFORM][COLLIDER_PLATFORM] = false;
 	matrix[COLLIDER_PLATFORM][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_PLATFORM][COLLIDER_ENEMY] = false;
@@ -114,17 +114,19 @@ j1Collisions::j1Collisions() : j1Module()
 	matrix[COLLIDER_GRAVITY][COLLIDER_WALL] = true;
 	matrix[COLLIDER_GRAVITY][COLLIDER_WIN] = false;
 	matrix[COLLIDER_GRAVITY][COLLIDER_DEATH] = false;
-
 }
 
 // Destructor
 j1Collisions::~j1Collisions()
 {}
 
-bool j1Collisions::Awake() {
+bool j1Collisions::Awake(pugi::xml_node& config) {
+	getDebug = config.child("debug").attribute("value").as_int();
 	return true;
 }
 bool j1Collisions::Start() {
+	if (getDebug == 0)debug = false;
+	else if (getDebug == 1)debug = true;
 	return true;
 }
 
