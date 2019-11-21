@@ -37,6 +37,7 @@ bool j1Scene::Awake(pugi::xml_node& config) {
 // Called before the first frame
 bool j1Scene::Start() {
 	if (current_scene == 0) {
+		background1_small = App->tex->Load("maps/fondo0_small.png");
 		intro = App->tex->Load("textures/Start.png");
 		App->audio->PlayMusic("audio/music/intro.ogg");
 	}
