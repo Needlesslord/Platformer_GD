@@ -103,7 +103,6 @@ public:
 	bool hasDoubleJumped;
 	bool alive;
 	bool godMode = false;
-	bool win = false;
 
 	bool gravitySwapped;
 	bool justSwapped = false;

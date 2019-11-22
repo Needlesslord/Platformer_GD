@@ -141,12 +141,16 @@ bool j1Player::Start() {
 	colHead			= App->collisions->AddCollider(head, COLLIDER_PLAYER, this);
 	colRightside	= App->collisions->AddCollider(rightside, COLLIDER_PLAYER, this);
 	colLeftside		= App->collisions->AddCollider(leftside, COLLIDER_PLAYER, this);
-	col = App->collisions->AddCollider({ originalPosition_1.x, originalPosition_1.y, playerWidth, playerHeight }, COLLIDER_PLAYER, this);
+	col				= App->collisions->AddCollider({ originalPosition_1.x, originalPosition_1.y, playerWidth, playerHeight }, COLLIDER_PLAYER, this);
 	gravitySwapped = false;
 
 	player_textures = App->tex->Load("textures/Ninja_Frog.png");
 	imgwin = App->tex->Load("textures/imgwin.png");
-	if (App->scene->current_scene == 1) {
+	if (App->scene->current_scene == 0) {
+		position.x = originalPosition_1.x;
+		position.y = originalPosition_1.y;
+	}
+	else if (App->scene->current_scene == 1) {
 		position.x = originalPosition_1.x;
 		position.y = originalPosition_1.y;
 	}
@@ -213,7 +217,7 @@ bool j1Player::Update(float dt) {
 
 	if (justSwapped) {
 		swapTimer++;
-		if (swapTimer > 100) {
+		if (swapTimer > 80) {
 			swapTimer = 0;
 			justSwapped = false;
 		}
@@ -401,17 +405,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		}
 
 		if (c2->type == COLLIDER_WIN) {
-			if (App->scene->current_scene == 1) {
-				position.x = originalPosition_1.x;
-				position.y = originalPosition_1.y;
+			if (current_map == 1) {
+				App->scene->changeSceneTo(2);
 			}
-			if (App->scene->current_scene == 2) {
-				position.x = originalPosition_2.x;
-				position.y = originalPosition_2.y;
+			if (current_map == 2) {
+				App->scene->changeSceneTo(1);
 			}
-			win = true;
-			gravitySwapped = false;
-			gravity = 0.08;
 		}
 		if (c2->type == COLLIDER_DEATH) {
 			if (App->scene->current_scene == 1) {

@@ -12,7 +12,6 @@
 #include "j1Intro.h"
 #include "j1Animation.h"
 #include "j1Collisions.h"
-#include "j1FadeToBlack.h"
 #include "j1Level1.h"
 #include "j1Level2.h"
 #include "j1Particles.h"

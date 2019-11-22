@@ -8,8 +8,6 @@
 #include "j1Enemy.h"
 #include "j1Enemy_Air1.h"
 #include "j1Enemy_Land.h"
-#include "j1Exit.h"
-#include "j1SceneEntity.h"
 #include "j1NPC.h"
 
 #define SPAWN_MARGIN 50

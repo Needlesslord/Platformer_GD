@@ -13,8 +13,6 @@
 #include "j1EntityManager.h"
 #include "j1Enemy_Air1.h"
 #include "j1Enemy_Land.h"
-#include "j1Exit.h"
-#include "j1SceneEntity.h"
 #include "j1NPC.h"
 
 
@@ -38,23 +36,21 @@ bool j1Scene::Awake(pugi::xml_node& config) {
 bool j1Scene::Start() {
 	if (current_scene == 0) {
 		background1_small = App->tex->Load("maps/fondo0_small.png");
-		intro = App->tex->Load("textures/Start.png");
-		App->audio->PlayMusic("audio/music/intro.ogg");
+		App->map->Load("00 Tutorial.tmx");
+		//App->audio->PlayMusic("audio/music/intro.ogg");
 	}
-	if (current_scene == 1) {
+	else if (current_scene == 1) {
 		background1_small = App->tex->Load("maps/fondo1_small.png");
-		App->map->Load("Level1-0_v3 - Tomás.tmx");
+		App->map->Load("01 Level1.tmx");
 		//App->audio->PlayMusic("audio/music/Scene1.ogg");
 	}
-	if (current_scene == 2) {
+	else if (current_scene == 2) {
 		background2_small = App->tex->Load("maps/fondo2_small.png");
-		App->map->Load("Level2-0_v2.tmx");
+		App->map->Load("02 Level2.tmx");
 		//App->audio->PlayMusic("audio/music/intro.ogg");
 	}
 
 	App->entity_manager->AddEntity(ENTITY_TYPE::ENTITY_TYPE_ENEMY_AIR1, 600, 600);
-
-
 	return true;
 }
 
@@ -179,11 +175,12 @@ bool j1Scene::changeSceneTo(int scene) {
 
 		App->player->CleanUp();
 		App->player->Start(); 
-		App->player->win = false;
 		App->player->position.x = App->player->originalPosition_1.x;
 		App->player->position.y = App->player->originalPosition_1.y;
 		App->player->velocity.y = 0;
 		App->player->current_map = 1;
+		App->player->gravitySwapped = false;
+		App->player->gravity = 0.08;
 
 		App->scene->CleanUp();
 		App->scene->Start();
@@ -196,11 +193,12 @@ bool j1Scene::changeSceneTo(int scene) {
 
 		App->player->CleanUp();
 		App->player->Start();
-		App->player->win = false;
 		App->player->position.x = App->player->originalPosition_2.x;
 		App->player->position.y = App->player->originalPosition_2.y;
 		App->player->velocity.y = 0;
 		App->player->current_map = 2;
+		App->player->gravitySwapped = false;
+		App->player->gravity = 0.08;
 
 		App->scene->CleanUp();
 		App->scene->Start();

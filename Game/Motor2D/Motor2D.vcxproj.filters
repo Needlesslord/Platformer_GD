@@ -52,12 +52,6 @@
     <ClCompile Include="j1NPC.cpp">
       <Filter>Desenvolupament  ========\Entities\Static</Filter>
     </ClCompile>
-    <ClCompile Include="j1SceneEntity.cpp">
-      <Filter>Desenvolupament  ========\Entities\ChangeScene</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Exit.cpp">
-      <Filter>Desenvolupament  ========\Entities\ChangeScene</Filter>
-    </ClCompile>
     <ClCompile Include="j1Entity.cpp">
       <Filter>Desenvolupament  ========\Entities\EntityManager</Filter>
     </ClCompile>
@@ -147,12 +141,6 @@
     <ClInclude Include="j1NPC.h">
       <Filter>Desenvolupament  ========\Entities\Static</Filter>
     </ClInclude>
-    <ClInclude Include="j1SceneEntity.h">
-      <Filter>Desenvolupament  ========\Entities\ChangeScene</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Exit.h">
-      <Filter>Desenvolupament  ========\Entities\ChangeScene</Filter>
-    </ClInclude>
     <ClInclude Include="j1Entity.h">
       <Filter>Desenvolupament  ========\Entities\EntityManager</Filter>
     </ClInclude>
@@ -196,9 +184,6 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Entities">
       <UniqueIdentifier>{223f4ecc-ab0f-4ace-a7b5-29ac1b58d6fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Entities\ChangeScene">
-      <UniqueIdentifier>{2dd25f00-4fe7-4cdd-86f8-9bcafeb3ee2c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Desenvolupament  ========\Entities\EntityManager">
       <UniqueIdentifier>{953d81ee-3c43-4cce-b4d2-8c0da153cf74}</UniqueIdentifier>
