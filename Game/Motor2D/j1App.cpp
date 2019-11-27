@@ -9,11 +9,8 @@
 #include "j1Audio.h"
 #include "j1Scene.h"
 #include "j1App.h"
-#include "j1Intro.h"
 #include "j1Animation.h"
 #include "j1Collisions.h"
-#include "j1Level1.h"
-#include "j1Level2.h"
 #include "j1Particles.h"
 #include "j1Player.h"
 #include "j1Map.h"
@@ -25,49 +22,32 @@
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
-	frames = 0;
-	input = new j1Input();
-	win = new j1Window();
-	render = new j1Render();
-	tex = new j1Textures();
-	audio = new j1Audio();
-	map = new j1Map();
-	collisions = new j1Collisions();
-	player = new j1Player();
-	entity_manager = new j1EntityManager();
-
-	{//Intro or Scene
-		pugi::xml_document save_file;
-		pugi::xml_node savenode;
-		save_file.load_file("config.xml");
-		savenode = save_file.child("config");
-
-		if (strcmp(savenode.child("scene").attribute("current_scene").value(), "0") == 0) {
-			intro = new j1Intro();
-			AddModule(intro);
-		}
-		else if (strcmp(savenode.child("scene").attribute("current_scene").value(), "1") == 0) {
-			scene = new j1Scene();
-			AddModule(scene);
-		}
-		else if (strcmp(savenode.child("scene").attribute("current_scene").value(), "2") == 0) {
-			scene = new j1Scene();
-			AddModule(scene);
-		}
-	}
+	input			= new j1Input();
+	win				= new j1Window();
+	render			= new j1Render();
+	tex				= new j1Textures();
+	audio			= new j1Audio();
+	scene			= new j1Scene();
+	map				= new j1Map();
+	collisions		= new j1Collisions();
+	player			= new j1Player();
+	entity_manager	= new j1EntityManager();
+	
+	
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(input);
 	AddModule(win);
-	AddModule(render);
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(map);
+	AddModule(scene);
 	AddModule(collisions);
 	AddModule(player);
 	AddModule(entity_manager);
-	//animation = new j1Animation();
-	//AddModule(animation);
+
+	AddModule(render);
+
 }
 
 // Destructor
@@ -95,6 +75,7 @@ bool j1App::Awake() {
 	// self-config
 	title.create(app_config.child("title").child_value());
 	organization.create(app_config.child("organization").child_value());
+	frameRateCap = config.child("app").attribute("framerate_cap").as_uint();
 
 	if(ret == true) {
 		p2List_item<j1Module*>* item;
@@ -160,13 +141,53 @@ bool j1App::LoadConfig() {
 }
 
 // ---------------------------------------------
-void j1App::PrepareUpdate() {}
+void j1App::PrepareUpdate() {
+	frames++;
+	FPS_count++;
+	dt = frameTimer.ReadSec();
+	frameTimer.Start();
+}
 
 // ---------------------------------------------
 void j1App::FinishUpdate() {
 	if (SaveRequest) Save();
-
 	if (LoadRequest) Load();
+
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
+		FPS_cap = !FPS_cap;
+		frames = 0;
+	}
+
+	// 1) FPS
+	if (FPS_Timer.Read() > 1000) {
+		FPS_Timer.Start();
+		last_FPS_count = FPS_count;
+		FPS_count = 0;
+	}
+	FPS = last_FPS_count;
+
+	// 2) Average FPS
+	average_FPS = frames / startupTimer.ReadSec();
+
+	// 3) MS of the last frame
+	MS_of_the_last_frame = frameTimer.Read();
+
+	// 4) FPS Cap On/Off
+	if (FPS_cap) cap = "ON";
+	else cap = "OFF";	
+
+	// 5) Vsync On/Off
+	if (App->render->Vsync) vsync = "ON";
+	else vsync = "OFF";
+
+	char title[256];
+	sprintf_s(title, 256, "Ninja Frog Against Gravity --- Current FPS: %02u / Average FPS: %.2f / MS Last Frame: %02u / Cap is: %s / Vsync is: %s", FPS, average_FPS, MS_of_the_last_frame, cap, vsync);
+	App->win->SetTitle(title);
+
+	if ((MS_of_the_last_frame < (1000 / frameRateCap)) && FPS_cap) 
+		SDL_Delay((1000 / frameRateCap) - MS_of_the_last_frame);
+
+	LOG("We waited %d MS", 1000 / frameRateCap - MS_of_the_last_frame);
 }
 
 // Call modules before each loop iteration

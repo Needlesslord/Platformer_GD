@@ -46,7 +46,7 @@ bool j1Scene::Start() {
 	}
 	else if (current_scene == 2) {
 		background2_small = App->tex->Load("maps/fondo2_small.png");
-		App->map->Load("02 Level2.tmx");
+		App->map->Load("02 Level2_2.tmx");
 		//App->audio->PlayMusic("audio/music/intro.ogg");
 	}
 
@@ -130,17 +130,6 @@ bool j1Scene::Update(float dt) {
 
 	App->map->Draw(-App->render->camera.x);
 	App->map->CollidersMap();
-	
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
-					App->map->data.width, App->map->data.height,
-					App->map->data.tile_width, App->map->data.tile_height,
-					App->map->data.tilesets.count(),
-					map_coordinates.x, map_coordinates.y);
-
-	App->win->SetTitle(title.GetString());
 
 	return true;
 }
@@ -179,8 +168,6 @@ bool j1Scene::changeSceneTo(int scene) {
 		App->player->position.y = App->player->originalPosition_1.y;
 		App->player->velocity.y = 0;
 		App->player->current_map = 1;
-		App->player->gravitySwapped = false;
-		App->player->gravity = 0.08;
 
 		App->scene->CleanUp();
 		App->scene->Start();
@@ -197,8 +184,6 @@ bool j1Scene::changeSceneTo(int scene) {
 		App->player->position.y = App->player->originalPosition_2.y;
 		App->player->velocity.y = 0;
 		App->player->current_map = 2;
-		App->player->gravitySwapped = false;
-		App->player->gravity = 0.08;
 
 		App->scene->CleanUp();
 		App->scene->Start();

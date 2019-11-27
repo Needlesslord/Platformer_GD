@@ -10,9 +10,8 @@
 #include "j1Collisions.h"
 #include "j1Particles.h"
 #include "j1Player.h"
-#include "j1Level1.h"
-#include "j1Level2.h"
 #include "j1Animation.h"
+#include "j1Timer.h"
 
 
 j1Player::j1Player() : j1Module() {
@@ -87,11 +86,6 @@ j1Player::j1Player() : j1Module() {
 
 	//falling
 	player_falling.PushBack({ 192,  96,  32, 32 });
-
-	//TODO: FIX ANIMATIONS
-
-
-	//TODO: ADD MIRROR (VERTICAL AND HORIZONTAL)
 }
 
 j1Player::~j1Player() {}
@@ -103,6 +97,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	playerHeight				= config.child("size").attribute("h").as_int();
 	velocity.x					= config.child("velocity").attribute("x").as_float();
 	velocity.y					= config.child("velocity").attribute("y").as_float();
+	impulse						= config.child("jump_impulse").attribute("y").as_float();
 	gravity						= config.child("gravity").attribute("value").as_float();
 	feet.x						= config.child("position_scene_1").attribute("x").as_float();
 	feet.y						= config.child("position_scene_1").attribute("y").as_float() + config.child("size").attribute("h").as_int();	//PLAYER H + PLAYER Y
@@ -198,7 +193,7 @@ bool j1Player::Update(float dt) {
 	if (!godMode) velocity.y -= gravity;
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !againstLeftSide) {
-		position.x -= velocity.x;
+		position.x -= velocity.x * dt;
 		if (gravitySwapped && againstRoof)current_animation = &player_walking_mirror_gravitySwapped;
 		else if (!gravitySwapped && grounded)current_animation = &player_walking_mirror;
 		mirror = true;
@@ -206,34 +201,31 @@ bool j1Player::Update(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) /*RESET*/ { player_walking_mirror_gravitySwapped.Reset(); player_walking_mirror.Reset(); }
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !againstRightSide) {
-		position.x += velocity.x;
+		position.x += velocity.x * dt;
 		if (gravitySwapped && againstRoof) current_animation = &player_walking_gravitySwapped;
 		else if (!gravitySwapped && grounded)current_animation = &player_walking;
 		mirror = false;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) /*RESET*/ { player_walking_gravitySwapped.Reset(); player_walking.Reset(); }
 
-	MoveEverything(gravitySwapped);
+	MoveEverything(gravitySwapped, dt);
 
-	if (justSwapped) {
-		swapTimer++;
-		if (swapTimer > 80) {
-			swapTimer = 0;
-			justSwapped = false;
-		}
+	if (justSwapped && swapTimer.ReadSec() > 1) {
+		justSwapped = false;
+		swapTimer.Stop();
 	}
 
 	//DOUBLE JUMP
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !hasDoubleJumped && !godMode) {
 		if (gravitySwapped) { //INVERTED GRAVITY
 			if (velocity.y < 0 && !againstRoof) {
-				velocity.y = -3;
+				velocity.y = -impulse;
 				hasDoubleJumped = true;
 			}
 		}
 		else { 
 			if (velocity.y > 0 && !grounded) {
-				velocity.y = 3;
+				velocity.y = impulse;
 				hasDoubleJumped = true;
 			}
 		}
@@ -244,34 +236,32 @@ bool j1Player::Update(float dt) {
 		if (gravitySwapped) { //INVERTED GRAVITY
 			if (againstRoof && !godMode) {
 				againstRoof = false;
-				velocity.y = -3;
+				velocity.y = -impulse;
 				hasDoubleJumped = false;
 				//TODO: Play an Fx for jumping
 			}
 		}
 		else {
-			if (grounded && velocity.y > -1 && !godMode) {
+			if (grounded && !godMode) {
 				grounded = false;
-				velocity.y = 3;
+				velocity.y = impulse;
 				hasDoubleJumped = false;
 			}
 		}
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode) {
-		position.y -= 6;
+		position.y -= impulse * 2;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode) {
-		position.y += 6;
+		position.y += impulse * 2;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) { // TODO: TURN OFF
 		S_Down = true;
 		grounded = false;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) S_Down = false;
 
-	DrawPlayer();
-
+	App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
 	return true;
 }
 
@@ -280,31 +270,42 @@ bool j1Player::PostUpdate() {
 	againstLeftSide		= false;
 	againstRightSide	= false;
 	againstRoof			= false;
+	S_Down				= false;
 	return true;
 }
 
 bool j1Player::Save(pugi::xml_node& node) {
 	node.append_child("position_x").append_attribute("value") = position.x;
 	node.append_child("position_y").append_attribute("value") = position.y;
-	if(gravitySwapped) node.append_child("gravity").append_attribute("value") = 1;
-	else if(!gravitySwapped) node.append_child("gravity").append_attribute("value") = 0;
+	if(gravitySwapped) node.append_child("gravity_swapped").append_attribute("value") = 1;
+	else node.append_child("gravity_swapped").append_attribute("value") = 0;
 	return true;
 }
 bool j1Player::Load(pugi::xml_node& node) {
 	position.x = node.child("position_x").attribute("value").as_float();
-	position.y = node.child("position_y").attribute("value").as_float() - 5;
-	int gravity = node.child("gravity").attribute("value").as_int();
-	if (gravity == 0) gravitySwapped = false;
-	else if(gravity == 1) gravitySwapped = true;
+	position.y = node.child("position_y").attribute("value").as_float();
+	int gravity = node.child("gravity_swapped").attribute("value").as_int();
+	if (gravity == 0) {
+		if (gravitySwapped) {
+			gravitySwapped = false;
+			gravity = 10;
+		}
+	}
+	else if (gravity == 1) {
+		if (!gravitySwapped) {
+			gravitySwapped = true;
+			gravity = -10;
+		}
+	}
 	return true;
 }
 
-void j1Player::MoveEverything(bool swapped) {
-	position.y -= velocity.y;
+void j1Player::MoveEverything(bool swapped, float dt) {
+	position.y -= velocity.y * dt;
 	feet.x = position.x;
 	feet.y = position.y + playerHeight;
 	head.x = position.x;
-	head.y = position.y - 1;
+	head.y = position.y - head.h;
 	rightside.x = position.x + playerWidth;
 	rightside.y = position.y;
 	leftside.x = position.x - leftside.w;
@@ -316,63 +317,55 @@ void j1Player::MoveEverything(bool swapped) {
 	colLeftside->SetPos(leftside.x, leftside.y);
 }
 
-bool j1Player::ChangeGravity() {
-	if (!gravitySwapped) { //NORMAL CASE
+bool j1Player::ChangeGravity(bool withImpulse) {
+	if (!gravitySwapped) { 
 		gravity = gravity * (-1);
-		velocity.y = -8;
+		if(withImpulse) velocity.y -= impulse;
 		gravitySwapped = true;
-		return true; //Gravity WILL be different from the original state
+		return true; 
 	}
-	else { //GRAVITY HAS ALREADY BEEN CHANGED
+	else { 
 		gravity = gravity * (-1);
-		velocity.y = 8;
+		if (withImpulse) velocity.y += impulse;
 		gravitySwapped = false;
-		return false; //Gravity WILL NOT be different from the original state
+		return false; 
 	}
-}
-
-bool j1Player::DrawPlayer() {
-	if (!gravitySwapped && !mirror)
-		App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
-	else if (!gravitySwapped && mirror)
-		App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
-	else if (gravitySwapped && !mirror)
-		App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
-	else if (gravitySwapped && mirror)
-		App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
-	else {
-		LOG("Couldn't draw player");
-		return false;
-	}
-	return true;
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c1->type == COLLIDER_PLAYER && !godMode) {
 		if (!gravitySwapped) {
-			if ((c2->type == COLLIDER_PLATFORM || c2->type == COLLIDER_WALL) && c1 != colRightside && c1 != colLeftside && velocity.y < 0 && 
+			if (c2->type == COLLIDER_PLATFORM && c1 != colRightside && c1 != colLeftside && velocity.y < 0 && 
 				!S_Down && position.y + playerHeight < c2->rect.y + 6) {
 				velocity.y = 0;
 				position.y = c2->rect.y - playerHeight;
 				grounded = true;
 			}
+			else if (c2->type == COLLIDER_WALL) {
+				if (c1 != colRightside && c1 != colLeftside && velocity.y < 0 &&
+					!S_Down && position.y + playerHeight < c2->rect.y + 15) {
+					velocity.y = 0;
+					position.y = c2->rect.y - playerHeight;
+					grounded = true;
+				}
 
-			if (c2->type == COLLIDER_WALL && position.y < c2->rect.y + c2->rect.h && position.y + playerHeight > c2->rect.y && 
-				position.x + playerWidth >= c2->rect.x && position.x <= c2->rect.x) {
-				againstRightSide = true;
-				againstLeftSide = false;
-			}
+				if (position.y < c2->rect.y + c2->rect.h && position.y + playerHeight > c2->rect.y&&
+					position.x + playerWidth >= c2->rect.x && position.x <= c2->rect.x) {
+					againstRightSide = true;
+					againstLeftSide = false;
+				}
 
-			if (c2->type == COLLIDER_WALL && position.y < c2->rect.y + c2->rect.h && position.y + playerHeight > c2->rect.y &&
-				position.x <= c2->rect.x + c2->rect.w && position.x + playerWidth >= c2->rect.x + c2->rect.w) {
-				againstLeftSide = true;
-				againstRightSide = false;
-			}
+				if (position.y < c2->rect.y + c2->rect.h && position.y + playerHeight > c2->rect.y&&
+					position.x <= c2->rect.x + c2->rect.w && position.x + playerWidth >= c2->rect.x + c2->rect.w) {
+					againstLeftSide = true;
+					againstRightSide = false;
+				}
 
-			if (c2->type == COLLIDER_WALL && c1 != colRightside && c1 != colLeftside && velocity.y > 0 && position.y + 6 > c2->rect.y + c2->rect.h) {
-				position.y = c2->rect.y + c2->rect.h;
-				velocity.y = 0;
-				againstRoof = true;
+				if (c1 != colRightside && c1 != colLeftside && velocity.y > 0 && position.y + 15 > c2->rect.y + c2->rect.h) {
+					position.y = c2->rect.y + c2->rect.h;
+					velocity.y = 0;
+					againstRoof = true;
+				}
 			}
 		}
 
@@ -405,13 +398,14 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		}
 
 		if (c2->type == COLLIDER_WIN) {
-			if (current_map == 1) {
+			if (App->scene->current_scene == 1) {
 				App->scene->changeSceneTo(2);
 			}
-			if (current_map == 2) {
+			if (App->scene->current_scene == 2) {
 				App->scene->changeSceneTo(1);
 			}
 		}
+
 		if (c2->type == COLLIDER_DEATH) {
 			if (App->scene->current_scene == 1) {
 				position.x = originalPosition_1.x;
@@ -423,12 +417,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			}		
            	velocity.y = 0;
 			grounded = true;
-			gravity = 0.08;
-			gravitySwapped = false;
+			ChangeGravity(false);
 		}
+
 		if (c2->type == COLLIDER_GRAVITY && !justSwapped) {
 			justSwapped = true;
-			ChangeGravity();
+			swapTimer.Start();
+			ChangeGravity(true);
 		}
 	}
 }

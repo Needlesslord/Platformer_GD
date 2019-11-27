@@ -11,8 +11,6 @@
 #include "j1Collisions.h"
 #include "j1Particles.h"
 #include "j1Player.h"
-#include "j1Level1.h"
-#include "j1Level2.h"
 #include "j1Animation.h"
 
 j1Entity::j1Entity(float x, float y) : position(x, y)

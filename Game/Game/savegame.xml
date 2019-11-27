@@ -1,22 +1,23 @@
 <?xml version="1.0"?>
 <save>
-	<scene>
-		<current_scene value="1" />
-	</scene>
 	<input />
 	<window />
-	<renderer>
-		<camera x="-2331" y="-1952" />
-	</renderer>
 	<textures />
 	<audio>
 		<volume value="64" />
 	</audio>
 	<map />
+	<scene>
+		<current_scene value="2" />
+	</scene>
 	<collisions />
 	<player>
-		<position_x value="1405" />
-		<position_y value="1144.07996" />
-		<gravity value="0" />
+		<position_x value="494.199921" />
+		<position_y value="3432.34009" />
+		<gravity_swapped value="0" />
 	</player>
+	<entity_manager />
+	<renderer>
+		<camera x="-504" y="-6528" />
+	</renderer>
 </save>

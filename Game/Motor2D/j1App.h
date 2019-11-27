@@ -3,6 +3,8 @@
 #include "p2List.h"
 #include "j1Module.h"
 #include "PugiXml\src\pugixml.hpp"
+#include "j1PerfTimer.h"
+#include "j1Timer.h"
 
 // Modules
 class j1Window;
@@ -11,7 +13,6 @@ class j1Render;
 class j1Textures;
 class j1Audio;
 class j1Scene;
-class j1Intro;
 class j1Collisions;
 class j1Player;
 class j1Map;
@@ -68,13 +69,9 @@ public:
 	j1Textures*			tex;
 	j1Audio*			audio;
 	j1Scene*			scene;
-	j1Intro*			intro;
 	j1Map*				map;
 	j1Collisions*		collisions;
 	//j1Animation*		animation;
-	//j1FadeToBlack*	fade;
-	//j1Level1*			l1;
-	//j1Level2*			l2;
 	//j1Particles*		particle;
 	j1Player*			player;
 	//j1Entity*			entity;
@@ -84,8 +81,24 @@ public:
 
 private:
 	p2List<j1Module*>	modules;
-	uint				frames;
-	float				dt;
+
+	//WINDOW TITTLE REQUIREMENTS:
+	uint				FPS;
+	float				average_FPS;
+	uint				MS_of_the_last_frame;
+	char*				cap;
+	char*				vsync;
+
+	bool				FPS_cap;
+	uint				frameRateCap = 0;
+	uint				frames = 0;
+	j1Timer				startupTimer;
+	j1Timer				frameTimer;
+	j1Timer				FPS_Timer;
+	uint				FPS_count = 0;
+	uint				last_FPS_count = 0;
+	float dt = 0;
+
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	pugi::xml_node		app_config;
@@ -93,11 +106,6 @@ private:
 	char**				args;
 	p2SString			title;
 	p2SString			organization;
-
-	//mutable bool		want_to_save;
-	//bool				want_to_load;
-	//p2SString			load_game;
-	//mutable p2SString	save_game;
 };
 
 extern j1App* App;

@@ -33,10 +33,9 @@ public:
 	bool PostUpdate();
 	bool Load(pugi::xml_node& node);
 	bool Save(pugi::xml_node& node);
-	void MoveEverything(bool swapped);
-	bool ChangeGravity();
+	void MoveEverything(bool swapped, float dt);
+	bool ChangeGravity(bool withImpulse);
 	bool CleanUp();
-	bool DrawPlayer();
 	void OnCollision(Collider* c1, Collider* c2);
 
 private:
@@ -78,6 +77,7 @@ public:
 	int playerHeight;
 	int playerWidth;
 	fPoint velocity;
+	float impulse;
 	float gravity;
 		Collider* col;
 	SDL_Rect feet;
@@ -106,7 +106,7 @@ public:
 
 	bool gravitySwapped;
 	bool justSwapped = false;
-	int swapTimer = 0;
+	j1Timer swapTimer;
 
 	player_states current_state;
 	p2SString			folder;

@@ -83,7 +83,6 @@
     <ClCompile Include="j1Enemy.cpp" />
     <ClCompile Include="j1Entity.cpp" />
     <ClCompile Include="j1EntityManager.cpp" />
-    <ClCompile Include="j1Intro.cpp" />
     <ClCompile Include="j1Enemy_Land.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
@@ -91,9 +90,9 @@
     <ClCompile Include="j1Input.cpp" />
     <ClCompile Include="j1Map.cpp" />
     <ClCompile Include="j1NPC.cpp" />
+    <ClCompile Include="j1PerfTimer.cpp" />
     <ClCompile Include="j1Scene.cpp" />
-    <ClCompile Include="j1Level1.cpp" />
-    <ClCompile Include="j1Level2.cpp" />
+    <ClCompile Include="j1Timer.cpp" />
     <ClCompile Include="MemLeaks.cpp" />
     <ClCompile Include="p2Log.cpp" />
     <ClCompile Include="j1Render.cpp" />
@@ -109,13 +108,12 @@
     <ClInclude Include="j1Enemy.h" />
     <ClInclude Include="j1Entity.h" />
     <ClInclude Include="j1EntityManager.h" />
-    <ClInclude Include="j1Intro.h" />
     <ClInclude Include="j1Enemy_Land.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1NPC.h" />
+    <ClInclude Include="j1PerfTimer.h" />
     <ClInclude Include="j1Scene.h" />
-    <ClInclude Include="j1Level1.h" />
-    <ClInclude Include="j1Level2.h" />
+    <ClInclude Include="j1Timer.h" />
     <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="j1Audio.h" />
     <ClInclude Include="j1Input.h" />
