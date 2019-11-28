@@ -104,6 +104,11 @@ public:
 	bool alive;
 	bool godMode = false;
 
+	bool doorLocked = true;
+	SDL_Texture* lockedDoor;
+	Collider* key;
+	SDL_Texture* key_tex;
+
 	bool gravitySwapped;
 	bool justSwapped = false;
 	j1Timer swapTimer;

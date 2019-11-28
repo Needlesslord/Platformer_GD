@@ -141,6 +141,10 @@ bool j1Player::Start() {
 
 	player_textures = App->tex->Load("textures/Ninja_Frog.png");
 	imgwin = App->tex->Load("textures/imgwin.png");
+	lockedDoor = App->tex->Load("textures/candado.png");
+	key_tex = App->tex->Load("textures/llave.png");
+	key = App->collisions->AddCollider({ 700, 1405, 12, 48 }, COLLIDER_KEY, this);
+
 	if (App->scene->current_scene == 0) {
 		position.x = originalPosition_1.x;
 		position.y = originalPosition_1.y;
@@ -162,6 +166,8 @@ bool j1Player::CleanUp() {
 
 	App->tex->UnLoad(player_textures);
 	App->tex->UnLoad(imgwin);
+	App->tex->UnLoad(lockedDoor);
+	App->tex->UnLoad(key_tex);
 
 	if (col != nullptr)col->to_delete = true;
 	if (colFeet != nullptr)colFeet->to_delete = true;
@@ -251,17 +257,22 @@ bool j1Player::Update(float dt) {
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode) {
-		position.y -= impulse * 2;
+		position.y -= impulse * dt;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode) {
-		position.y += impulse * 2;
+		position.y += impulse * dt;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) { // TODO: TURN OFF
 		S_Down = true;
 		grounded = false;
 	}
 	MoveEverything(gravitySwapped, dt);
-	//App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
+	if (App->scene->current_scene == 1 && doorLocked)
+	{
+		App->render->Blit(lockedDoor, directWin_1.x + 18, directWin_1.y - 35);
+		App->render->Blit(key_tex, key->rect.x, key->rect.y);
+	}
+	App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
 	return true;
 }
 
@@ -408,7 +419,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 		}
 
-		if (c2->type == COLLIDER_WIN) {
+		if (c2->type == COLLIDER_KEY) {
+			key->to_delete;
+			key = nullptr;
+			doorLocked = false;
+		}
+
+		if (c2->type == COLLIDER_WIN && !doorLocked) {
 			if (App->scene->current_scene == 1) {
 				App->scene->changeSceneTo(2);
 			}

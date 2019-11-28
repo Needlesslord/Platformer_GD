@@ -26,6 +26,7 @@ j1Collisions::j1Collisions() : j1Module() {
 	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_NPC] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_GRAVITY] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_KEY] = true;
 
 	matrix[COLLIDER_ENEMY][COLLIDER_PLATFORM] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
