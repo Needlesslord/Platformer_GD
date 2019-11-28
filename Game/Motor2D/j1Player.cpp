@@ -190,7 +190,7 @@ bool j1Player::Update(float dt) {
 		else								current_animation = &player_jumping;
 	}
 
-	if (!godMode) velocity.y -= gravity;
+	if (!godMode) velocity.y -= gravity * dt;
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !againstLeftSide) {
 		position.x -= velocity.x * dt;
@@ -208,7 +208,7 @@ bool j1Player::Update(float dt) {
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) /*RESET*/ { player_walking_gravitySwapped.Reset(); player_walking.Reset(); }
 
-	MoveEverything(gravitySwapped, dt);
+	
 
 	if (justSwapped && swapTimer.ReadSec() > 1) {
 		justSwapped = false;
@@ -260,8 +260,8 @@ bool j1Player::Update(float dt) {
 		S_Down = true;
 		grounded = false;
 	}
-
-	App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
+	MoveEverything(gravitySwapped, dt);
+	//App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
 	return true;
 }
 
@@ -349,13 +349,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					grounded = true;
 				}
 
-				if (position.y < c2->rect.y + c2->rect.h && position.y + playerHeight > c2->rect.y&&
+				if (position.y < c2->rect.y + c2->rect.h && position.y + playerHeight > c2->rect.y &&
 					position.x + playerWidth >= c2->rect.x && position.x <= c2->rect.x) {
 					againstRightSide = true;
 					againstLeftSide = false;
 				}
 
-				if (position.y < c2->rect.y + c2->rect.h && position.y + playerHeight > c2->rect.y&&
+				if (position.y < c2->rect.y + c2->rect.h && position.y + playerHeight > c2->rect.y &&
 					position.x <= c2->rect.x + c2->rect.w && position.x + playerWidth >= c2->rect.x + c2->rect.w) {
 					againstLeftSide = true;
 					againstRightSide = false;
@@ -372,28 +372,39 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 		else {
-			if ((c2->type == COLLIDER_PLATFORM || c2->type == COLLIDER_WALL) &&
+			if (c2->type == COLLIDER_PLATFORM &&
 				c1 != colRightside && c1 != colLeftside && velocity.y > 0 && 
 				!S_Down && position.y + 6 > c2->rect.y + c2->rect.h) {
 				velocity.y = 0;
 				position.y = c2->rect.y + c2->rect.h - 1;
 				againstRoof = true;
 			}
+			if (c2->type == COLLIDER_WALL) {
+				if (c1 != colRightside && c1 != colLeftside && velocity.y > 0 &&
+					!S_Down && position.y + 15 > c2->rect.y + c2->rect.h) {
+					velocity.y = 0;
+					position.y = c2->rect.y + c2->rect.h - 1;
+					againstRoof = true;
+				}
+				if (position.y < c2->rect.y + c2->rect.h && position.y + playerHeight > c2->rect.y &&
+					position.x + playerWidth >= c2->rect.x && position.x <= c2->rect.x &&
+					c1 != colFeet && c1 != colHead) {
+					againstRightSide = true;
+					againstLeftSide = false;
+				}
 
-			if (c2->type == COLLIDER_WALL && c1->rect.y <= c2->rect.y + c2->rect.h && c1->rect.y + playerHeight >= c2->rect.y && c1->rect.x + playerWidth >= c2->rect.x && c1->rect.x <= c2->rect.x) {
-				againstRightSide = true;
-				againstLeftSide = false;
-			}
+				if (position.y < c2->rect.y + c2->rect.h && position.y + playerHeight > c2->rect.y &&
+					position.x <= c2->rect.x + c2->rect.w && position.x + playerWidth >= c2->rect.x + c2->rect.w &&
+					c1 != colFeet && c1 != colHead) {
+					againstLeftSide = true;
+					againstRightSide = false;
+				}
 
-			if (c2->type == COLLIDER_WALL && c1->rect.y <= c2->rect.y + c2->rect.h && c1->rect.y + playerHeight >= c2->rect.y && c1->rect.x <= c2->rect.x + c2->rect.w && c1->rect.x + playerWidth >= c2->rect.x + c2->rect.w) {
-				againstLeftSide = true;
-				againstRightSide = false;
-			}
-
-			if (c2->type == COLLIDER_WALL && c1 != colRightside && c1 != colLeftside && velocity.y < 0 && position.y + playerHeight < c2->rect.y + 6) {
-				position.y = c2->rect.y - playerHeight;
-				velocity.y = 0;
-				againstRoof = true;
+				if (c1 != colRightside && c1 != colLeftside && velocity.y < 0 && position.y + playerHeight < c2->rect.y + 15) {
+					position.y = c2->rect.y - playerHeight;
+					velocity.y = 0;
+					grounded = true;
+				}
 			}
 		}
 
