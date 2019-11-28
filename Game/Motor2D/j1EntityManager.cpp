@@ -34,7 +34,7 @@ bool j1EntityManager::Awake(pugi::xml_node&)
 
 bool j1EntityManager::Start()
 {	
-	sprites = App->tex->Load("Enemy_Air1_Pink_Man.png");
+	sprites_Enemy_Air1 = App->tex->Load("Enemy_Air1_Pink_Man.png");
 
 	return true;
 }
@@ -61,7 +61,7 @@ bool j1EntityManager::Update()
 		if (entities[i] != nullptr) entities[i]->Move();
 
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
-		if (entities[i] != nullptr) entities[i]->Draw(sprites);
+		if (entities[i] != nullptr) entities[i]->Draw(sprites_Enemy_Air1);
 
 	return true;
 }
@@ -89,7 +89,7 @@ bool j1EntityManager::CleanUp()
 {
 	bool ret = true;
 
-	App->tex->UnLoad(sprites);
+	App->tex->UnLoad(sprites_Enemy_Air1);
 
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{

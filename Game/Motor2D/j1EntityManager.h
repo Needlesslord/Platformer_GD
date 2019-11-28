@@ -82,7 +82,7 @@ private:
 	EntityInfo			queue[MAX_ENTITIES];
 	j1Entity*			entities[MAX_ENTITIES];
 	//j1Enemy*			enemies[MAX_ENEMIES];
-	SDL_Texture*		sprites;
+	SDL_Texture*		sprites_Enemy_Air1;
 
 };
 

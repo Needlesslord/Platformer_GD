@@ -10,12 +10,16 @@ private:
 	bool going_up = true;
 	float original_y = 0;
 	j1Animation fly;
+	j1Animation flyM;
+	float distance;
 
 public:
 
 	Enemy_Air1(float x, float y);
 
 	void Move();
+	//void Draw(SDL_Texture* sprites);
+
 };
 
 #endif 
