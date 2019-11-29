@@ -78,6 +78,7 @@ public:
 	int playerHeight;
 	int playerWidth;
 	fPoint velocity;
+	fPoint maxSpeed;
 	float impulse;
 	float gravity;
 		Collider* col;
@@ -93,16 +94,12 @@ public:
 	iPoint directWin_1;
 	iPoint directWin_2;
 
-	bool playerCanMove = false;
-	bool S_Down = false;
-
 	bool grounded;
 	bool againstRightSide;
 	bool againstLeftSide;
 	bool againstRoof;
 
 	bool hasDoubleJumped;
-	bool alive;
 	bool godMode = false;
 
 	bool doorLocked = true;
@@ -113,6 +110,8 @@ public:
 	bool gravitySwapped;
 	bool justSwapped = false;
 	j1Timer swapTimer;
+
+	j1Timer past2Sec;
 
 	player_states current_state;
 	p2SString			folder;

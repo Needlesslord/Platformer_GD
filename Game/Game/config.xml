@@ -28,23 +28,22 @@
   
   <player>
     <position_turorial x="0" y="0"/>
-    <position_scene_1 x="500" y="900"/>
+    <position_scene_1 x="500" y="1111"/>
     <position_scene_2 x="490" y="3400"/>
     <win_position_1 x="4206" y="515"/>
     <win_position_2 x="2394" y="328"/>
     <size w="14" h="24"/>
     <velocity x="100" y="0"/>
+    <max_speed x="300" y="480"/>
     <jump_impulse y="200"/>
     <gravity value="400"/>
     <feet h="1"/>
     <head h="1"/>
     <right_side w="1"/>
     <left_side w="1"/>
-    <s_down value="false"/>
     <grounded value="false"/>
     <has_doublejumped value="false"/>
     <mirror value="false"/>
-    <alive value ="true"/>
     <folder>textures/</folder>
     <texture tex ="Ninja_Frog.png"/>
     <animation_offset x="5" y="3"/>

@@ -8,16 +8,16 @@
 	</audio>
 	<map />
 	<scene>
-		<current_scene value="2" />
+		<current_scene value="1" />
 	</scene>
 	<collisions />
 	<player>
-		<position_x value="494.199921" />
-		<position_y value="3432.34009" />
+		<position_x value="1832.10852" />
+		<position_y value="1144.07837" />
 		<gravity_swapped value="0" />
 	</player>
 	<entity_manager />
 	<renderer>
-		<camera x="-504" y="-6528" />
+		<camera x="-3180" y="-1952" />
 	</renderer>
 </save>
