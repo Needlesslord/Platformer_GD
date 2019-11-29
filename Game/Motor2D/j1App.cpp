@@ -15,10 +15,7 @@
 #include "j1Player.h"
 #include "j1Map.h"
 #include "j1Entity.h"
-#include "j1EntityManager.h"
-#include "j1Enemy.h"
-#include "j1Enemy_Air1.h"
-#include "j1Enemy_Land.h"
+#include "EntityManager.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
