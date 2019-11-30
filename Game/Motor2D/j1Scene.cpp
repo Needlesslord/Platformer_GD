@@ -10,8 +10,8 @@
 #include "j1Map.h"
 #include "j1Collisions.h"
 #include "j1Player.h"
-#include "j1EntityManager.h"
-
+#include "EntityManager.h"
+#include "Brofiler.h"
 
 j1Scene::j1Scene() : j1Module() {
 	name.create("scene");
@@ -31,6 +31,9 @@ bool j1Scene::Awake(pugi::xml_node& config) {
 
 // Called before the first frame
 bool j1Scene::Start() {
+
+	BROFILER_CATEGORY("Scene_Start", Profiler::Color::Salmon)
+
 	if (current_scene == 0) {
 		background1_small = App->tex->Load("maps/fondo0_small.png");
 		App->map->Load("00 Tutorial.tmx");
@@ -54,11 +57,17 @@ bool j1Scene::Start() {
 
 // Called each loop iteration
 bool j1Scene::PreUpdate() {
+
+	BROFILER_CATEGORY("Scene_PreUpdate", Profiler::Color::PaleVioletRed)
+
 	return true;
 }
 
 // Called each loop iteration
-bool j1Scene::Update(float dt) {	
+bool j1Scene::Update(float dt) {
+
+	BROFILER_CATEGORY("Scene_Update", Profiler::Color::HotPink)
+
 	{//DEBUG KEYS
 		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) { //CHANGE TO SCENE 1
 			if (current_scene != 1) {
@@ -134,6 +143,9 @@ bool j1Scene::Update(float dt) {
 
 // Called each loop iteration
 bool j1Scene::PostUpdate() {
+
+	BROFILER_CATEGORY("Scene_Update", Profiler::Color::DeepPink)
+
 	bool ret = true;
 	
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) ret = false; //QUIT

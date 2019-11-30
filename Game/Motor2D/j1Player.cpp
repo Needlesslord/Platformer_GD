@@ -12,6 +12,7 @@
 #include "j1Player.h"
 #include "j1Animation.h"
 #include "j1Timer.h"
+#include "Brofiler.h"
 
 
 j1Player::j1Player() : j1Module() {
@@ -181,6 +182,9 @@ bool j1Player::CleanUp() {
 }
 
 bool j1Player::PreUpdate() {
+
+	BROFILER_CATEGORY("Player_PreUpdate", Profiler::Color::DodgerBlue)
+
 	if (velocity.x > maxSpeed.x) velocity.x = maxSpeed.x;
 	if (velocity.x < -maxSpeed.x) velocity.x = -maxSpeed.x;
 	if (velocity.y > maxSpeed.y) velocity.y = maxSpeed.y;
@@ -190,6 +194,9 @@ bool j1Player::PreUpdate() {
 
 // Update: draw background
 bool j1Player::Update(float dt) {
+
+	BROFILER_CATEGORY("Player_Update", Profiler::Color::Blue)
+
 	if(mirror && gravitySwapped)		current_animation = &player_idle_mirror_gravitySwapped;
 	else if (mirror && !gravitySwapped)	current_animation = &player_idle_mirror;
 	else if(!mirror && gravitySwapped)	current_animation = &player_idle_gravitySwapped;
@@ -282,6 +289,9 @@ bool j1Player::Update(float dt) {
 }
 
 bool j1Player::PostUpdate() {
+
+	BROFILER_CATEGORY("Player_PostUpdate", Profiler::Color::DeepSkyBlue)
+
 	grounded			= false;
 	againstLeftSide		= false;
 	againstRightSide	= false;
@@ -316,6 +326,9 @@ bool j1Player::Load(pugi::xml_node& node) {
 }
 
 void j1Player::MoveEverything(bool swapped, float dt) {
+
+	BROFILER_CATEGORY("Player_MoveEverything", Profiler::Color::RoyalBlue)
+
 	position.y -= velocity.y * dt;
 	feet.x = position.x;
 	feet.y = position.y + playerHeight;
@@ -333,6 +346,9 @@ void j1Player::MoveEverything(bool swapped, float dt) {
 }
 
 bool j1Player::ChangeGravity(bool withImpulse) {
+
+	BROFILER_CATEGORY("Player_ChangeGravity", Profiler::Color::SteelBlue)
+
 	if (!gravitySwapped) { 
 		gravity = gravity * (-1);
 		if(withImpulse) velocity.y -= impulse;
@@ -348,6 +364,9 @@ bool j1Player::ChangeGravity(bool withImpulse) {
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
+
+	BROFILER_CATEGORY("Player_OnCollision", Profiler::Color::CornflowerBlue)
+
 	if (c1->type == COLLIDER_PLAYER && !godMode) {
 		if (!gravitySwapped) {
 			if (c2->type == COLLIDER_PLATFORM && c1 != colRightside && c1 != colLeftside && velocity.y < 0 && 

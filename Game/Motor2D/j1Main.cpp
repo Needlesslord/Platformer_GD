@@ -2,11 +2,13 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
+#include "Brofiler.h"
 // This is needed here because SDL redefines main function
 // do not add any other libraries here, instead put them in their modules
 #include "SDL/include/SDL.h"
 #pragma comment( lib, "SDL/libx86/SDL2.lib" )
 #pragma comment( lib, "SDL/libx86/SDL2main.lib" )
+#pragma comment ( lib, "Brofiler/ProfilerCore32.lib" )
 
 enum MainState {
 	CREATE = 1,
@@ -63,9 +65,13 @@ int main(int argc, char* args[]) {
 
 			// Loop all modules until we are asked to leave ---------------------
 			case LOOP:
-			if(App->Update() == false)
-				state = CLEAN;
-			break;
+			{
+				BROFILER_FRAME("MainLoop");
+
+				if (App->Update() == false)
+					state = CLEAN;
+				break;
+			}
 
 			// Cleanup allocated memory -----------------------------------------
 			case CLEAN:

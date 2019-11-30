@@ -6,16 +6,15 @@
 #include "j1Map.h"
 #include "j1Collisions.h"
 #include "j1App.h"
+#include "Brofiler.h"
 #include <math.h>
 
-j1Map::j1Map() : j1Module(), map_loaded(false)
-{
+j1Map::j1Map() : j1Module(), map_loaded(false) {
 	name.create("map");
 }
 
 // Destructor
-j1Map::~j1Map()
-{}
+j1Map::~j1Map() {}
 
 // Called before render is available
 bool j1Map::Awake(pugi::xml_node& config)
@@ -29,8 +28,10 @@ bool j1Map::Awake(pugi::xml_node& config)
 }
 
 
-void j1Map::Draw(int camera_position)
-{
+void j1Map::Draw(int camera_position) {
+
+	BROFILER_CATEGORY("Map_Draw", Profiler::Color::White)
+
 	if (map_loaded == false)
 		return;
 

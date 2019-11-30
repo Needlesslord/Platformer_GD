@@ -2,6 +2,7 @@
 #include "j1Input.h"
 #include "j1Render.h"
 #include "j1Collisions.h"
+#include "Brofiler.h"
 
 j1Collisions::j1Collisions() : j1Module() {
 	name.create("collisions");
@@ -131,8 +132,10 @@ bool j1Collisions::Start() {
 	return true;
 }
 
-bool j1Collisions::PreUpdate()
-{
+bool j1Collisions::PreUpdate() {
+
+	BROFILER_CATEGORY("Collisions_PreUpdate", Profiler::Color::LightGoldenRodYellow)
+
 	// Remove all colliders scheduled for deletion
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -181,6 +184,9 @@ bool j1Collisions::PreUpdate()
 
 // Called before render is available
 bool j1Collisions::Update(float dt) {
+
+	BROFILER_CATEGORY("Collisions_Update", Profiler::Color::Yellow)
+
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		debug = !debug;
 
@@ -235,6 +241,9 @@ bool j1Collisions::Update(float dt) {
 }
 
 bool j1Collisions::PostUpdate() {
+
+	BROFILER_CATEGORY("Collisions_PostUpdate", Profiler::Color::GoldenRod)
+
 	return true;
 }
 
@@ -252,8 +261,10 @@ bool j1Collisions::CleanUp() {
 	return true;
 }
 
-Collider* j1Collisions::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback)
-{
+Collider* j1Collisions::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback){
+
+	BROFILER_CATEGORY("CheckCollision", Profiler::Color::PaleGoldenRod)
+
 	Collider* ret = nullptr;
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
@@ -270,8 +281,10 @@ Collider* j1Collisions::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module*
 
 // -----------------------------------------------------
 
-bool Collider::CheckCollision(const SDL_Rect& r) const
-{
+bool Collider::CheckCollision(const SDL_Rect& r) const {
+
+	BROFILER_CATEGORY("Collisions_CheckCollision", Profiler::Color::Gold)
+
 	return (rect.x < r.x + r.w &&
 		rect.x + rect.w > r.x &&
 		rect.y < r.y + r.h &&

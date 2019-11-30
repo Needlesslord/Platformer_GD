@@ -76,8 +76,8 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Desenvolupament  ========\Entities\Dynamic\PROVA</Filter>
     </ClCompile>
-    <ClCompile Include="j1Enemy_Air.cpp">
-      <Filter>Desenvolupament  ========\Entities\Dynamic\+</Filter>
+    <ClCompile Include="j1Pathfinding.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -174,8 +174,11 @@
     <ClInclude Include="Enemy.h">
       <Filter>Desenvolupament  ========\Entities\Dynamic\PROVA</Filter>
     </ClInclude>
-    <ClInclude Include="j1Enemy_Air.h">
-      <Filter>Desenvolupament  ========\Entities\Dynamic\+</Filter>
+    <ClInclude Include="Brofiler.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Pathfinding.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
