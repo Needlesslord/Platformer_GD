@@ -46,6 +46,10 @@ Art (Sprites and Tilesets):
 
 		[Pixel Frog's Twitter](https://twitter.com/PixelFrog123)
 
+Art (some sprites, such as checkpoints and keys/doors):
+
+	Núria Lamonja
+
 
 Music:
 

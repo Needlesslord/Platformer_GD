@@ -2,6 +2,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1PathFinding.h"
+#include "Brofiler.h"
 
 j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH),width(0), height(0)
 {
@@ -120,25 +121,44 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 	iPoint cell;
 	uint before = list_to_fill.list.count();
 
-	// north
+	////////////// HANDOUT //////////////////////////
+	//// north
+	//cell.create(pos.x, pos.y + 1);
+	//if(App->pathfinding->IsWalkable(cell))
+	//	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+	//// south
+	//cell.create(pos.x, pos.y - 1);
+	//if(App->pathfinding->IsWalkable(cell))
+	//	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+	//// east
+	//cell.create(pos.x + 1, pos.y);
+	//if(App->pathfinding->IsWalkable(cell))
+	//	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+	//// west
+	//cell.create(pos.x - 1, pos.y);
+	//if(App->pathfinding->IsWalkable(cell))
+	//	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+		// UP
 	cell.create(pos.x, pos.y + 1);
-	if(App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
-	// south
+	// DOWN
 	cell.create(pos.x, pos.y - 1);
-	if(App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
-	// east
+	// RIGHT
 	cell.create(pos.x + 1, pos.y);
-	if(App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
-	// west
+	// LEFT
 	cell.create(pos.x - 1, pos.y);
-	if(App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
 
 	return list_to_fill.list.count();
 }
@@ -174,6 +194,25 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	return ret;
 }
 
-MOVE_TO WillMoveTo(p2DynArray<iPoint>& path) {}
+MOVE_TO WillMoveTo(p2DynArray<iPoint>& path) {
+	
+	if (path.Count() >= 2) {
+		
+		//iPoint tile = path[0];
+		//iPoint next_tile = path[1];
+		//int tile_to_next_tile_x = next_tile.x - tile.x;
+		//int tile_to_next_tile_y = next_tile.y - tile.y;
+		//
+		//if (tile_to_next_tile_x == 1) return PATH_RIGHT;
+		//else if (tile_to_next_tile_x == -1) return PATH_LEFT;
+		//else if (tile_to_next_tile_y == 1)	return PATH_DOWN;
+		//else if (tile_to_next_tile_y == -1) return PATH_UP;
+		//else return PATH_NONE;
+
+	}
+
+	return PATH_NONE;
+
+}
 
 MOVE_TO WillMoveTo_Land(p2DynArray<iPoint>& path) {}
