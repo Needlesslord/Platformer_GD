@@ -9,6 +9,7 @@
 #include "j1App.h"
 #include "j1Scene.h"
 #include "j1Input.h"
+#include "Brofiler.h"
 #define VSYNC true
 
 j1Render::j1Render() : j1Module() {
@@ -69,12 +70,18 @@ bool j1Render::Start() {
 
 // Called each loop iteration
 bool j1Render::PreUpdate() {
+
+	BROFILER_CATEGORY("Render_PreUpdate", Profiler::Color::Indigo)
+
 	SDL_RenderClear(renderer);
 
 	return true;
 }
 
 bool j1Render::Update(float dt) {
+
+	BROFILER_CATEGORY("Render_Update", Profiler::Color::Purple)
+
 	if (!App->scene->keys_enabled) {
 		camera.x = -(App->player->position.x + App->player->playerWidth) * scale + camera.w / scale;
 		camera.y = -(App->player->position.y + App->player->playerHeight) * scale + camera.h / scale;
@@ -83,6 +90,9 @@ bool j1Render::Update(float dt) {
 }
 
 bool j1Render::PostUpdate() {
+
+	BROFILER_CATEGORY("Render_PostUpdate", Profiler::Color::MediumPurple)
+
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
 

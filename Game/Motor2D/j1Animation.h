@@ -1,5 +1,7 @@
 #ifndef __j1Animation_H__
 #define __j1Animation_H__
+
+#include "Brofiler.h"
 #include "SDL/include/SDL_rect.h"
 #define MAX_FRAMES 25
 

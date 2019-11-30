@@ -16,6 +16,7 @@
 #include "j1Map.h"
 #include "j1Entity.h"
 #include "EntityManager.h"
+#include "Brofiler.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
@@ -103,6 +104,9 @@ bool j1App::Start() {
 
 // Called each loop iteration
 bool j1App::Update() {
+
+	BROFILER_CATEGORY("App_Update", Profiler::Color::Crimson)
+
 	bool ret = true;
 	PrepareUpdate();
 
@@ -139,6 +143,9 @@ bool j1App::LoadConfig() {
 
 // ---------------------------------------------
 void j1App::PrepareUpdate() {
+
+	BROFILER_CATEGORY("App_PrepareUpdate", Profiler::Color::DarkRed)
+
 	frames++;
 	FPS_count++;
 	dt = frameTimer.ReadSec();
@@ -147,6 +154,9 @@ void j1App::PrepareUpdate() {
 
 // ---------------------------------------------
 void j1App::FinishUpdate() {
+
+	BROFILER_CATEGORY("App_FinishUpdate", Profiler::Color::FireBrick)
+
 	if (SaveRequest) Save();
 	if (LoadRequest) Load();
 
@@ -189,6 +199,9 @@ void j1App::FinishUpdate() {
 
 // Call modules before each loop iteration
 bool j1App::PreUpdate() {
+
+	BROFILER_CATEGORY("App_PreUpdate", Profiler::Color::Red)
+
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	item = modules.start;
@@ -209,6 +222,9 @@ bool j1App::PreUpdate() {
 
 // Call modules on each loop iteration
 bool j1App::DoUpdate() {
+
+	BROFILER_CATEGORY("App_PostUpdate", Profiler::Color::Brown)
+
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	item = modules.start;
@@ -229,6 +245,9 @@ bool j1App::DoUpdate() {
 
 // Call modules after each loop iteration
 bool j1App::PostUpdate() {
+
+	BROFILER_CATEGORY("App_PostUpdate", Profiler::Color::Maroon)
+
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	j1Module* pModule = NULL;
