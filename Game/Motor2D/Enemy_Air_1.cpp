@@ -14,9 +14,12 @@
 
 j1Enemy_Air_1::j1Enemy_Air_1(int x, int y, ENTITY_TYPE type) : j1Entity(x, y, ENTITY_TYPE::ENTITY_TYPE_ENEMY_AIR_1)
 {
-	animation = NULL;
+	animation = nullptr;
 
+	//flying enemy idle
 	enemy_air_1_idle.PushBack({ 0, 0, 32, 32 });
+	enemy_air_1_idle.PushBack({ 32, 0, 32, 32 });
+	enemy_air_1_idle.PushBack({ 64, 0, 32, 32 });
 	enemy_air_1_idle.PushBack({ 32, 0, 32, 32 });
 	enemy_air_1_idle.PushBack({ 64, 0, 32, 32 });
 	enemy_air_1_idle.speed = 0.125f;
