@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "p2Point.h"
 #include "p2DynArray.h"
+#include "p2List.h"
 
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
@@ -13,6 +14,19 @@
 // Intro: http://www.raywenderlich.com/4946/introduction-to-a-pathfinding
 // Details: http://theory.stanford.edu/~amitp/GameProgramming/
 // --------------------------------------------------
+
+enum MOVE_TO
+{
+	PATH_NONE = -1,
+	PATH_UP,
+	PATH_DOWN,
+	PATH_RIGHT,
+	PATH_LEFT,
+	PATH_UP_RIGHT,
+	PATH_UP_LEFT,
+	PATH_DOWN_RIGHT,
+	PATH_DOWN_LEFT
+};
 
 class j1PathFinding : public j1Module
 {
@@ -43,6 +57,9 @@ public:
 
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;
+
+	MOVE_TO WillMoveTo(p2DynArray<iPoint>& path);
+	MOVE_TO WillMoveTo_Land(p2DynArray<iPoint>& path);
 
 private:
 

@@ -18,6 +18,7 @@ class j1Player;
 class j1Map;
 class j1Entity;
 class j1EntityManager;
+class j1PathFinding;
 
 //Missing other classes
 
@@ -76,6 +77,7 @@ public:
 	j1Player*			player;
 	//j1Entity*			entity;
 	j1EntityManager*	entity_manager;
+	j1PathFinding*		pathfinding;
 	bool SaveRequest = false;
 	bool LoadRequest = false;
 
