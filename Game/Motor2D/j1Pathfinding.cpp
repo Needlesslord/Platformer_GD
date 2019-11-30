@@ -22,6 +22,7 @@ bool j1PathFinding::CleanUp()
 
 	last_path.Clear();
 	RELEASE_ARRAY(map);
+
 	return true;
 }
 
@@ -32,6 +33,7 @@ void j1PathFinding::SetMap(uint width, uint height, uchar* data)
 	this->height = height;
 
 	RELEASE_ARRAY(map);
+
 	map = new uchar[width*height];
 	memcpy(map, data, width*height);
 }

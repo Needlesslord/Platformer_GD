@@ -14,7 +14,6 @@
 #include "j1Particles.h"
 #include "j1Player.h"
 #include "j1Map.h"
-#include "j1Entity.h"
 #include "EntityManager.h"
 #include "j1PathFinding.h"
 #include "Brofiler.h"

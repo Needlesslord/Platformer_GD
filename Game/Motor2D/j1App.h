@@ -16,7 +16,6 @@ class j1Scene;
 class j1Collisions;
 class j1Player;
 class j1Map;
-class j1Entity;
 class j1EntityManager;
 class j1PathFinding;
 
@@ -75,7 +74,6 @@ public:
 	//j1Animation*		animation;
 	//j1Particles*		particle;
 	j1Player*			player;
-	//j1Entity*			entity;
 	j1EntityManager*	entity_manager;
 	j1PathFinding*		pathfinding;
 	bool SaveRequest = false;
