@@ -17,6 +17,7 @@ class j1Collisions;
 class j1Player;
 class j1Map;
 class j1EntityManager;
+class j1PathFinding;
 
 //Missing other classes
 
@@ -74,6 +75,7 @@ public:
 	//j1Particles*		particle;
 	j1Player*			player;
 	j1EntityManager*	entity_manager;
+	j1PathFinding*		pathfinding;
 	bool SaveRequest = false;
 	bool LoadRequest = false;
 

@@ -175,3 +175,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 	return ret;
 }
+
+MOVE_TO WillMoveTo(p2DynArray<iPoint>& path) {}
+
+MOVE_TO WillMoveTo_Land(p2DynArray<iPoint>& path) {}
