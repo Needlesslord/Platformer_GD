@@ -45186,7 +45186,7 @@
   <object id="435" x="2172.73" y="736.364" width="39.3939" height="51.5152"/>
  </objectgroup>
  <objectgroup color="#ffaaff" name="Flying enemies">
-  <object id="443" x="1300" y="984.848" width="15.1515" height="15.1515"/>
+  <object id="443" x="1290.91" y="1003.03" width="15.1515" height="15.1515"/>
   <object id="444" x="678.788" y="1560.61" width="21.2121" height="18.1818"/>
   <object id="445" x="2363.64" y="1660.61" width="18.1818" height="21.2121"/>
   <object id="446" x="2812.12" y="512.121" width="15.1515" height="18.1818"/>
