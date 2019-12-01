@@ -233,7 +233,7 @@ bool j1Player::Update(float dt) {
 		else if (!mirror && gravitySwapped)	current_animation = &player_jumping_gravitySwapped;
 		else								current_animation = &player_jumping;
 	}
-	if (past2Sec.ReadSec() < 1)			current_animation = &player_idle;
+	if (past2Sec.ReadSec() < 1)	current_animation = &player_idle;
 
 	if (!godMode && past2Sec.ReadSec() > 1) velocity.y -= gravity * dt;
 
@@ -302,17 +302,16 @@ bool j1Player::Update(float dt) {
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		App->particles->AddParticle(App->particles->shuriken, position.x + 20, position.y, COLLIDER_PLAYER_SHOT, 0);
-		//col_particle = App->collisions->AddCollider({ position.x + 20, position.y, 5, 5 }, COLLIDER_PLAYER_SHOT, 0);
-
 	}
 		
 	MoveEverything(gravitySwapped, dt);
+
 	if (App->scene->current_scene == 1 && doorLocked) {
 		App->render->Blit(lockedDoor, directWin_1.x + 18, directWin_1.y - 35);
 		App->render->Blit(key_tex, key->rect.x, key->rect.y);
 	}
 	else if (App->scene->current_scene == 2 && doorLocked) {
-		App->render->Blit(lockedDoor, directWin_1.x + 18, directWin_1.y - 35);
+		App->render->Blit(lockedDoor, directWin_2.x + 18, directWin_2.y - 35);
 		App->render->Blit(key_tex, key->rect.x, key->rect.y);
 	}
 
