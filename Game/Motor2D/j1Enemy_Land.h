@@ -27,16 +27,8 @@ public:
 	void Move(p2DynArray<iPoint>& path, float dt);
 	void OnCollision(Collider* c1, Collider* c2);
 
-	//void Move();
-	void MoveIdle(iPoint position);
-	fPoint speed;
-	fPoint speed_following;
-
 private:
 
-	float attack_radar_distance = 150;
-
-	bool flip;
 	j1Animation* current_animation;
 
 	j1Animation idle;
@@ -67,6 +59,26 @@ private:
 	MOVE_TO direction;
 	iPoint rePathing;
 
+public:
+
+	void MoveIdle(iPoint position);
+	void AttackPlayer(iPoint initial_position_enemy_air);
+	bool HasToAttack(float attack_radar_distance);
+
+	//void Move();
+	fPoint speed;
+	fPoint speed_following;
+
+	int distance_land;
+	float move_direction_land;
+	bool attacking = false;
+	iPoint initial_position_enemy_land;
+
+private:
+
+	float attack_radar_distance = 30;
+	bool flip;
+	bool jumping = false;
 
 };
 

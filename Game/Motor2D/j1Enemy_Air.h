@@ -29,7 +29,7 @@ public:
 
 	void MoveIdle(iPoint position);
 	void AttackPlayer(iPoint initial_position_enemy_air);
-	bool HasToAttack();
+	bool HasToAttack(float attack_radar_distance);
 
 	//void Move();
 	fPoint speed;
@@ -42,7 +42,7 @@ public:
 
 private:
 	
-	float attack_radar_distance = 150;
+	float attack_radar_distance = 30;
 
 	bool flip;
 	//j1Animation idle;

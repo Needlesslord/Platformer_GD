@@ -46,7 +46,6 @@ j1Enemy_Land::j1Enemy_Land(ENTITY_TYPE type, float x, float y) : j1Entity(ENTITY
 	//runM.PushBack({ 448, 0, 32, 32 });
 	//runM.PushBack({ 480, 0, 32, 32 });
 
-
 }
 
 j1Enemy_Land::~j1Enemy_Land() {};
@@ -88,6 +87,32 @@ bool j1Enemy_Land::Update(float dt) {
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);
 
+	if (!HasToAttack(attack_radar_distance)) {
+		distance_land = 0;
+		move_direction_land = 1;
+		if (distance_land > 30) {
+			move_direction_land = -1;
+		}
+		else if (distance_land < 0) {
+			move_direction_land = +1;
+		}
+		else {
+			position.x += move_direction_land;
+			if (move_direction_land > 0) distance_land--;
+			else distance_land++;
+		}
+	}
+
+	if (jumping) {
+		bool jump = true;
+		//make them jump
+	}
+
+
+	if (HasToAttack(attack_radar_distance)) AttackPlayer(App->entity_manager->enemy_land->initial_position_enemy_land);
+
+	
+	
 	//App->render->Blit(img, position.x, position.y, &(current_animation->GetCurrentFrame()));
 
 	//if (App->player->col != nullptr) {
@@ -182,21 +207,43 @@ void j1Enemy_Land::OnCollision(Collider* c1, Collider* c2)
 }
 
 void j1Enemy_Land::MoveIdle(iPoint position) {
+	float attack_radar_distance = 20;
+	if (!HasToAttack(attack_radar_distance)) {
+		distance_land = 0;
+		move_direction_land = 1;
+		if (distance_land > 30) {
+			move_direction_land = -1;
+		}
+		else if (distance_land < 0) {
+			move_direction_land = +1;
+		}
+		else {
+			position.x += move_direction_land;
+			if (move_direction_land > 0) distance_land--;
+			else distance_land++;
+		}
+	}
 
-	//int distance = 0;
-	//float move_direction = 1;
+}
 
+void j1Enemy_Land::AttackPlayer(iPoint initial_position_enemy_air) {
 
-	//if (distance > 100) {
-	//	move_direction = -1;
-	//}
-	//else if (distance < 0) {
-	//	move_direction = +1;
-	//}
-	//else {
-	//	position.x += move_direction;
-	//	if (move_direction > 0) distance--;
-	//	else distance++;
-	//}
+	//if ((App->player->position.x == position.x) && (App->player->position.y == position.y)) position = /*initial_position_enemy_air*/{ position.x + 100, position.y + 100 };
 
+	if (App->player->position.x < position.x) position.x--;
+	if (App->player->position.x > position.x) position.x++;
+
+	if (App->player->position.y < position.y && !jumping) jumping = true;
+
+}
+
+bool j1Enemy_Land::HasToAttack(float attack_radar_distance) {
+	bool ret = false;
+
+	if ((App->player->position.x > position.x) && ((App->player->position.x - position.x) < attack_radar_distance)) ret = true;
+	else if ((App->player->position.x < position.x) && ((App->player->position.x - position.x) > -attack_radar_distance)) ret = true;
+	if ((App->player->position.y > position.y) && ((App->player->position.y - position.y) < attack_radar_distance)) ret = true;
+	else if ((App->player->position.y < position.y) && ((App->player->position.y - position.y) > -attack_radar_distance)) ret = true;
+
+	return ret;
 }
