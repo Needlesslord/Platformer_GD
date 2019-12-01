@@ -53,10 +53,12 @@ bool j1Enemy_Air::Update(float dt) {
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);
 
+	//MoveIdle(position);
+
 	if (!HasToAttack()) {
 		distance_air = 0;
 		move_direction_air = 1;
-		if (distance_air > 50) {
+		if (distance_air > 30) {
 			move_direction_air = -1;
 		}
 		else if (distance_air < 0) {
@@ -68,7 +70,9 @@ bool j1Enemy_Air::Update(float dt) {
 			else distance_air++;
 		}
 	}
-	else AttackPlayer(App->entity_manager->enemy_air->initial_position_enemy_air);
+
+
+	if (HasToAttack()) AttackPlayer(App->entity_manager->enemy_air->initial_position_enemy_air);
 
 
 	//if (App->player->col != nullptr) {
@@ -145,6 +149,8 @@ void j1Enemy_Air::OnCollision(Collider* c1, Collider* c2)
 
 		if (c2->type == COLLIDER_PLAYER && !App->player->godMode) {
 
+			position = initial_position_enemy_air;
+
 			if (App->scene->current_scene == 0) {
 				App->player->position.x = App->player->originalPosition_1.x;
 				App->player->position.y = App->player->originalPosition_1.y;
@@ -164,27 +170,27 @@ void j1Enemy_Air::OnCollision(Collider* c1, Collider* c2)
 
 void j1Enemy_Air::MoveIdle(iPoint position) {
 	
-	//int distance = 0;
-	//float move_direction = 1;
-
-
-	//if (distance > 100) {
-	//	move_direction = -1;
-	//}
-	//else if (distance < 0) {
-	//	move_direction = +1;
-	//}
-	//else {
-	//	position.x += move_direction;
-	//	if (move_direction > 0) distance--;
-	//	else distance++;
-	//}
+	if (!HasToAttack()) {
+		distance_air = 0;
+		move_direction_air = 1;
+		if (distance_air > 30) {
+			move_direction_air = -1;
+		}
+		else if (distance_air < 0) {
+			move_direction_air = +1;
+		}
+		else {
+			position.x += move_direction_air;
+			if (move_direction_air > 0) distance_air--;
+			else distance_air++;
+		}
+	}
 
 }
 
 void j1Enemy_Air::AttackPlayer(iPoint initial_position_enemy_air) {
 
-	if ((App->player->position.x == position.x) && (App->player->position.y == position.y)) position = initial_position_enemy_air;
+	//if ((App->player->position.x == position.x) && (App->player->position.y == position.y)) position = /*initial_position_enemy_air*/{ position.x + 100, position.y + 100 };
 
 	if (App->player->position.x < position.x) position.x--;
 	if (App->player->position.y < position.y) position.y--;
@@ -196,9 +202,9 @@ bool j1Enemy_Air::HasToAttack() {
 	bool ret = false;
 
 	if ((App->player->position.x > position.x) && ((App->player->position.x - position.x) < 20)) ret = true;
-	if ((App->player->position.x < position.x) && ((App->player->position.x - position.x) > -20)) ret = true;
+	else if ((App->player->position.x < position.x) && ((App->player->position.x - position.x) > -20)) ret = true;
 	if ((App->player->position.y > position.y) && ((App->player->position.y - position.y) < 20)) ret = true;
-	if ((App->player->position.y < position.y) && ((App->player->position.y - position.y) > -20)) ret = true;
+	else if ((App->player->position.y < position.y) && ((App->player->position.y - position.y) > -20)) ret = true;
 
 	return ret;
 }
