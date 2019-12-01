@@ -41,7 +41,7 @@ j1Particles::~j1Particles()
 // Load assets
 bool j1Particles::Start()
 {
-	graphics = App->tex->Load("rtype/Ninja_Frog.png");
+	graphics = App->tex->Load("textures/Ninja_Frog.png");
 
 	// Load particles fx particle
 	//explosion.fx = App->audio->LoadFx("rtype/explosion.wav");

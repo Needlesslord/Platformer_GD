@@ -248,7 +248,7 @@ bool j1Player::Update(float dt) {
 	}
 
 	//DOUBLE JUMP
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !hasDoubleJumped && !godMode) {
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !hasDoubleJumped && !godMode) {
 		if (gravitySwapped) { //INVERTED GRAVITY
 			if (velocity.y < 0 && !againstRoof) {
 				velocity.y = -impulse;
@@ -264,7 +264,7 @@ bool j1Player::Update(float dt) {
 	}
 
 	//JUMP
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
 		if (gravitySwapped) { //INVERTED GRAVITY
 			if (againstRoof && !godMode) {
 				againstRoof = false;
@@ -288,6 +288,11 @@ bool j1Player::Update(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode) {
 		position.y += impulse * dt;
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		App->particles->AddParticle(App->particles->shuriken, position.x + 20, position.y, COLLIDER_PLAYER_SHOT);
+	}
+
 	
 	MoveEverything(gravitySwapped, dt);
 	if (App->scene->current_scene == 1 && doorLocked)
