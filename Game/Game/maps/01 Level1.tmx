@@ -50,6 +50,9 @@
   <image source="Background_Yellow.png" width="64" height="64"/>
  </tileset>
  <layer name="Plataforma" width="300" height="150">
+  <properties>
+   <property name="isWalkable" type="bool" value="true"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -45178,7 +45181,7 @@
   <object id="86" x="1871.17" y="1254.82" width="65.8333" height="16.7121"/>
   <object id="91" x="3278" y="966.924" width="67.5" height="17.9091"/>
  </objectgroup>
- <objectgroup name="Checkpoint">
+ <objectgroup color="#ff5500" name="Checkpoint">
   <object id="434" x="1784.85" y="1984.85" width="42.4242" height="57.5758"/>
   <object id="435" x="2172.73" y="736.364" width="39.3939" height="51.5152"/>
  </objectgroup>

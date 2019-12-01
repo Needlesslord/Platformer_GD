@@ -72143,7 +72143,7 @@
   <object id="91" x="2988.73" y="1000.62" width="70" height="15.8333"/>
   <object id="376" x="1133.52" y="1190.14" width="67.5" height="19"/>
  </objectgroup>
- <objectgroup name="Checkpoint">
+ <objectgroup color="#ff5500" name="Checkpoint">
   <object id="449" x="1328" y="828" width="52" height="68"/>
   <object id="450" x="3108" y="468" width="40" height="76"/>
  </objectgroup>
