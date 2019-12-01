@@ -83,6 +83,9 @@
     <ClCompile Include="j1CheckPoint.cpp">
       <Filter>Desenvolupament  ========\Entities\Static</Filter>
     </ClCompile>
+    <ClCompile Include="j1Particles.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -187,6 +190,9 @@
     <ClInclude Include="j1Enemy_Air.h" />
     <ClInclude Include="j1CheckPoint.h">
       <Filter>Desenvolupament  ========\Entities\Static</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Particles.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
