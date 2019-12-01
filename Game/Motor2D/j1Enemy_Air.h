@@ -35,7 +35,7 @@ public:
 	fPoint speed;
 	fPoint speed_following;
 
-	int distance_air;
+	int distance_air = 0;
 	float move_direction_air;
 	bool attacking = false;
 	iPoint initial_position_enemy_air;

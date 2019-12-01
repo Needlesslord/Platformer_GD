@@ -53,9 +53,44 @@ bool j1Scene::Start() {
 	// ENEMIES
 	if (current_scene == 1) {
 		//AIR
-		App->entity_manager->CreateEntity(ENEMY_AIR, App->player->originalPosition_1.x + 120, App->player->originalPosition_1.y - 20);
+		//App->entity_manager->CreateEntity(ENEMY_AIR, App->player->originalPosition_1.x + 120, App->player->originalPosition_1.y - 20);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 1300, 1000);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 2100, 740);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 2100, 740);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 2363, 1660);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 2810, 512);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 3160, 1290);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 680, 1560);
 		//LAND
-		App->entity_manager->CreateEntity(ENEMY_LAND, App->player->originalPosition_1.x + 120, App->player->originalPosition_1.y + 10);
+		//App->entity_manager->CreateEntity(ENEMY_LAND, App->player->originalPosition_1.x + 120, App->player->originalPosition_1.y + 10);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 895, 1145);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 1160, 1712);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 1800, 1135);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 2620, 1365);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 2445, 940);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 3540, 645);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 4000, 1020);
+
+	}
+	if (current_scene == 2) {
+		//AIR
+		//App->entity_manager->CreateEntity(ENEMY_AIR, App->player->originalPosition_1.x + 120, App->player->originalPosition_1.y - 20);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 1800, 2800);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 3270, 3130);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 740, 3800);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 1940, 4700);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 1530, 5600);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 4245, 3775);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 3625, 4900);
+		//LAND
+		//App->entity_manager->CreateEntity(ENEMY_LAND, App->player->originalPosition_1.x + 120, App->player->originalPosition_1.y + 10);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 4232, 5215);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 3780, 3970);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 2900, 5270);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 3090, 5900);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 2200, 3900);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 645, 3260);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 500, 4730);
 
 	}
 
