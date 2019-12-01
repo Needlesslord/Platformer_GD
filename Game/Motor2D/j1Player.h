@@ -107,6 +107,10 @@ public:
 	Collider* key;
 	SDL_Texture* key_tex;
 
+	Collider* checkpoint_1;
+	SDL_Texture* checkpoint_1_tex;		//has to be made an animation
+	bool autosave_1 = false;
+
 	bool gravitySwapped;
 	bool justSwapped = false;
 	j1Timer swapTimer;

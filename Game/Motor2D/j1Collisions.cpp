@@ -28,6 +28,7 @@ j1Collisions::j1Collisions() : j1Module() {
 	matrix[COLLIDER_PLAYER][COLLIDER_NPC] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_GRAVITY] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_KEY] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_CHECKPOINT] = true;
 
 	matrix[COLLIDER_ENEMY][COLLIDER_PLATFORM] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
@@ -234,6 +235,13 @@ bool j1Collisions::Update(float dt) {
 		case COLLIDER_GRAVITY: //yellow
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
+		case COLLIDER_KEY: //yellow
+			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+			break;
+		case COLLIDER_CHECKPOINT: //yellow
+			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+			break;
+
 		}
 	}
 

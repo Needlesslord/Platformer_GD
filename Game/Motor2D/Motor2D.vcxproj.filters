@@ -79,6 +79,10 @@
     <ClCompile Include="j1PathFinding.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1Enemy_Air.cpp" />
+    <ClCompile Include="j1CheckPoint.cpp">
+      <Filter>Desenvolupament  ========\Entities\Static</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -179,6 +183,10 @@
     </ClInclude>
     <ClInclude Include="j1PathFinding.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Enemy_Air.h" />
+    <ClInclude Include="j1CheckPoint.h">
+      <Filter>Desenvolupament  ========\Entities\Static</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

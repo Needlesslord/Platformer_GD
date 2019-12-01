@@ -148,6 +148,11 @@ bool j1Player::Start() {
 	key_tex = App->tex->Load("textures/llave.png");
 	key = App->collisions->AddCollider({ 700, 1405, 12, 48 }, COLLIDER_KEY, this);
 
+	// CHECKPOINTS
+	checkpoint_1_tex = App->tex->Load("textures/llave.png");
+	checkpoint_1 = App->collisions->AddCollider({ 700, 1405, 12, 48 }, COLLIDER_CHECKPOINT, this);
+
+
 	if (App->scene->current_scene == 0) {
 		position.x = originalPosition_1.x;
 		position.y = originalPosition_1.y;
@@ -171,12 +176,16 @@ bool j1Player::CleanUp() {
 	App->tex->UnLoad(imgwin);
 	App->tex->UnLoad(lockedDoor);
 	App->tex->UnLoad(key_tex);
+	App->tex->UnLoad(checkpoint_1_tex);
+
 
 	if (col != nullptr)col->to_delete = true;
 	if (colFeet != nullptr)colFeet->to_delete = true;
 	if (colHead != nullptr)colHead->to_delete = true;
 	if (colRightside != nullptr) colRightside->to_delete = true;
 	if (colLeftside != nullptr) colLeftside->to_delete = true;
+
+	if (autosave_1)checkpoint_1->to_delete = true;
 
 	return true;
 }
@@ -448,6 +457,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			key->to_delete;
 			key = nullptr;
 			doorLocked = false;
+		}
+
+		if (c2->type == COLLIDER_CHECKPOINT) {
+			checkpoint_1->to_delete;
+			checkpoint_1 = nullptr;
+			autosave_1 = true;
+			App->SaveRequest = true;
 		}
 
 		if (c2->type == COLLIDER_WIN && !doorLocked) {
