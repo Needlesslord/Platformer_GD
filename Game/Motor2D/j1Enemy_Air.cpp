@@ -186,7 +186,6 @@ void j1Enemy_Air::AttackPlayer(iPoint initial_position_enemy_air) {
 
 	if ((App->player->position.x == position.x) && (App->player->position.y == position.y)) position = initial_position_enemy_air;
 
-
 	if (App->player->position.x < position.x) position.x--;
 	if (App->player->position.y < position.y) position.y--;
 	if (App->player->position.x > position.x) position.x++;
@@ -196,10 +195,10 @@ void j1Enemy_Air::AttackPlayer(iPoint initial_position_enemy_air) {
 bool j1Enemy_Air::HasToAttack() {
 	bool ret = false;
 
-	if ((App->player->position.x > position.x) && ((App->player->position.x - position.x) < 50)) ret = true;
-	if ((App->player->position.x < position.x) && ((App->player->position.x - position.x) > -50)) ret = true;
-	if ((App->player->position.y > position.y) && ((App->player->position.y - position.y) < 50)) ret = true;
-	if ((App->player->position.y < position.y) && ((App->player->position.y - position.y) > -50)) ret = true;
+	if ((App->player->position.x > position.x) && ((App->player->position.x - position.x) < 20)) ret = true;
+	if ((App->player->position.x < position.x) && ((App->player->position.x - position.x) > -20)) ret = true;
+	if ((App->player->position.y > position.y) && ((App->player->position.y - position.y) < 20)) ret = true;
+	if ((App->player->position.y < position.y) && ((App->player->position.y - position.y) > -20)) ret = true;
 
 	return ret;
 }
