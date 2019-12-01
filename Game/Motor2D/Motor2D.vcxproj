@@ -78,13 +78,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="Enemy_Air_1.cpp" />
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="j1CheckPoint.cpp" />
     <ClCompile Include="j1Collisions.cpp" />
-    <ClCompile Include="j1Enemy.cpp" />
     <ClCompile Include="j1Enemy_Air.cpp" />
     <ClCompile Include="j1Entity.cpp" />
     <ClCompile Include="j1EntityManager.cpp" />
@@ -110,14 +105,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brofiler.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Enemy_Air_1.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="EntityManager.h" />
     <ClInclude Include="j1Animation.h" />
     <ClInclude Include="j1CheckPoint.h" />
     <ClInclude Include="j1Collisions.h" />
-    <ClInclude Include="j1Enemy.h" />
     <ClInclude Include="j1Enemy_Air.h" />
     <ClInclude Include="j1Entity.h" />
     <ClInclude Include="j1EntityManager.h" />

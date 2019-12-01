@@ -292,11 +292,9 @@ bool j1Player::Update(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		App->particles->AddParticle(App->particles->shuriken, position.x + 20, position.y, COLLIDER_PLAYER_SHOT);
 	}
-
-	
+		
 	MoveEverything(gravitySwapped, dt);
-	if (App->scene->current_scene == 1 && doorLocked)
-	{
+	if (App->scene->current_scene == 1 && doorLocked) {
 		App->render->Blit(lockedDoor, directWin_1.x + 18, directWin_1.y - 35);
 		App->render->Blit(key_tex, key->rect.x, key->rect.y);
 	}

@@ -49,34 +49,6 @@
     <ClCompile Include="j1Timer.cpp">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Desenvolupament  ========\Entities\EntityManager\PROVA</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityManager.cpp">
-      <Filter>Desenvolupament  ========\Entities\EntityManager\PROVA</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy_Air_1.cpp">
-      <Filter>Desenvolupament  ========\Entities\Dynamic\PROVA</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Enemy.cpp">
-      <Filter>Desenvolupament  ========\Entities\Dynamic\+</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Enemy_Land.cpp">
-      <Filter>Desenvolupament  ========\Entities\Dynamic\+</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Player.cpp">
-      <Filter>Desenvolupament  ========\Entities\Dynamic\+</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Entity.cpp">
-      <Filter>Desenvolupament  ========\Entities\EntityManager\+</Filter>
-    </ClCompile>
-    <ClCompile Include="j1EntityManager.cpp">
-      <Filter>Desenvolupament  ========\Entities\EntityManager\+</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Desenvolupament  ========\Entities\Dynamic\PROVA</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Enemy_Air.cpp" />
     <ClCompile Include="j1CheckPoint.cpp">
       <Filter>Desenvolupament  ========\Entities\Static</Filter>
     </ClCompile>
@@ -85,6 +57,21 @@
     </ClCompile>
     <ClCompile Include="j1PathFinding.cpp">
       <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Enemy_Land.cpp">
+      <Filter>Desenvolupament  ========\Entities\Dynamic</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Player.cpp">
+      <Filter>Desenvolupament  ========\Entities\Dynamic</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Enemy_Air.cpp">
+      <Filter>Desenvolupament  ========\Entities\Dynamic</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Entity.cpp">
+      <Filter>Desenvolupament  ========\Entities\EntityManager</Filter>
+    </ClCompile>
+    <ClCompile Include="j1EntityManager.cpp">
+      <Filter>Desenvolupament  ========\Entities\EntityManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -154,37 +141,9 @@
     <ClInclude Include="j1Timer.h">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Desenvolupament  ========\Entities\EntityManager\PROVA</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityManager.h">
-      <Filter>Desenvolupament  ========\Entities\EntityManager\PROVA</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy_Air_1.h">
-      <Filter>Desenvolupament  ========\Entities\Dynamic\PROVA</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Enemy.h">
-      <Filter>Desenvolupament  ========\Entities\Dynamic\+</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Enemy_Land.h">
-      <Filter>Desenvolupament  ========\Entities\Dynamic\+</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Player.h">
-      <Filter>Desenvolupament  ========\Entities\Dynamic\+</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Entity.h">
-      <Filter>Desenvolupament  ========\Entities\EntityManager\+</Filter>
-    </ClInclude>
-    <ClInclude Include="j1EntityManager.h">
-      <Filter>Desenvolupament  ========\Entities\EntityManager\+</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Desenvolupament  ========\Entities\Dynamic\PROVA</Filter>
-    </ClInclude>
     <ClInclude Include="Brofiler.h">
       <Filter>Desenvolupament  ========\Core</Filter>
     </ClInclude>
-    <ClInclude Include="j1Enemy_Air.h" />
     <ClInclude Include="j1CheckPoint.h">
       <Filter>Desenvolupament  ========\Entities\Static</Filter>
     </ClInclude>
@@ -193,6 +152,21 @@
     </ClInclude>
     <ClInclude Include="j1PathFinding.h">
       <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Enemy_Land.h">
+      <Filter>Desenvolupament  ========\Entities\Dynamic</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Player.h">
+      <Filter>Desenvolupament  ========\Entities\Dynamic</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Enemy_Air.h">
+      <Filter>Desenvolupament  ========\Entities\Dynamic</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Entity.h">
+      <Filter>Desenvolupament  ========\Entities\EntityManager</Filter>
+    </ClInclude>
+    <ClInclude Include="j1EntityManager.h">
+      <Filter>Desenvolupament  ========\Entities\EntityManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,18 +202,6 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Entities\Static">
       <UniqueIdentifier>{40d566e7-4d2f-48f0-82c2-205ddf6f3956}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Entities\EntityManager\PROVA">
-      <UniqueIdentifier>{33746ab6-fdfa-4e1a-8ad4-365a21b2898d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Entities\Dynamic\PROVA">
-      <UniqueIdentifier>{dc63f3a8-d9f3-41f6-8e1c-bcdbe27b8c9d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Entities\Dynamic\+">
-      <UniqueIdentifier>{edfb9d94-0a76-4101-b102-dc2a3638ea42}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Entities\EntityManager\+">
-      <UniqueIdentifier>{f307f437-d6d1-4e40-8e5c-a5a95e181071}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

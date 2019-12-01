@@ -1,6 +1,5 @@
 #include "j1EntityManager.h"
 #include "j1Player.h"
-#include "j1Enemy.h"
 #include "j1Enemy_Air.h"
 #include "j1Enemy_Land.h"
 #include "j1NPC.h"
