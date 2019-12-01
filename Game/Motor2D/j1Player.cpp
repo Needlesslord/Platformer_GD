@@ -298,6 +298,8 @@ bool j1Player::Update(float dt) {
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		App->particles->AddParticle(App->particles->shuriken, position.x + 20, position.y, COLLIDER_PLAYER_SHOT, 0);
+		//col_particle = App->collisions->AddCollider({ position.x + 20, position.y, 5, 5 }, COLLIDER_PLAYER_SHOT, 0);
+
 	}
 		
 	MoveEverything(gravitySwapped, dt);

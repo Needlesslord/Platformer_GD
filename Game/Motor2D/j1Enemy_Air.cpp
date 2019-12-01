@@ -117,6 +117,7 @@ void j1Enemy_Air::OnCollision(Collider* c1, Collider* c2)
 		{
 			isAlive = false;
 			c2->to_delete = true;
+			c1->to_delete = true;
 		}
 	}
 

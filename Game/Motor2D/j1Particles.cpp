@@ -42,10 +42,16 @@ bool j1Particles::CleanUp() {
 }
 
 bool j1Particles::PreUpdate() {
+
+	BROFILER_CATEGORY("ParticlesUpdate", Profiler::Color::Orange)
+
 	return true;
 }
 
 bool j1Particles::Update(float dt) {
+
+	BROFILER_CATEGORY("ParticlesUpdate", Profiler::Color::OrangeRed)
+
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)	{
 		Particle* p = active[i];
 
@@ -65,6 +71,9 @@ bool j1Particles::Update(float dt) {
 }
 
 bool j1Particles::PostUpdate() {
+
+	BROFILER_CATEGORY("ParticlesUpdate", Profiler::Color::DarkOrange)
+
 	return true;
 }
 
@@ -119,8 +128,9 @@ Particle::Particle(const Particle& p) :
 	fx(p.fx), born(p.born), life(p.life)
 {}
 
-Particle::~Particle()
-{}
+Particle::~Particle() {
+	if (collider != nullptr) collider->to_delete = true;
+}
 
 bool Particle::Update()
 {
@@ -133,6 +143,9 @@ bool Particle::Update()
 	}
 	else
 		if (anim.Finished()) ret = false;
+
+	//if (collider != nullptr && collider->type == COLLIDER_TYPE::COLLIDER_ENEMY_SHOT)
+	//	position.x -= speed.x;
 
 	particleRect.x += speed.x;
 

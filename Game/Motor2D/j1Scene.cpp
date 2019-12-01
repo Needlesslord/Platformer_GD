@@ -52,8 +52,12 @@ bool j1Scene::Start() {
 
 	// ENEMIES
 	if (current_scene == 1) {
-		App->entity_manager->CreateEntity(ENEMY_AIR, App->player->originalPosition_1.x + 20, App->player->originalPosition_1.y - 20);
+		//AIR
+		//App->entity_manager->CreateEntity(ENEMY_AIR, App->player->originalPosition_1.x + 20, App->player->originalPosition_1.y - 20);
 		App->entity_manager->CreateEntity(ENEMY_AIR, App->player->originalPosition_1.x + 120, App->player->originalPosition_1.y - 20);
+		//LAND
+		App->entity_manager->CreateEntity(ENEMY_LAND, App->player->originalPosition_1.x + 200, App->player->originalPosition_1.y - 20);
+
 	}
 
 	return true;
