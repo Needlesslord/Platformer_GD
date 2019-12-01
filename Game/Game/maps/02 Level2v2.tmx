@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="400" tilewidth="16" tileheight="16" nextobjectid="401">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="400" tilewidth="16" tileheight="16" nextobjectid="403">
  <tileset firstgid="1" name="Tiles_Sand_Mud_Ice_16" tilewidth="16" tileheight="16" tilecount="55" columns="11">
   <image source="Tiles_Sand_Mud_Ice_16.png" width="176" height="80"/>
   <terraintypes>
@@ -120216,7 +120216,7 @@
   <object id="388" x="3276" y="3128" width="20" height="20"/>
   <object id="389" x="3624" y="4904" width="20" height="20"/>
   <object id="390" x="740" y="3800" width="20" height="28"/>
-  <object id="391" x="1684" y="2700" width="20" height="28"/>
+  <object id="391" x="1792" y="2804" width="20" height="28"/>
   <object id="396" x="4244" y="3776" width="36" height="28"/>
  </objectgroup>
  <objectgroup color="#5500ff" name="Land enemies">
