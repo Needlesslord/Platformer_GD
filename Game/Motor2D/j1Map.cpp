@@ -7,6 +7,8 @@
 #include "j1Collisions.h"
 #include "j1App.h"
 #include "Brofiler.h"
+#include "j1Player.h"
+#include "j1Scene.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false) {
@@ -149,6 +151,12 @@ bool j1Map::CleanUp()
 
 	// Clean up the pugui tree
 	map_file.reset();
+
+	//int cs = App->scene->current_scene;
+	App->collisions->CleanUp();
+	App->player->CleanUp();
+	//App->scene->current_scene = cs;
+	App->player->Start();
 
 	return true;
 }

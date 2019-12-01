@@ -139,6 +139,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 bool j1Player::Start() {
 	LOG("Loading player");
+
 	current_state = PLAYER_ST_IDLE;
 	current_animation = &player_idle;
 	colFeet			= App->collisions->AddCollider(feet, COLLIDER_PLAYER, this);
@@ -153,7 +154,7 @@ bool j1Player::Start() {
 	imgwin = App->tex->Load("textures/imgwin.png");
 	lockedDoor = App->tex->Load("textures/candado.png");
 	key_tex = App->tex->Load("textures/llave.png");
-	
+
 	if (App->scene->current_scene == 1) {
 		// KEY POSITION COLLIDER
 		key = App->collisions->AddCollider({ 700, 1405, 12, 48 }, COLLIDER_KEY, this);
@@ -214,6 +215,7 @@ bool j1Player::PreUpdate() {
 
 // Update: draw background
 bool j1Player::Update(float dt) {
+	
 	BROFILER_CATEGORY("Player_Update", Profiler::Color::Blue)
 
 	current_animation->speed = dt * 10;

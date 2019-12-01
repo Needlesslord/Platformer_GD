@@ -46,7 +46,7 @@ bool j1Scene::Start() {
 	}
 	else if (current_scene == 2) {
 		background2_small = App->tex->Load("maps/fondo2_small.png");
-		App->map->Load("02 Level2.tmx");
+		App->map->Load("02 Level2v2.tmx");
 		//App->audio->PlayMusic("audio/music/intro.ogg");
 	}
 
@@ -56,7 +56,7 @@ bool j1Scene::Start() {
 		//App->entity_manager->CreateEntity(ENEMY_AIR, App->player->originalPosition_1.x + 20, App->player->originalPosition_1.y - 20);
 		App->entity_manager->CreateEntity(ENEMY_AIR, App->player->originalPosition_1.x + 120, App->player->originalPosition_1.y - 20);
 		//LAND
-		App->entity_manager->CreateEntity(ENEMY_LAND, App->player->originalPosition_1.x + 200, App->player->originalPosition_1.y - 20);
+		App->entity_manager->CreateEntity(ENEMY_LAND, App->player->originalPosition_1.x + 120, App->player->originalPosition_1.y - 20);
 
 	}
 
@@ -177,6 +177,7 @@ bool j1Scene::CleanUp() {
 	if (current_scene == 1) App->tex->UnLoad(background1_small);
 	if (current_scene == 2) App->tex->UnLoad(background2_small);
 	App->tex->UnLoad(imgwin);
+	App->map->CleanUp();
 	// WE NEED TO CLEAN UP THE ENEMIES
 	return true;
 }
