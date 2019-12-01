@@ -311,8 +311,8 @@ bool j1Player::Update(float dt) {
 		App->render->Blit(key_tex, key->rect.x, key->rect.y);
 	}
 	else if (App->scene->current_scene == 2 && doorLocked) {
-		App->render->Blit(lockedDoor, directWin_2.x + 18, directWin_2.y - 35);
-		App->render->Blit(key_tex, key->rect.x, key->rect.y);
+		App->render->Blit(lockedDoor, directWin_2.x - 90, directWin_2.y - 8);
+		App->render->Blit(key_tex, 4517, 6298);
 	}
 
 	if (gravitySwapped && godMode) App->render->Blit(player_textures_godmode, position.x - AnimationOffstet.x, position.y - 5/*TODO: initialize AnimationOffsetGravitySwapped so no magic number*/, &(current_animation->GetCurrentFrame()));
