@@ -149,7 +149,9 @@ bool j1Player::Start() {
 	key = App->collisions->AddCollider({ 700, 1405, 12, 48 }, COLLIDER_KEY, this);
 
 	// CHECKPOINTS
-	checkpoint_1_tex = App->tex->Load("textures/llave.png");
+	if (autosave_1) checkpoint_1_tex = App->tex->Load("textures/checkpoint_activated_Swapped.png");
+	else if (!autosave_1) checkpoint_1_tex = App->tex->Load("textures/checkpoint_deactivated_Swappedda.png");
+
 	checkpoint_1 = App->collisions->AddCollider({ 700, 1405, 12, 48 }, COLLIDER_CHECKPOINT, this);
 
 
