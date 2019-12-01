@@ -58,8 +58,8 @@ public:
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;
 
-	MOVE_TO WillMoveTo(p2DynArray<iPoint>& path);
-	MOVE_TO WillMoveTo_Land(p2DynArray<iPoint>& path);
+	MOVE_TO WillMoveTo(p2DynArray<iPoint>& path) const;
+	MOVE_TO WillMoveTo_Land(p2DynArray<iPoint>& path) const;
 
 private:
 

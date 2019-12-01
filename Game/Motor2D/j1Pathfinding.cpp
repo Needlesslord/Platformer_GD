@@ -49,7 +49,12 @@ bool j1PathFinding::CheckBoundaries(const iPoint& pos) const
 bool j1PathFinding::IsWalkable(const iPoint& pos) const
 {
 	uchar t = GetTileAt(pos);
-	return t != INVALID_WALK_CODE && t > 0;
+	//return (t != INVALID_WALK_CODE && t > 0) || true;
+	
+	//if (t == INVALID_WALK_CODE) return false;
+	//else return true;
+
+	return true;
 }
 
 // Utility: return the walkability value of a tile
@@ -256,46 +261,46 @@ p2DynArray<iPoint> j1PathFinding::CreatePath(const iPoint& origin, const iPoint&
 	return to_path;
 }
 
-MOVE_TO WillMoveTo(p2DynArray<iPoint>& path) {
+MOVE_TO j1PathFinding::WillMoveTo(p2DynArray<iPoint>& path) const {
 	
-	//if (path.Count() >= 2) {
+	if (path.Count() >= 2) {
 		
-		//iPoint tile = path[0];
-		//iPoint next_tile = path[1];
-		//int tile_to_next_tile_x = next_tile.x - tile.x;
-		//int tile_to_next_tile_y = next_tile.y - tile.y;
-		//
-		//if (tile_to_next_tile_x == 1) return PATH_RIGHT;
-		//else if (tile_to_next_tile_x == -1) return PATH_LEFT;
-		//else if (tile_to_next_tile_y == 1)	return PATH_DOWN;
-		//else if (tile_to_next_tile_y == -1) return PATH_UP;
+		iPoint tile = path[0];
+		iPoint next_tile = path[1];
+		int tile_to_next_tile_x = next_tile.x - tile.x;
+		int tile_to_next_tile_y = next_tile.y - tile.y;
+		
+		if (tile_to_next_tile_x == 1) return PATH_RIGHT;
+		else if (tile_to_next_tile_x == -1) return PATH_LEFT;
+		else if (tile_to_next_tile_y == 1)	return PATH_DOWN;
+		else if (tile_to_next_tile_y == -1) return PATH_UP;
 
-		// implement diagonals
+		 //implement diagonals
 
-		//else return PATH_NONE;
+		else return PATH_NONE;
 
-	//}
+	}
 
 	return PATH_NONE;
 
 }
 
-MOVE_TO WillMoveTo_Land(p2DynArray<iPoint>& path) {
+MOVE_TO j1PathFinding::WillMoveTo_Land(p2DynArray<iPoint>& path) const {
 
-	//if (path.Count() >= 2) {
+	if (path.Count() >= 2) {
 
-	//iPoint tile = path[0];
-	//iPoint next_tile = path[1];
-	//int tile_to_next_tile_x = next_tile.x - tile.x;
-	//int tile_to_next_tile_y = next_tile.y - tile.y;
-	//
-	//if (tile_to_next_tile_x == 1) return PATH_RIGHT;
-	//else if (tile_to_next_tile_x == -1) return PATH_LEFT;
-	//else if (tile_to_next_tile_y == 1)	return PATH_DOWN;
-	//else if (tile_to_next_tile_y == -1) return PATH_UP;
-	//else return PATH_NONE;
+	iPoint tile = path[0];
+	iPoint next_tile = path[1];
+	int tile_to_next_tile_x = next_tile.x - tile.x;
+	int tile_to_next_tile_y = next_tile.y - tile.y;
+	
+	if (tile_to_next_tile_x == 1) return PATH_RIGHT;
+	else if (tile_to_next_tile_x == -1) return PATH_LEFT;
+	else if (tile_to_next_tile_y == 1)	return PATH_DOWN;
+	else if (tile_to_next_tile_y == -1) return PATH_UP;
+	else return PATH_NONE;
 
-	//}
+	}
 
 	return PATH_NONE;
 

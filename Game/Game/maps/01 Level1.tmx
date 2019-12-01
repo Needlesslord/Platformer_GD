@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="150" tilewidth="16" tileheight="16" nextobjectid="434">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="150" tilewidth="16" tileheight="16" nextobjectid="436">
  <tileset firstgid="1" name="Tiles_Sand_Mud_Ice_16" tilewidth="16" tileheight="16" tilecount="55" columns="11">
   <image source="Tiles_Sand_Mud_Ice_16.png" width="176" height="80"/>
   <terraintypes>
@@ -45177,5 +45177,9 @@
  <objectgroup name="Gravedad">
   <object id="86" x="1871.17" y="1254.82" width="65.8333" height="16.7121"/>
   <object id="91" x="3278" y="966.924" width="67.5" height="17.9091"/>
+ </objectgroup>
+ <objectgroup name="Checkpoint">
+  <object id="434" x="1784.85" y="1984.85" width="42.4242" height="57.5758"/>
+  <object id="435" x="2172.73" y="736.364" width="39.3939" height="51.5152"/>
  </objectgroup>
 </map>
