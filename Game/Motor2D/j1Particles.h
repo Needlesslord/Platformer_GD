@@ -14,15 +14,14 @@ enum COLLIDER_TYPE;
 
 struct Particle
 {
-	Collider* collider = nullptr;
+	Collider* collider;
 	j1Animation anim;
 	uint fx = 0;
-	iPoint position;
+	SDL_Rect particleRect;
 	iPoint speed;
 	Uint32 born = 0;
 	Uint32 life = 0;
 	bool fx_played = false;
-
 	Particle();
 	Particle(const Particle& p);
 	~Particle();
@@ -42,7 +41,7 @@ public:
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
 
-	void AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0);
+	void AddParticle(Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay = 0);
 
 private:
 

@@ -13,7 +13,7 @@ j1Enemy_Air::~j1Enemy_Air() {};
 
 bool j1Enemy_Air::Start() {
 	img = App->tex->Load("textures/enemy_ghost_angry.png");
-	collider = App->collisions->AddCollider({ position.x, position.y, 20, /*TODO: INITIALIZE IPoint for these*/ 20 }, COLLIDER_ENEMY, App->entity_manager);
+	collider = App->collisions->AddCollider({ position.x, position.y, 25, /*TODO: INITIALIZE IPoint for these*/ 23 }, COLLIDER_ENEMY, App->entity_manager);
 
 	return true;
 }
@@ -26,7 +26,7 @@ bool j1Enemy_Air::PreUpdate() {
 }
 
 bool j1Enemy_Air::Update(float dt) {
-	Draw({0, 0, 25 /*20*/, 23 /*20*/}, position.x, position.y, flip);
+	Draw({0, 0, 25, 23}, position.x, position.y, flip);
 	return true;
 }
 

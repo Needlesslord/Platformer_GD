@@ -21,7 +21,7 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
-
+	void OnCollision(Collider* c1, Collider* c2) {}
 	void Move();
 private:
 	bool flip;
