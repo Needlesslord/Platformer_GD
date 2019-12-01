@@ -22,9 +22,32 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	void Move();
+	void Move(p2DynArray<iPoint>& path, float dt);
+	void OnCollision(Collider* c1, Collider* c2);
+
+	void MoveIdle(iPoint position);
+	void AttackPlayer(iPoint initial_position_enemy_air);
+	bool HasToAttack();
+
+	//void Move();
+	fPoint speed;
+	fPoint speed_following;
+
+	int distance_air;
+	float move_direction_air;
+	bool attacking = false;
+	iPoint initial_position_enemy_air;
+
 private:
 	bool flip;
+
+	//j1Animation idle;
+	
+	// PATHFINDING
+	bool has_path = false;
+	p2DynArray<iPoint>* path;
+	MOVE_TO direction;
+	iPoint rePathing;
 };
 
 #endif 

@@ -8,7 +8,7 @@
 	</audio>
 	<map />
 	<scene>
-		<current_scene value="0" />
+		<current_scene value="2" />
 	</scene>
 	<collisions />
 	<player>
@@ -20,6 +20,6 @@
 	<pathfinding />
 	<:anonymous />
 	<renderer>
-		<camera x="-914" y="-2560" />
+		<camera x="-491" y="-11551" />
 	</renderer>
 </save>

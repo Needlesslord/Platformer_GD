@@ -12,39 +12,39 @@
 j1Enemy_Land::j1Enemy_Land(ENTITY_TYPE type, float x, float y) : j1Entity(ENTITY_TYPE::ENEMY_AIR, x, y)
 {
 	//idle
-	run.PushBack({ 0, 0, 32, 32 });
-	run.PushBack({ 32, 0, 32, 32 });
-	run.PushBack({ 64, 0, 32, 32 });
-	run.PushBack({ 96, 0, 32, 32 });
-	run.PushBack({ 128, 0, 32, 32 });
-	run.PushBack({ 160, 0, 32, 32 });
-	run.PushBack({ 192, 0, 32, 32 });
-	run.PushBack({ 224, 0, 32, 32 });
-	run.PushBack({ 256, 0, 32, 32 });
-	run.PushBack({ 288, 0, 32, 32 });
-	run.PushBack({ 320, 0, 32, 32 });
-	run.PushBack({ 352, 0, 32, 32 });
-	run.PushBack({ 384, 0, 32, 32 });
-	run.PushBack({ 416, 0, 32, 32 });
-	run.PushBack({ 448, 0, 32, 32 });
-	run.PushBack({ 480, 0, 32, 32 });
+	//run.PushBack({ 0, 0, 32, 32 });
+	//run.PushBack({ 32, 0, 32, 32 });
+	//run.PushBack({ 64, 0, 32, 32 });
+	//run.PushBack({ 96, 0, 32, 32 });
+	//run.PushBack({ 128, 0, 32, 32 });
+	//run.PushBack({ 160, 0, 32, 32 });
+	//run.PushBack({ 192, 0, 32, 32 });
+	//run.PushBack({ 224, 0, 32, 32 });
+	//run.PushBack({ 256, 0, 32, 32 });
+	//run.PushBack({ 288, 0, 32, 32 });
+	//run.PushBack({ 320, 0, 32, 32 });
+	//run.PushBack({ 352, 0, 32, 32 });
+	//run.PushBack({ 384, 0, 32, 32 });
+	//run.PushBack({ 416, 0, 32, 32 });
+	//run.PushBack({ 448, 0, 32, 32 });
+	//run.PushBack({ 480, 0, 32, 32 });
 
-	runM.PushBack({ 0, 0, 32, 32 });
-	runM.PushBack({ 32, 0, 32, 32 });
-	runM.PushBack({ 64, 0, 32, 32 });
-	runM.PushBack({ 96, 0, 32, 32 });
-	runM.PushBack({ 128, 0, 32, 32 });
-	runM.PushBack({ 160, 0, 32, 32 });
-	runM.PushBack({ 192, 0, 32, 32 });
-	runM.PushBack({ 224, 0, 32, 32 });
-	runM.PushBack({ 256, 0, 32, 32 });
-	runM.PushBack({ 288, 0, 32, 32 });
-	runM.PushBack({ 320, 0, 32, 32 });
-	runM.PushBack({ 352, 0, 32, 32 });
-	runM.PushBack({ 384, 0, 32, 32 });
-	runM.PushBack({ 416, 0, 32, 32 });
-	runM.PushBack({ 448, 0, 32, 32 });
-	runM.PushBack({ 480, 0, 32, 32 });
+	//runM.PushBack({ 0, 0, 32, 32 });
+	//runM.PushBack({ 32, 0, 32, 32 });
+	//runM.PushBack({ 64, 0, 32, 32 });
+	//runM.PushBack({ 96, 0, 32, 32 });
+	//runM.PushBack({ 128, 0, 32, 32 });
+	//runM.PushBack({ 160, 0, 32, 32 });
+	//runM.PushBack({ 192, 0, 32, 32 });
+	//runM.PushBack({ 224, 0, 32, 32 });
+	//runM.PushBack({ 256, 0, 32, 32 });
+	//runM.PushBack({ 288, 0, 32, 32 });
+	//runM.PushBack({ 320, 0, 32, 32 });
+	//runM.PushBack({ 352, 0, 32, 32 });
+	//runM.PushBack({ 384, 0, 32, 32 });
+	//runM.PushBack({ 416, 0, 32, 32 });
+	//runM.PushBack({ 448, 0, 32, 32 });
+	//runM.PushBack({ 480, 0, 32, 32 });
 
 
 }
@@ -52,8 +52,8 @@ j1Enemy_Land::j1Enemy_Land(ENTITY_TYPE type, float x, float y) : j1Entity(ENTITY
 j1Enemy_Land::~j1Enemy_Land() {};
 
 bool j1Enemy_Land::Start() {
-	img = App->tex->Load("textures/enemy_masked_guy.png");
-	imgM = App->tex->Load("textures/enemy_masked_guy_mirror.png");
+	img = App->tex->Load("textures/enemy_land.png");
+	imgM = App->tex->Load("textures/enemy_land_mirror.png");
 
 	collider = App->collisions->AddCollider({ position.x, position.y, 25, /*TODO: INITIALIZE IPoint for these*/ 23 }, COLLIDER_ENEMY, App->entity_manager);
 
@@ -146,4 +146,22 @@ void j1Enemy_Land::OnCollision(Collider* c1, Collider* c2)
 	}
 }
 
-void IdleMovement() {}
+void j1Enemy_Land::MoveIdle(iPoint position) {
+
+	//int distance = 0;
+	//float move_direction = 1;
+
+
+	//if (distance > 100) {
+	//	move_direction = -1;
+	//}
+	//else if (distance < 0) {
+	//	move_direction = +1;
+	//}
+	//else {
+	//	position.x += move_direction;
+	//	if (move_direction > 0) distance--;
+	//	else distance++;
+	//}
+
+}

@@ -24,14 +24,14 @@
 
 	GitHub: tomascarreras1000
 
-	Tomás has been in charge of the base code, the player (lead role), save/load, map's collisions design, config, camera, music, debug
+	Tomás has been in charge of the base code, the player (lead role), save/load, map's collisions design, config, camera, music, debug, entity manager, pathfinding, particles, fps
 
 
 **Lead Design, Programmer and Management:** Núria Lamonja
 
 	GitHub:	 needlesslord
 
-	Núria has been in charge of the base code, the level design and implementation, music and sprites (choosing and arranging them), implemented map's collisions, readme, web page, delivery
+	Núria has been in charge of the base code, the level design and implementation, music and sprites (choosing and arranging them), implemented map's collisions, readme, web page, delivery, enemies, pathfinding, uml, particles
 
 
 
@@ -46,7 +46,8 @@ Art (Sprites and Tilesets):
 
 		[Pixel Frog's Twitter](https://twitter.com/PixelFrog123)
 
-Art (some sprites, such as checkpoints and keys/doors):
+
+Art (some sprites, such as checkpoints, enemies or keys/doors):
 
 	Núria Lamonja
 
@@ -75,7 +76,7 @@ Design and Development:
 Ninja Frog Against Gravity is a platformer where your goal is to find the way out. 
 
 
-The player is a Ninja Frog and find the exit it has to fall through holes where the gravity changes and walk downwards.
+The player is a Ninja Frog, who has to find the exit falling through holes where the gravity changes and walk downwards.
 
 
 
@@ -125,9 +126,9 @@ CONTROLS:
 
 	PLAYER 
 	A 	move left
-	S 	fall from the platform
 	D 	move right
-	SPACE 	jump + double jump (only when going upwards)
+	W	jump + double jump (only when going upwards)
+	SPACE	shurikens
 	
 	ESC 	to leave the game	
 	
@@ -137,7 +138,7 @@ CONTROLS:
 	DEBUG:
 
 	I 	Intro					//TO IMPLEMENT YET
-	T x2	Tutorial
+	T x2	Tutorial				//TO IMPLEMENT YET
 	F1 	Level 1				
 	F2 	Level 2				
 	F3 	Start again (the same level)	
@@ -150,7 +151,7 @@ CONTROLS:
 	F10 	God mode				
 
 
-	CAMERA
+	CAMERA (with F7)
 	Keyboard arrows to move up, down, left and right
 
 
@@ -164,7 +165,9 @@ CONTROLS:
 	### Innovation
 
 
-		Not implemented yet
+		Gravity change
+		Maximum 3 shurikens
+		Checkpoints and autosave with keys
 
 
 
