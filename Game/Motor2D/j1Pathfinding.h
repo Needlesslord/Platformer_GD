@@ -9,112 +9,61 @@
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
 
-// --------------------------------------------------
-// Recommended reading:
-// Intro: http://www.raywenderlich.com/4946/introduction-to-a-pathfinding
-// Details: http://theory.stanford.edu/~amitp/GameProgramming/
-// --------------------------------------------------
-
 enum MOVE_TO
 {
-	PATH_NONE = -1,
-	PATH_UP,
-	PATH_DOWN,
-	PATH_RIGHT,
-	PATH_LEFT,
-	PATH_UP_RIGHT,
-	PATH_UP_LEFT,
-	PATH_DOWN_RIGHT,
-	PATH_DOWN_LEFT
+	PATH_5 = -1,
+
+	PATH_1,
+	PATH_2,
+	PATH_3,
+	PATH_4,
+	PATH_6,
+	PATH_7,
+	PATH_8,
+	PATH_9
 };
 
-class j1PathFinding : public j1Module
-{
+class j1PathFinding : public j1Module {
 public:
-
 	j1PathFinding();
-
-	// Destructor
 	~j1PathFinding();
-
-	// Called before quitting
 	bool CleanUp();
-
-	// Sets up the walkability map
-	void SetMap(uint width, uint height, uchar* data);
-
-	// Main function to request a path from A to B
-	p2DynArray<iPoint> CreatePath(const iPoint& origin, const iPoint& destination);
-
-	// To request all tiles involved in the last generated path
-	const p2DynArray<iPoint>* GetLastPath() const;
-
-	// Utility: return true if pos is inside the map boundaries
-	bool CheckBoundaries(const iPoint& pos) const;
-
-	// Utility: returns true is the tile is walkable
-	bool IsWalkable(const iPoint& pos) const;
-
-	// Utility: return the walkability value of a tile
-	uchar GetTileAt(const iPoint& pos) const;
-
-	MOVE_TO WillMoveTo(p2DynArray<iPoint>& path) const;
-	MOVE_TO WillMoveTo_Land(p2DynArray<iPoint>& path) const;
+	void SetMap(uint w, uint h, uchar* data);
+	p2DynArray<iPoint>* CreatePath(iPoint& origin, iPoint& destination);
+	p2DynArray<iPoint>* GetLastPath();
+	bool CheckBoundaries(iPoint& p);
+	bool IsWalkable(iPoint& p);
+	uchar GetTileAt(iPoint& p);
+	MOVE_TO WillMoveTo(p2DynArray<iPoint>& path);
+	MOVE_TO WillMoveTo_Land(p2DynArray<iPoint>& path);
 
 private:
-
-	// size of the map
+	p2DynArray<iPoint>* path = nullptr;
+	p2DynArray<iPoint> lastPath;
 	uint width;
 	uint height;
-	// all map walkability values [0..255]
-	uchar* map;
-	// we store the created path here
-	p2DynArray<iPoint> to_path;
+	uchar* map = nullptr;
 };
 
-// forward declaration
 struct PathList;
 
-// ---------------------------------------------------------------------
-// Pathnode: Helper struct to represent a node in the path creation
-// ---------------------------------------------------------------------
-struct PathNode
-{
-	// Convenient constructors
+struct PathNode {
 	PathNode();
-	PathNode(int g, int h, const iPoint& pos, const PathNode* parent);
-	PathNode(const PathNode& node);
-
-	// Fills a list (PathList) of all valid adjacent pathnodes
-	uint FindWalkableAdjacents(PathList& list_to_fill) const;
-	// Calculates this tile score
-	int Score() const;
-	// Calculate the F for a specific destination tile
-	int CalculateF(const iPoint& destination);
-
-	// -----------
+	PathNode(int g, int h, iPoint& p, PathNode* parent);
+	PathNode(PathNode& node);
+	uint FindWalkableAdjacents(PathList& list_to_fill);
+	int Score();
+	int CalculateF(iPoint& destination);
 	int g;
 	int h;
 	iPoint pos;
-	const PathNode* parent; // needed to reconstruct the path in the end
+	PathNode* parent = nullptr;
 };
 
-// ---------------------------------------------------------------------
-// Helper struct to include a list of path nodes
-// ---------------------------------------------------------------------
-struct PathList
-{
-	// Looks for a node in this list and returns it's list node or NULL
-	p2List_item<PathNode>* Find(const iPoint& point) const;
-
-	// Returns the Pathnode with lowest score in this list or NULL if empty
-	p2List_item<PathNode>* GetNodeLowestScore() const;
-
-	// -----------
-	// The list itself, note they are not pointers!
-	p2List<PathNode> list;
+struct PathList {
+	p2List_item<PathNode>* Find(iPoint& point);
+	p2List_item<PathNode>* GetNodeLowestScore();
+	p2List<PathNode> node_list;
 };
-
-
 
 #endif // __j1PATHFINDING_H__

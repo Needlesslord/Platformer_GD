@@ -76,15 +76,15 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Desenvolupament  ========\Entities\Dynamic\PROVA</Filter>
     </ClCompile>
-    <ClCompile Include="j1PathFinding.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1Enemy_Air.cpp" />
     <ClCompile Include="j1CheckPoint.cpp">
       <Filter>Desenvolupament  ========\Entities\Static</Filter>
     </ClCompile>
     <ClCompile Include="j1Particles.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1PathFinding.cpp">
+      <Filter>Desenvolupament  ========\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,15 +184,15 @@
     <ClInclude Include="Brofiler.h">
       <Filter>Desenvolupament  ========\Core</Filter>
     </ClInclude>
-    <ClInclude Include="j1PathFinding.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="j1Enemy_Air.h" />
     <ClInclude Include="j1CheckPoint.h">
       <Filter>Desenvolupament  ========\Entities\Static</Filter>
     </ClInclude>
     <ClInclude Include="j1Particles.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1PathFinding.h">
+      <Filter>Desenvolupament  ========\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

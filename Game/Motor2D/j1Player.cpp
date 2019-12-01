@@ -467,6 +467,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			key->to_delete;
 			key = nullptr;
 			doorLocked = false;
+			App->SaveRequest = true;
 		}
 
 		if (c2->type == COLLIDER_CHECKPOINT) {
