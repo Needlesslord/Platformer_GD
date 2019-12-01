@@ -143,6 +143,7 @@ bool j1Player::Start() {
 	gravitySwapped = false;
 	past2Sec.Start();
 	player_textures = App->tex->Load("textures/Ninja_Frog.png");
+	player_textures_godmode = App->tex->Load("textures/Ninja_Frog_GODMODE.png");
 	imgwin = App->tex->Load("textures/imgwin.png");
 	lockedDoor = App->tex->Load("textures/candado.png");
 	key_tex = App->tex->Load("textures/llave.png");
@@ -174,6 +175,7 @@ bool j1Player::CleanUp() {
 	LOG("Unloading player");
 
 	App->tex->UnLoad(player_textures);
+	App->tex->UnLoad(player_textures_godmode);
 	App->tex->UnLoad(imgwin);
 	App->tex->UnLoad(lockedDoor);
 	App->tex->UnLoad(key_tex);
@@ -293,8 +295,15 @@ bool j1Player::Update(float dt) {
 		App->render->Blit(lockedDoor, directWin_1.x + 18, directWin_1.y - 35);
 		App->render->Blit(key_tex, key->rect.x, key->rect.y);
 	}
-	if (gravitySwapped) App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - 5/*TODO: initialize AnimationOffsetGravitySwapped so no magic number*/, &(current_animation->GetCurrentFrame()));
+
+	if (gravitySwapped && godMode) App->render->Blit(player_textures_godmode, position.x - AnimationOffstet.x, position.y - 5/*TODO: initialize AnimationOffsetGravitySwapped so no magic number*/, &(current_animation->GetCurrentFrame()));
+	else if (!gravitySwapped && godMode) App->render->Blit(player_textures_godmode, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
+	else if (gravitySwapped && !godMode) App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - 5/*TODO: initialize AnimationOffsetGravitySwapped so no magic number*/, &(current_animation->GetCurrentFrame()));
 	else App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
+	
+	//if (gravitySwapped) App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - 5/*TODO: initialize AnimationOffsetGravitySwapped so no magic number*/, &(current_animation->GetCurrentFrame()));
+	//else App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
+
 	return true;
 }
 

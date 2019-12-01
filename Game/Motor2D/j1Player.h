@@ -41,6 +41,7 @@ public:
 
 private:
 	SDL_Texture* player_textures = nullptr;
+	SDL_Texture* player_textures_godmode = nullptr;
 	SDL_Texture* img_m = nullptr;
 
 public:
