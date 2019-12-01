@@ -232,6 +232,7 @@ bool j1Scene::changeSceneTo(int scene) {
 		App->player->position.y = App->player->originalPosition_1.y;
 		App->player->velocity.y = 0;
 		App->player->current_map = 1;
+		App->player->doorLocked = true;
 
 		App->scene->CleanUp();
 		App->scene->Start();
@@ -248,6 +249,7 @@ bool j1Scene::changeSceneTo(int scene) {
 		App->player->position.y = App->player->originalPosition_2.y;
 		App->player->velocity.y = 0;
 		App->player->current_map = 2;
+		App->player->doorLocked = true;
 
 		App->scene->CleanUp();
 		App->scene->Start();
