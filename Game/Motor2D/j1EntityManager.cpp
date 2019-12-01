@@ -17,6 +17,9 @@ bool j1EntityManager::Awake(pugi::xml_node&) {
 }
 
 bool j1EntityManager::Start() {	
+	for (p2List_item<j1Entity*>* it = entity_list.start; it != nullptr; it = it->next) {
+		it->data->Start();
+	}
 	return true;
 }
 
@@ -25,28 +28,26 @@ bool j1EntityManager::PreUpdate() {
 }
 
 bool j1EntityManager::Update(float dt) {
-	for (p2List_item<j1Entity*>* it = entity_list.start; it != nullptr; it = it->next)
-	{
+	for (p2List_item<j1Entity*>* it = entity_list.start; it != nullptr; it = it->next) {
 		it->data->Update(dt);
 	}
 	return true;
 }
 
 bool j1EntityManager::PostUpdate() {
+	for (p2List_item<j1Entity*>* it = entity_list.start; it != nullptr; it = it->next) {
+		it->data->PostUpdate();
+	}
 	return true;
 }
 
 bool j1EntityManager::CleanUp() {
 	bool ret = true;
 
-	for (uint i = 0; i < MAX_ENTITIES; ++i)
-	{
-		if (entities[i] != nullptr)
-		{
-			delete entities[i];
-			entities[i] = nullptr;
-		}
+	for (p2List_item<j1Entity*>* it = entity_list.end; it != NULL; it = it->prev) {
+		ret = it->data->CleanUp();
 	}
+	entity_list.clear();
 	return ret;
 }
 

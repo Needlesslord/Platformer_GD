@@ -51,7 +51,6 @@ bool j1Scene::Start() {
 	}
 
 	App->entity_manager->CreateEntity(ENEMY_AIR, App->player->originalPosition_1.x + 20, App->player->originalPosition_1.y - 20);
-	//App->entity_manager->AddEntity(ENTITY_TYPE::ENEMY_AIR, App->player->originalPosition_1.x + 20, App->player->originalPosition_1.y - 20);
 	return true;
 }
 

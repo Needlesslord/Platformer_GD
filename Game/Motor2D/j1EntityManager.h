@@ -67,9 +67,6 @@ public:
 private:
 
 	EntityInfo			queue[MAX_ENTITIES];
-	j1Entity*			entities[MAX_ENTITIES];
-	//j1Enemy*			enemies[MAX_ENEMIES];
-
 };
 
 #endif 
