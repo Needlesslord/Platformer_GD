@@ -27,16 +27,25 @@ public:
 	void Move(p2DynArray<iPoint>& path, float dt);
 	void OnCollision(Collider* c1, Collider* c2);
 
-	void Move();
+	void MoveIdle(iPoint position);
+	void AttackPlayer(iPoint initial_position_enemy_air);
+	bool HasToAttack();
+
+	//void Move();
 	fPoint speed;
 	fPoint speed_following;
-	   
+
+	int distance_air;
+	float move_direction_air;
+	bool attacking = false;
+	iPoint initial_position_enemy_air;
+
 private:
 	
 	float attack_radar_distance = 150;
 
 	bool flip;
-	j1Animation idle;
+	//j1Animation idle;
 	
 	// PATHFINDING
 	bool has_path = false;

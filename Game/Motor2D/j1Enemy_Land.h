@@ -27,8 +27,8 @@ public:
 	void Move(p2DynArray<iPoint>& path, float dt);
 	void OnCollision(Collider* c1, Collider* c2);
 
-	void Move();
-	void IdleMovement();
+	//void Move();
+	void MoveIdle(iPoint position);
 	fPoint speed;
 	fPoint speed_following;
 

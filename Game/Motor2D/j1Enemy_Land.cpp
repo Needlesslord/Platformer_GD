@@ -88,18 +88,6 @@ bool j1Enemy_Land::Update(float dt) {
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);
 
-	if (distance > 100) {
-		move_direction = -1;
-	}
-	else if (distance < 0) {
-		move_direction = +1;
-	}
-	else {
-		position.x += move_direction;
-		if (move_direction > 0) distance--;
-		else distance++;
-	}
-
 	//App->render->Blit(img, position.x, position.y, &(current_animation->GetCurrentFrame()));
 
 	//if (App->player->col != nullptr) {
@@ -193,4 +181,22 @@ void j1Enemy_Land::OnCollision(Collider* c1, Collider* c2)
 
 }
 
-void IdleMovement() {}
+void j1Enemy_Land::MoveIdle(iPoint position) {
+
+	//int distance = 0;
+	//float move_direction = 1;
+
+
+	//if (distance > 100) {
+	//	move_direction = -1;
+	//}
+	//else if (distance < 0) {
+	//	move_direction = +1;
+	//}
+	//else {
+	//	position.x += move_direction;
+	//	if (move_direction > 0) distance--;
+	//	else distance++;
+	//}
+
+}
