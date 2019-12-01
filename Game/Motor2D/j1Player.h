@@ -108,6 +108,9 @@ public:
 	Collider* key;
 	SDL_Texture* key_tex;
 
+	// CHECKPOINTS
+	j1Animation checkpoint_saved_1;
+	j1Animation checkpoint_unsaved_1;
 	Collider* checkpoint_1;
 	SDL_Texture* checkpoint_1_tex;		//has to be made an animation
 	bool autosave_1 = false;

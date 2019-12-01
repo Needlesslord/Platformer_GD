@@ -89,6 +89,20 @@ j1Player::j1Player() : j1Module() {
 	player_falling.PushBack({ 192,  96,  32, 32 });
 
 	//TODO: ANIMATIONS MUST GO ACCORDING TO dt
+
+	////CHECKPOINTS
+	//// need coordinates!!!
+	//checkpoint_saved_1.PushBack({ 256,  377,  23, 32 });
+	//checkpoint_saved_1.PushBack({ 231,  377,  25, 32 });
+	//checkpoint_saved_1.PushBack({ 415,  349,  25, 32 });
+	//checkpoint_saved_1.PushBack({ 390,  349,  25, 32 });
+	//checkpoint_saved_1.speed = 0.3f;
+	//checkpoint_unsaved_1.PushBack({ 256,  377,  23, 32 });
+	//checkpoint_unsaved_1.PushBack({ 231,  377,  25, 32 });
+	//checkpoint_unsaved_1.PushBack({ 415,  349,  25, 32 });
+	//checkpoint_unsaved_1.PushBack({ 390,  349,  25, 32 });
+	//checkpoint_unsaved_1.speed = 0.3f;
+
 }
 
 j1Player::~j1Player() {}
@@ -147,13 +161,15 @@ bool j1Player::Start() {
 	imgwin = App->tex->Load("textures/imgwin.png");
 	lockedDoor = App->tex->Load("textures/candado.png");
 	key_tex = App->tex->Load("textures/llave.png");
-	key = App->collisions->AddCollider({ 700, 1405, 12, 48 }, COLLIDER_KEY, this);
-
-	// CHECKPOINTS
-	if (autosave_1) checkpoint_1_tex = App->tex->Load("textures/checkpoint_activated_Swapped.png");
-	else if (!autosave_1) checkpoint_1_tex = App->tex->Load("textures/checkpoint_deactivated_Swapped.png");
-	checkpoint_1 = App->collisions->AddCollider({ 705, 1405, 32, 32 }, COLLIDER_CHECKPOINT, this);
-
+	
+	if (App->scene->current_scene == 1) {
+		// KEY POSITION COLLIDER
+		key = App->collisions->AddCollider({ 700, 1405, 12, 48 }, COLLIDER_KEY, this);
+		// CHECKPOINTS
+		if (autosave_1) checkpoint_1_tex = App->tex->Load("textures/checkpoint_activated_Swapped.png");
+		else if (!autosave_1) checkpoint_1_tex = App->tex->Load("textures/checkpoint_deactivated_Swapped.png");
+		checkpoint_1 = App->collisions->AddCollider({ 705, 1405, 32, 32 }, COLLIDER_CHECKPOINT, this);
+	}
 
 	if (App->scene->current_scene == 0) {
 		position.x = originalPosition_1.x;
