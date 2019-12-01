@@ -82,7 +82,7 @@ bool j1Enemy_Land::Update(float dt) {
 	if (position.x > App->player->position.x) flip = true;
 	else flip = false;
 
-	if (isAlive) Draw({ 0, 0, 25 /*20*/, 23 /*20*/ }, position.x, position.y, flip);
+	if (isAlive) Draw({ 0, 0, 25, 23 }, position.x, position.y, flip);
 
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);

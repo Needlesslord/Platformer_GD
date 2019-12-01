@@ -155,15 +155,6 @@ bool j1Player::Start() {
 	lockedDoor = App->tex->Load("textures/candado.png");
 	key_tex = App->tex->Load("textures/llave.png");
 
-	if (App->scene->current_scene == 1) {
-		// KEY POSITION COLLIDER
-		key = App->collisions->AddCollider({ 700, 1405, 12, 48 }, COLLIDER_KEY, this);
-		// CHECKPOINTS
-		if (autosave_1) checkpoint_1_tex = App->tex->Load("textures/checkpoint_activated_Swapped.png");
-		else if (!autosave_1) checkpoint_1_tex = App->tex->Load("textures/checkpoint_deactivated_Swapped.png");
-		checkpoint_1 = App->collisions->AddCollider({ 705, 1405, 32, 32 }, COLLIDER_CHECKPOINT, this);
-	}
-
 	if (App->scene->current_scene == 0) {
 		position.x = originalPosition_1.x;
 		position.y = originalPosition_1.y;
@@ -171,10 +162,21 @@ bool j1Player::Start() {
 	else if (App->scene->current_scene == 1) {
 		position.x = originalPosition_1.x;
 		position.y = originalPosition_1.y;
+		
+		// KEY POSITION COLLIDER
+		key = App->collisions->AddCollider({ 700, 1405, 12, 48 }, COLLIDER_KEY, this);
+		// CHECKPOINTS
+		if (autosave_1) checkpoint_1_tex = App->tex->Load("textures/checkpoint_activated_Swapped.png");
+		else if (!autosave_1) checkpoint_1_tex = App->tex->Load("textures/checkpoint_deactivated_Swapped.png");
+		checkpoint_1 = App->collisions->AddCollider({ 705, 1405, 32, 32 }, COLLIDER_CHECKPOINT, this); 
+	
 	}
 	else if (App->scene->current_scene == 2) {
 		position.x = originalPosition_2.x;
 		position.y = originalPosition_2.y;
+
+		// KEY POSITION COLLIDER
+		key = App->collisions->AddCollider({ 700, 1405, 12, 48 }, COLLIDER_KEY, this);
 	}
 	return true;
 }
@@ -306,6 +308,10 @@ bool j1Player::Update(float dt) {
 		
 	MoveEverything(gravitySwapped, dt);
 	if (App->scene->current_scene == 1 && doorLocked) {
+		App->render->Blit(lockedDoor, directWin_1.x + 18, directWin_1.y - 35);
+		App->render->Blit(key_tex, key->rect.x, key->rect.y);
+	}
+	else if (App->scene->current_scene == 2 && doorLocked) {
 		App->render->Blit(lockedDoor, directWin_1.x + 18, directWin_1.y - 35);
 		App->render->Blit(key_tex, key->rect.x, key->rect.y);
 	}

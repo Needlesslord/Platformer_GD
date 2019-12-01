@@ -8,7 +8,9 @@
 #include <cmath>
 
 
-j1Enemy_Air::j1Enemy_Air(ENTITY_TYPE type, float x, float y) : j1Entity(ENTITY_TYPE::ENEMY_AIR, x, y) {}
+j1Enemy_Air::j1Enemy_Air(ENTITY_TYPE type, float x, float y) : j1Entity(ENTITY_TYPE::ENEMY_AIR, x, y)
+{
+}
 
 j1Enemy_Air::~j1Enemy_Air() {};
 
@@ -53,8 +55,10 @@ bool j1Enemy_Air::Update(float dt) {
 
 	//MoveIdle(position);
 
-	if (!HasToAttack(attack_radar_distance)) {
-		//distance_air = 0;
+
+	if (!HasToAttack()) {
+		distance_air = 0;
+
 		move_direction_air = 1;
 		if (distance_air > 30) {
 			move_direction_air = -1;
@@ -73,7 +77,7 @@ bool j1Enemy_Air::Update(float dt) {
 	}
 
 
-	if (HasToAttack(attack_radar_distance)) AttackPlayer(App->entity_manager->enemy_air->initial_position_enemy_air);
+	if (HasToAttack()) AttackPlayer(App->entity_manager->enemy_air->initial_position_enemy_air);
 
 
 	//if (App->player->col != nullptr) {
@@ -170,8 +174,8 @@ void j1Enemy_Air::OnCollision(Collider* c1, Collider* c2)
 }
 
 void j1Enemy_Air::MoveIdle(iPoint position) {
-	float attack_radar_distance = 20;
-	if (!HasToAttack(attack_radar_distance)) {
+	
+	if (!HasToAttack()) {
 		distance_air = 0;
 		move_direction_air = 1;
 		if (distance_air > 30) {
@@ -199,13 +203,13 @@ void j1Enemy_Air::AttackPlayer(iPoint initial_position_enemy_air) {
 	if (App->player->position.y > position.y) position.y++;
 }
 
-bool j1Enemy_Air::HasToAttack(float attack_radar_distance) {
+bool j1Enemy_Air::HasToAttack() {
 	bool ret = false;
 
-	if ((App->player->position.x > position.x) && ((App->player->position.x - position.x) < attack_radar_distance)) ret = true;
-	else if ((App->player->position.x < position.x) && ((App->player->position.x - position.x) > -attack_radar_distance)) ret = true;
-	if ((App->player->position.y > position.y) && ((App->player->position.y - position.y) < attack_radar_distance)) ret = true;
-	else if ((App->player->position.y < position.y) && ((App->player->position.y - position.y) > -attack_radar_distance)) ret = true;
+	if ((App->player->position.x > position.x) && ((App->player->position.x - position.x) < 20)) ret = true;
+	else if ((App->player->position.x < position.x) && ((App->player->position.x - position.x) > -20)) ret = true;
+	if ((App->player->position.y > position.y) && ((App->player->position.y - position.y) < 20)) ret = true;
+	else if ((App->player->position.y < position.y) && ((App->player->position.y - position.y) > -20)) ret = true;
 
 	return ret;
 }
