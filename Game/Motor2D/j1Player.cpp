@@ -150,9 +150,8 @@ bool j1Player::Start() {
 
 	// CHECKPOINTS
 	if (autosave_1) checkpoint_1_tex = App->tex->Load("textures/checkpoint_activated_Swapped.png");
-	else if (!autosave_1) checkpoint_1_tex = App->tex->Load("textures/checkpoint_deactivated_Swappedda.png");
-
-	checkpoint_1 = App->collisions->AddCollider({ 700, 1405, 12, 48 }, COLLIDER_CHECKPOINT, this);
+	else if (!autosave_1) checkpoint_1_tex = App->tex->Load("textures/checkpoint_deactivated_Swapped.png");
+	checkpoint_1 = App->collisions->AddCollider({ 705, 1405, 32, 32 }, COLLIDER_CHECKPOINT, this);
 
 
 	if (App->scene->current_scene == 0) {
