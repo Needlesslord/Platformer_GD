@@ -1,10 +1,7 @@
 #include "j1App.h"
-#include "j1Player.h"
 #include "j1Enemy_Air.h"
 #include "j1Collisions.h"
 #include "j1Textures.h"
-#include "j1Scene.h"
-#include "j1Map.h"
 #include <cmath>
 
 
@@ -16,11 +13,7 @@ j1Enemy_Air::~j1Enemy_Air() {};
 
 bool j1Enemy_Air::Start() {
 	img = App->tex->Load("textures/enemy_ghost_angry.png");
-	imgM = App->tex->Load("textures/enemy_ghost_angry_mirror.png");
-
-	collider = App->collisions->AddCollider({ position.x, position.y, 25, /*TODO: INITIALIZE IPoint for these*/ 23 }, COLLIDER_ENEMY, App->entity_manager);
-
-	speed_following = { 0.5f, 0.5f };
+	collider = App->collisions->AddCollider({ position.x, position.y, 20, /*TODO: INITIALIZE IPoint for these*/ 20 }, COLLIDER_ENEMY, App->entity_manager);
 
 	initial_position_enemy_air = position;
 
@@ -28,21 +21,13 @@ bool j1Enemy_Air::Start() {
 }
 bool j1Enemy_Air::CleanUp() {
 	App->tex->UnLoad(img);
-	App->tex->UnLoad(imgM);
-
-	collider->to_delete = true;
-
 	return true;
 }
 bool j1Enemy_Air::PreUpdate() {
-
-	BROFILER_CATEGORY("EnemyAir_PreUpdate", Profiler::Color::GreenYellow)
-
 	return true;
 }
 
 bool j1Enemy_Air::Update(float dt) {
-
 	BROFILER_CATEGORY("EnemyAir_Update", Profiler::Color::ForestGreen)
 
 	if (position.x > App->player->position.x) flip = true;
@@ -71,7 +56,6 @@ bool j1Enemy_Air::Update(float dt) {
 		}
 	}
 
-
 	if (HasToAttack()) AttackPlayer(App->entity_manager->enemy_air->initial_position_enemy_air);
 
 
@@ -99,15 +83,15 @@ bool j1Enemy_Air::Update(float dt) {
 	//	}
 	//}
 
+	else AttackPlayer(App->entity_manager->enemy_air->initial_position_enemy_air);
+
 	return true;
 }
 
 bool j1Enemy_Air::PostUpdate() {
-
-	BROFILER_CATEGORY("EnemyAir_PostUpdate", Profiler::Color::LawnGreen)
-
 	return true;
 }
+
 
 void j1Enemy_Air::Move(p2DynArray<iPoint>& path, float dt)
 {
@@ -168,6 +152,9 @@ void j1Enemy_Air::OnCollision(Collider* c1, Collider* c2)
 
 }
 
+void j1Enemy_Air::Move(){}
+
+
 void j1Enemy_Air::MoveIdle(iPoint position) {
 	
 	if (!HasToAttack()) {
@@ -208,3 +195,4 @@ bool j1Enemy_Air::HasToAttack() {
 
 	return ret;
 }
+

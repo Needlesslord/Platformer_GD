@@ -12,8 +12,8 @@
 	</scene>
 	<collisions />
 	<player>
-		<position_x value="487.999878" />
-		<position_y value="5943.73975" />
+		<position_x value="699.300842" />
+		<position_y value="1448.23035" />
 		<gravity_swapped value="0" />
 	</player>
 	<:anonymous />
