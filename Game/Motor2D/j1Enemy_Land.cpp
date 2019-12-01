@@ -189,6 +189,9 @@ void j1Enemy_Land::OnCollision(Collider* c1, Collider* c2)
 
 		if (c2->type == COLLIDER_PLAYER && !App->player->godMode) {
 
+			position = initial_position_enemy_land;
+
+
 			if (App->scene->current_scene == 0) {
 				App->player->position.x = App->player->originalPosition_1.x;
 				App->player->position.y = App->player->originalPosition_1.y;
