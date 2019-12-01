@@ -86,15 +86,15 @@ j1Entity* j1EntityManager::EntityFactory(ENTITY_TYPE type, float x, float y) {
 	}
 	else if (type == ENEMY_AIR) {
 		ret = new j1Enemy_Air(type, x, y);
-
-		if (ret != nullptr)
-			entity_list.add(ret);
+		if (ret != nullptr)	entity_list.add(ret);
 	}
 	else if (type == ENEMY_LAND) {
-
+		ret = new j1Enemy_Land(type, x, y);
+		if (ret != nullptr)entity_list.add(ret);
 	}
 	else if (type == ENEMY_LAND_INV_GRAV) {
-
+		ret = new j1Enemy_Land(type, x, y);
+		if (ret != nullptr)entity_list.add(ret);
 	}
 	else if (type == NPC) {
 

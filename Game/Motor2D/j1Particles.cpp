@@ -87,10 +87,10 @@ void j1Particles::AddParticle(Particle& particle, int x, int y, COLLIDER_TYPE ty
 			p->particleRect.w = 14;
 			p->particleRect.h = 14;
 			if (App->player->mirror) {
-				p->speed.x = -5;
+				p->speed.x = -8;
 				p->particleRect.x -= App->player->playerWidth + App->player->AnimationOffstet.x;
 			}
-			else p->speed.x = 5;
+			else p->speed.x = 8;
 
 			p->collider = App->collisions->AddCollider(p->particleRect, COLLIDER_PLAYER_SHOT, App->particles);
 
