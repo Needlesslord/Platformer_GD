@@ -2,9 +2,11 @@
 #define __j1ENEMY_AIR_H__
 
 #include "j1Entity.h"
-#include "p2Point.h"
 #include "PugiXml/src/pugixml.hpp"
+#include "j1PathFinding.h"
 #include "p2List.h"
+#include "p2Point.h"
+
 
 struct SDL_Texture;
 struct Collider;
@@ -39,8 +41,10 @@ public:
 	iPoint initial_position_enemy_air;
 
 private:
-	bool flip;
+	
+	float attack_radar_distance = 150;
 
+	bool flip;
 	//j1Animation idle;
 	
 	// PATHFINDING
@@ -48,6 +52,8 @@ private:
 	p2DynArray<iPoint>* path;
 	MOVE_TO direction;
 	iPoint rePathing;
+
+
 };
 
 #endif 

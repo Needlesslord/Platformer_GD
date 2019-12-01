@@ -144,6 +144,9 @@ bool Particle::Update()
 	else
 		if (anim.Finished()) ret = false;
 
+	//if (collider != nullptr && collider->type == COLLIDER_TYPE::COLLIDER_ENEMY_SHOT)
+	//	position.x -= speed.x;
+
 	particleRect.x += speed.x;
 
 	if (collider != nullptr)

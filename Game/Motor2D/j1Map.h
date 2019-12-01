@@ -92,12 +92,24 @@ class j1Map : public j1Module
 public:
 
 	j1Map();
+
+	// Destructor
 	virtual ~j1Map();
+
+	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
+
+	// Called each loop iteration
 	void Draw(int player_pos);
 	void CollidersMap();
+
+	// Called before quitting
 	bool CleanUp();
+
+	// Load new map
 	bool Load(const char* path);
+
+	// Coordinate translation methods
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 

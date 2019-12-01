@@ -88,19 +88,32 @@ bool j1Enemy_Land::Update(float dt) {
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);
 
-	if (distance > 100) {
-		move_direction = -1;
-	}
-	else if (distance < 0) {
-		move_direction = +1;
-	}
-	else {
-		position.x += move_direction;
-		if (move_direction > 0) distance--;
-		else distance++;
-	}
+	//App->render->Blit(img, position.x, position.y, &(current_animation->GetCurrentFrame()));
 
-	App->render->Blit(img, position.x, position.y, &(current_animation->GetCurrentFrame()));
+	//if (App->player->col != nullptr) {
+	//	if (abs(App->player->position.x - position.x) <= attack_radar_distance || abs(App->player->position.y - position.y) <= attack_radar_distance && App->player->col->type == COLLIDER_PLAYER)
+	//	{
+	//		iPoint origin = { App->map->WorldToMap((int)position.x + rePathing.x, (int)position.y + rePathing.y) };
+	//		iPoint destination;
+
+	//		if (position.x < App->player->position.x)
+	//			destination = { App->map->WorldToMap((int)(App->player->position.x + App->player->col->rect.x), (int)(App->player->position.y + App->player->col->rect.y / 2)) };
+	//		else
+	//			destination = { App->map->WorldToMap((int)(App->player->position.x), (int)(App->player->position.y + App->player->col->rect.y)) };
+
+	//		path = App->pathfinding->CreatePath(origin, destination);
+	//		Move(*path, dt);
+	//		has_path = true;
+
+	//	}
+
+	//	else if (has_path)
+	//	{
+	//		path->Clear();
+	//		has_path = false;
+	//	}
+	//}
+
 	return true;
 }
 
@@ -138,12 +151,34 @@ void j1Enemy_Land::Move(p2DynArray<iPoint>& path, float dt)
 void j1Enemy_Land::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1->type == COLLIDER_ENEMY) {
-		if (c2->type == COLLIDER_PLAYER_SHOT) {
+
+		if (c2->type == COLLIDER_PLAYER_SHOT)
+		{
 			isAlive = false;
 			c2->to_delete = true;
 			c1->to_delete = true;
 		}
 	}
+
+	if (c1->type == COLLIDER_ENEMY) {
+
+		if (c2->type == COLLIDER_PLAYER && !App->player->godMode) {
+
+			if (App->scene->current_scene == 0) {
+				App->player->position.x = App->player->originalPosition_1.x;
+				App->player->position.y = App->player->originalPosition_1.y;
+			}
+			else if (App->scene->current_scene == 1) {
+				App->player->position.x = App->player->originalPosition_1.x;
+				App->player->position.y = App->player->originalPosition_1.y;
+			}
+			else if (App->scene->current_scene == 2) {
+				App->player->position.x = App->player->originalPosition_2.x;
+				App->player->position.y = App->player->originalPosition_2.y;
+			}
+		}
+	}
+
 }
 
 void j1Enemy_Land::MoveIdle(iPoint position) {

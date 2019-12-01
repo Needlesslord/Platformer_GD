@@ -300,6 +300,8 @@ bool j1Player::Update(float dt) {
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		App->particles->AddParticle(App->particles->shuriken, position.x + 20, position.y, COLLIDER_PLAYER_SHOT, 0);
+		//col_particle = App->collisions->AddCollider({ position.x + 20, position.y, 5, 5 }, COLLIDER_PLAYER_SHOT, 0);
+
 	}
 		
 	MoveEverything(gravitySwapped, dt);
@@ -312,6 +314,9 @@ bool j1Player::Update(float dt) {
 	else if (!gravitySwapped && godMode) App->render->Blit(player_textures_godmode, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
 	else if (gravitySwapped && !godMode) App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - 5/*TODO: initialize AnimationOffsetGravitySwapped so no magic number*/, &(current_animation->GetCurrentFrame()));
 	else App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
+	
+	//if (gravitySwapped) App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - 5/*TODO: initialize AnimationOffsetGravitySwapped so no magic number*/, &(current_animation->GetCurrentFrame()));
+	//else App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
 
 	return true;
 }
@@ -479,14 +484,14 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			App->SaveRequest = true;
 		}
 
-		else if (c2->type == COLLIDER_CHECKPOINT) {
+		if (c2->type == COLLIDER_CHECKPOINT) {
 			checkpoint_1->to_delete;
 			checkpoint_1 = nullptr;
 			autosave_1 = true;
 			App->SaveRequest = true;
 		}
 
-		else if (c2->type == COLLIDER_WIN && !doorLocked) {
+		if (c2->type == COLLIDER_WIN && !doorLocked) {
 			if (App->scene->current_scene == 1) {
 				App->scene->changeSceneTo(2);
 			}
@@ -495,7 +500,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 		}
 
-		else if (c2->type == COLLIDER_DEATH || c2->type == COLLIDER_ENEMY) {
+		if (c2->type == COLLIDER_DEATH) {
 			if (App->scene->current_scene == 1) {
 				position.x = originalPosition_1.x;
 				position.y = originalPosition_1.y;
@@ -509,7 +514,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			if(gravitySwapped) ChangeGravity(false);
 		}
 
-		else if (c2->type == COLLIDER_GRAVITY && !justSwapped) {
+		if (c2->type == COLLIDER_GRAVITY && !justSwapped) {
 			justSwapped = true;
 			swapTimer.Start();
 			ChangeGravity(true);

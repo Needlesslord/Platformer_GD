@@ -97,9 +97,9 @@ bool j1Scene::Update(float dt) {
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) { //BACK TO BEGINING
-			App->player->velocity.y = 0;
 			if (current_scene == 0) {
-				
+				App->player->position.x = App->player->originalPosition_1.x;
+				App->player->position.y = App->player->originalPosition_1.y;
 			}
 			if (current_scene == 1) {
 				App->player->position.x = App->player->originalPosition_1.x;
@@ -204,7 +204,7 @@ bool j1Scene::changeSceneTo(int scene) {
 	}
 
 	else if (scene == 2) { //CHANGE TO SCENE 2		(F2)
-		//App->collisions->CleanUp();
+		App->collisions->CleanUp();
 		App->map->CleanUp();
 		current_scene = scene;
 
