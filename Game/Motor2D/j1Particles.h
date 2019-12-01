@@ -36,7 +36,9 @@ public:
 	~j1Particles();
 
 	bool Start();
-	bool Update();
+	bool PreUpdate();
+	bool Update(float dt);
+	bool PostUpdate();
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
 
