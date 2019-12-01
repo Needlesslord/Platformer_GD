@@ -26,6 +26,7 @@ bool j1Enemy_Air::PreUpdate() {
 }
 
 bool j1Enemy_Air::Update(float dt) {
+	Draw({0, 0, 20, 20}, position.x, position.y, flip);
 	return true;
 }
 

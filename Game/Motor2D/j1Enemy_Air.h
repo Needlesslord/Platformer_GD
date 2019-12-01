@@ -11,7 +11,6 @@ struct Collider;
 enum ENTITY_TYPE;
 
 class j1Enemy_Air : public j1Entity {
-
 public:
 
 	j1Enemy_Air(ENTITY_TYPE type, float x, float y);
@@ -24,7 +23,8 @@ public:
 	bool CleanUp();
 
 	void Move();
-
+private:
+	bool flip;
 };
 
 #endif 
