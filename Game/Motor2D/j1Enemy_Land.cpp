@@ -71,14 +71,14 @@ bool j1Enemy_Land::CleanUp() {
 }
 bool j1Enemy_Land::PreUpdate() {
 
-	BROFILER_CATEGORY("EnemyAir_PreUpdate", Profiler::Color::GreenYellow)
+	BROFILER_CATEGORY("EnemyLand_PreUpdate", Profiler::Color::GreenYellow)
 
 		return true;
 }
 
 bool j1Enemy_Land::Update(float dt) {
 
-	BROFILER_CATEGORY("EnemyAir_Update", Profiler::Color::ForestGreen)
+	BROFILER_CATEGORY("EnemyLand_Update", Profiler::Color::ForestGreen)
 
 	if (position.x > App->player->position.x) flip = true;
 	else flip = false;
@@ -131,7 +131,7 @@ bool j1Enemy_Land::Update(float dt) {
 
 bool j1Enemy_Land::PostUpdate() {
 
-	BROFILER_CATEGORY("EnemyAir_PostUpdate", Profiler::Color::LawnGreen)
+	BROFILER_CATEGORY("EnemyLand_PostUpdate", Profiler::Color::LawnGreen)
 
 		return true;
 }
