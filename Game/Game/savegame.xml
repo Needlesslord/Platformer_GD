@@ -12,21 +12,14 @@
 	</scene>
 	<collisions />
 	<player>
-		<position_x value="694.100769" />
-		<position_y value="1454.92847" />
+		<position_x value="699.300842" />
+		<position_y value="1448.23035" />
 		<gravity_swapped value="0" />
 	</player>
-  <enemies>
-    <enemy_air_1>
-    <position_x value="694.100769" />
-    <position_y value="1454.92847" />
-    <gravity_swapped value="0" />
-    </enemy_air_1>
-  </enemies>
 	<:anonymous />
 	<pathfinding />
 	<:anonymous />
 	<renderer>
-		<camera x="-904" y="-2573" />
+		<camera x="-914" y="-2560" />
 	</renderer>
 </save>
