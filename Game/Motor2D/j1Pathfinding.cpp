@@ -217,4 +217,8 @@ MOVE_TO WillMoveTo(p2DynArray<iPoint>& path) {
 
 }
 
-MOVE_TO WillMoveTo_Land(p2DynArray<iPoint>& path) {}
+MOVE_TO WillMoveTo_Land(p2DynArray<iPoint>& path) {
+
+	return PATH_NONE;
+
+}
