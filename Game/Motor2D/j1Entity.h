@@ -28,6 +28,9 @@ public:
 	virtual void OnCollision(Collider* c1, Collider* c2) {};
 	virtual void Draw(SDL_Rect r, float x, float y, bool flip);
 
+	//float abs(float x);
+
+
 public:
 
 	ENTITY_TYPE type;
@@ -35,6 +38,9 @@ public:
 	Collider* collider = nullptr;
 	j1Animation* animation = nullptr;
 	SDL_Texture* img = nullptr;
+	SDL_Texture* imgM = nullptr;
+	bool isAlive = true;
+
 };
 
 #endif 

@@ -75053,7 +75053,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <objectgroup color="#55aaff" name="Platform_col" visible="0">
+ <objectgroup color="#55aaff" name="Platform_col">
   <object id="150" x="2431.94" y="1600.06" width="48.0625" height="4.875"/>
   <object id="211" x="2432.13" y="1696" width="47.875" height="4.875"/>
   <object id="212" x="2432.5" y="1792.13" width="47.375" height="4.75"/>
@@ -75098,7 +75098,7 @@
   <object id="379" x="1872" y="1023.5" width="96" height="6"/>
   <object id="380" x="2031" y="1168" width="97.5" height="5.5"/>
  </objectgroup>
- <objectgroup color="#8d8d8d" name="Wall_col" visible="0">
+ <objectgroup color="#8d8d8d" name="Wall_col">
   <object id="280" x="2288" y="384.273" width="80" height="127.727"/>
   <object id="281" x="2368.27" y="352.091" width="63.5455" height="156.909"/>
   <object id="282" x="2407" y="367.545" width="41.3636" height="53.4545"/>
@@ -75193,16 +75193,16 @@
   <object id="376" x="4495.82" y="3599.82" width="64.3636" height="64.3636"/>
   <object id="377" x="4495.82" y="3711.64" width="64.3636" height="64.5455"/>
  </objectgroup>
- <objectgroup color="#00ff00" name="Salida" visible="0">
+ <objectgroup color="#00ff00" name="Salida">
   <object id="8" x="2312.5" y="328.5" width="46.5" height="55.5"/>
  </objectgroup>
- <objectgroup color="#aa0000" name="Muerte_limites" visible="0">
+ <objectgroup color="#aa0000" name="Muerte_limites">
   <object id="3" x="4768" y="7" width="28" height="3989"/>
   <object id="5" x="4" y="6" width="4791" height="25"/>
   <object id="6" x="5" y="8" width="27" height="3987"/>
   <object id="7" x="4" y="3967" width="4792" height="29"/>
  </objectgroup>
- <objectgroup name="Gravedad" visible="0">
+ <objectgroup name="Gravedad">
   <object id="241" x="3869" y="1669.5" width="69.5" height="20"/>
   <object id="269" x="463.333" y="1112" width="64" height="18"/>
  </objectgroup>

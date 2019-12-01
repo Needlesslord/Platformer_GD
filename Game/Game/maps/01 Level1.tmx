@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="150" tilewidth="16" tileheight="16" nextobjectid="436">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="150" tilewidth="16" tileheight="16" nextobjectid="449">
  <tileset firstgid="1" name="Tiles_Sand_Mud_Ice_16" tilewidth="16" tileheight="16" tilecount="55" columns="11">
   <image source="Tiles_Sand_Mud_Ice_16.png" width="176" height="80"/>
   <terraintypes>
@@ -45184,5 +45184,22 @@
  <objectgroup color="#ff5500" name="Checkpoint">
   <object id="434" x="1784.85" y="1984.85" width="42.4242" height="57.5758"/>
   <object id="435" x="2172.73" y="736.364" width="39.3939" height="51.5152"/>
+ </objectgroup>
+ <objectgroup color="#ffaaff" name="Flying enemies">
+  <object id="443" x="1300" y="984.848" width="15.1515" height="15.1515"/>
+  <object id="444" x="678.788" y="1560.61" width="21.2121" height="18.1818"/>
+  <object id="445" x="2363.64" y="1660.61" width="18.1818" height="21.2121"/>
+  <object id="446" x="2812.12" y="512.121" width="15.1515" height="18.1818"/>
+  <object id="447" x="3163.64" y="1293.94" width="15.1515" height="15.1515"/>
+  <object id="448" x="2100" y="739.394" width="15.1515" height="15.1515"/>
+ </objectgroup>
+ <objectgroup color="#5500ff" name="Land enemies">
+  <object id="436" x="893.939" y="1142.42" width="21.2121" height="21.2121"/>
+  <object id="437" x="1796.97" y="1133.33" width="21.2121" height="24.2424"/>
+  <object id="438" x="1160.61" y="1712.12" width="27.2727" height="27.2727"/>
+  <object id="439" x="2621.21" y="1366.67" width="33.3333" height="18.1818"/>
+  <object id="440" x="3539.39" y="642.424" width="30.303" height="36.3636"/>
+  <object id="441" x="2445.45" y="939.394" width="21.2121" height="12.1212"/>
+  <object id="442" x="3993.94" y="1018.18" width="54.5455" height="27.2727"/>
  </objectgroup>
 </map>

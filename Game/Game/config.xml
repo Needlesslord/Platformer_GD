@@ -27,7 +27,7 @@
   </map>
   
   <player>
-    <position_turorial x="0" y="0"/>
+    <position_turorial x="500" y="1111"/>
     <position_scene_1 x="500" y="1111"/>
     <position_scene_2 x="490" y="3400"/>
     <win_position_1 x="4206" y="515"/>
@@ -48,6 +48,16 @@
     <texture tex ="Ninja_Frog.png"/>
     <animation_offset x="5" y="3"/>
   </player>
+
+  <enemies>
+    <enemy_air_1>
+      <position_turorial x="500" y="1111"/>
+      <position_scene_1 x="500" y="1111"/>
+      <position_scene_2 x="490" y="3400"/>
+      <velocity x="60" y="60"/>
+      <mirror value="false"/>
+    </enemy_air_1>
+  </enemies>
 
   <scene current_scene ="1"/>
 

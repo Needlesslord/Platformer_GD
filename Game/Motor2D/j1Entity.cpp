@@ -36,5 +36,13 @@ bool j1Entity::Load(pugi::xml_node&) {
 }
 
 void j1Entity::Draw(SDL_Rect r, float x, float y, bool flip) {
-	App->render->Blit(img, position.x, position.y);
+	
+	if (!flip) App->render->Blit(img, position.x, position.y);
+	else App->render->Blit(imgM, position.x, position.y);
+
 }
+
+//float abs(float x) {
+//	if (x < 0) return -x;
+//	return x;
+//}

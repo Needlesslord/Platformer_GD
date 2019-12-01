@@ -46,11 +46,16 @@ bool j1Scene::Start() {
 	}
 	else if (current_scene == 2) {
 		background2_small = App->tex->Load("maps/fondo2_small.png");
-		App->map->Load("02 Level2_2.tmx");
+		App->map->Load("02 Level2.tmx");
 		//App->audio->PlayMusic("audio/music/intro.ogg");
 	}
 
-	App->entity_manager->CreateEntity(ENEMY_AIR, App->player->originalPosition_1.x + 20, App->player->originalPosition_1.y - 20);
+	// ENEMIES
+	if (current_scene == 1) {
+		App->entity_manager->CreateEntity(ENEMY_AIR, App->player->originalPosition_1.x + 20, App->player->originalPosition_1.y - 20);
+		App->entity_manager->CreateEntity(ENEMY_AIR, App->player->originalPosition_1.x + 120, App->player->originalPosition_1.y - 20);
+	}
+
 	return true;
 }
 
@@ -68,6 +73,12 @@ bool j1Scene::Update(float dt) {
 	BROFILER_CATEGORY("Scene_Update", Profiler::Color::HotPink)
 
 	{//DEBUG KEYS
+		if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN) { //CHANGE TO Tutorial
+			if (current_scene != 0) {
+				changeSceneTo(0);
+				//TODO Insert sound in an else to say you can't load lvl1
+			}
+		}
 		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) { //CHANGE TO SCENE 1
 			if (current_scene != 1) {
 				changeSceneTo(1);
@@ -82,6 +93,10 @@ bool j1Scene::Update(float dt) {
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) { //BACK TO BEGINING
+			if (current_scene == 0) {
+				App->player->position.x = App->player->originalPosition_1.x;
+				App->player->position.y = App->player->originalPosition_1.y;
+			}
 			if (current_scene == 1) {
 				App->player->position.x = App->player->originalPosition_1.x;
 				App->player->position.y = App->player->originalPosition_1.y;
@@ -143,7 +158,7 @@ bool j1Scene::Update(float dt) {
 // Called each loop iteration
 bool j1Scene::PostUpdate() {
 
-	BROFILER_CATEGORY("Scene_Update", Profiler::Color::DeepPink)
+	BROFILER_CATEGORY("Scene_PostUpdate", Profiler::Color::DeepPink)
 
 	bool ret = true;
 	
@@ -158,6 +173,7 @@ bool j1Scene::CleanUp() {
 	if (current_scene == 1) App->tex->UnLoad(background1_small);
 	if (current_scene == 2) App->tex->UnLoad(background2_small);
 	App->tex->UnLoad(imgwin);
+	// WE NEED TO CLEAN UP THE ENEMIES
 	return true;
 }
 
