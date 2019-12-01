@@ -67,6 +67,8 @@ bool j1Enemy_Air::Update(float dt) {
 			if (move_direction_air > 0) distance_air--;
 			else distance_air++;
 		}
+		if (distance_air > 30 && !initial_position_enemy_air.x) int i = 0;
+		else if (position.x == initial_position_enemy_air.x)int i = 0;
 	}
 
 
