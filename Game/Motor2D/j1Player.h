@@ -129,6 +129,8 @@ public:
 
 	Collider* col_particle;
 
+	uint numLives;
+	uint initialLives;
 };
 
 #endif

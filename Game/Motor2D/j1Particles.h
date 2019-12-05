@@ -7,7 +7,7 @@
 #include "j1Collisions.h"
 #include "j1Timer.h"
 
-#define MAX_ACTIVE_PARTICLES 3
+#define MAX_ACTIVE_PARTICLES 30
 
 struct SDL_Texture;
 struct Collider;

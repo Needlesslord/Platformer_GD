@@ -138,10 +138,16 @@ bool j1Scene::Update(float dt) {
 			if (current_scene == 1) {
 				App->player->position.x = App->player->originalPosition_1.x;
 				App->player->position.y = App->player->originalPosition_1.y;
+				if (App->player->gravitySwapped) {
+					App->player->gravitySwapped = false;
+				}
 			}
 			if (current_scene == 2) {
 				App->player->position.x = App->player->originalPosition_2.x;
 				App->player->position.y = App->player->originalPosition_2.y;
+				if (App->player->gravitySwapped) {
+					App->player->gravitySwapped = false;
+				}
 			}
 		}
 

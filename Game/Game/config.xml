@@ -47,6 +47,7 @@
     <folder>textures/</folder>
     <texture tex ="Ninja_Frog.png"/>
     <animation_offset x="5" y="3"/>
+    <num_lives value="3"/>
   </player>
 
   <enemies>

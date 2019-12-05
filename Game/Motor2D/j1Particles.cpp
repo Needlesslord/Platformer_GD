@@ -51,9 +51,8 @@ bool j1Particles::PreUpdate() {
 }
 
 bool j1Particles::Update(float dt) {
-
 	BROFILER_CATEGORY("ParticlesUpdate", Profiler::Color::OrangeRed)
-
+	if (App->player->godMode) shurikensUsed = 0;
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)	{
 		Particle* p = active[i];
 
@@ -90,6 +89,7 @@ bool j1Particles::Update(float dt) {
 			shurikensUsed = 0;
 		}
 	}
+	if (App->player->godMode) shurikensUsed = 0;
 	return true;
 }
 
