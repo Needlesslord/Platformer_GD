@@ -92,7 +92,7 @@ void j1Particles::AddParticle(Particle& particle, int x, int y, COLLIDER_TYPE ty
 			}
 			else p->speed.x = 8;
 
-			p->collider = App->collisions->AddCollider(p->particleRect, COLLIDER_PLAYER_SHOT, App->particles);
+			App->collisions->AddCollider(p->particleRect, COLLIDER_PLAYER_SHOT, App->particles);
 
 			active[i] = p;
 			break;
