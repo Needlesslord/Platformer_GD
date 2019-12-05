@@ -118,10 +118,8 @@ public:
 	bool gravitySwapped;
 	bool justSwapped = false;
 	j1Timer swapTimer;
-
 	j1Timer past2Sec;
 
-	player_states current_state;
 	p2SString			folder;
 	p2SString			texture;
 	bool mirror = false;
@@ -129,6 +127,8 @@ public:
 
 	Collider* col_particle;
 
+	uint numLives;
+	uint initialLives;
 };
 
 #endif

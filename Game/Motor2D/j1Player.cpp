@@ -80,8 +80,6 @@ j1Player::j1Player() : j1Module() {
 	//falling
 	player_falling.PushBack({ 192,  96,  32, 32 });
 
-	//TODO: ANIMATIONS MUST GO ACCORDING TO dt
-
 	////CHECKPOINTS
 	//// need coordinates!!!
 	//checkpoint_saved_1.PushBack({ 256,  377,  23, 32 });
@@ -133,21 +131,20 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	directWin_1.y				= config.child("win_position_1").attribute("y").as_int();
 	directWin_2.x				= config.child("win_position_2").attribute("x").as_int();
 	directWin_2.y				= config.child("win_position_2").attribute("y").as_int();
+	initialLives				= config.child("num_lives").attribute("value").as_uint();
 	return true;
 }
 
 
 bool j1Player::Start() {
 	LOG("Loading player");
-
-	current_state = PLAYER_ST_IDLE;
-	current_animation = &player_idle;
 	colFeet			= App->collisions->AddCollider(feet, COLLIDER_PLAYER, this);
 	colHead			= App->collisions->AddCollider(head, COLLIDER_PLAYER, this);
 	colRightside	= App->collisions->AddCollider(rightside, COLLIDER_PLAYER, this);
 	colLeftside		= App->collisions->AddCollider(leftside, COLLIDER_PLAYER, this);
 	col				= App->collisions->AddCollider({ originalPosition_1.x, originalPosition_1.y, playerWidth, playerHeight }, COLLIDER_PLAYER, this);
-	gravitySwapped = false;
+	gravitySwapped	= false;
+	numLives = initialLives;
 	past2Sec.Start();
 	player_textures = App->tex->Load("textures/Ninja_Frog.png");
 	player_textures_godmode = App->tex->Load("textures/Ninja_Frog_GODMODE.png");
@@ -158,11 +155,12 @@ bool j1Player::Start() {
 	if (App->scene->current_scene == 0) {
 		position.x = originalPosition_1.x;
 		position.y = originalPosition_1.y;
+		current_animation = &player_idle;
 	}
 	else if (App->scene->current_scene == 1) {
 		position.x = originalPosition_1.x;
 		position.y = originalPosition_1.y;
-		
+		current_animation = &player_idle;
 		// KEY POSITION COLLIDER
 		key = App->collisions->AddCollider({ 700, 1405, 12, 48 }, COLLIDER_KEY, this);
 		// CHECKPOINTS
@@ -174,7 +172,7 @@ bool j1Player::Start() {
 	else if (App->scene->current_scene == 2) {
 		position.x = originalPosition_2.x;
 		position.y = originalPosition_2.y;
-
+		current_animation = &player_falling;
 		// KEY POSITION COLLIDER
 		key = App->collisions->AddCollider({ 700, 1405, 12, 48 }, COLLIDER_KEY, this);
 	}
@@ -231,9 +229,10 @@ bool j1Player::Update(float dt) {
 		else if (!mirror && gravitySwapped)	current_animation = &player_jumping_gravitySwapped;
 		else								current_animation = &player_jumping;
 	}
-	if (past2Sec.ReadSec() < 1)	current_animation = &player_idle;
-
-	if (!godMode && past2Sec.ReadSec() > 1) velocity.y -= gravity * dt;
+	if (!godMode && past2Sec.ReadSec() > 1) {
+		if(!gravitySwapped)	velocity.y -= gravity * dt;
+		if (gravitySwapped) velocity.y += gravity * dt;
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !againstLeftSide) {
 		position.x -= velocity.x * dt;
@@ -298,8 +297,15 @@ bool j1Player::Update(float dt) {
 		position.y += impulse * dt;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !App->particles->onCooldown && App->particles->shurikensUsed < 3) {
 		App->particles->AddParticle(App->particles->shuriken, position.x + 20, position.y, COLLIDER_PLAYER_SHOT, 0);
+		App->particles->shurikensUsed++;
+		if (App->particles->shurikensUsed == 3) {
+			App->particles->onCooldown = true;
+			App->particles->cooldown.Start();
+			App->particles->partialCooldown.Stop();
+		}
+		else App->particles->partialCooldown.Start();
 	}
 		
 	MoveEverything(gravitySwapped, dt);
@@ -336,28 +342,19 @@ bool j1Player::PostUpdate() {
 }
 
 bool j1Player::Save(pugi::xml_node& node) {
-	node.append_child("position_x").append_attribute("value") = position.x;
-	node.append_child("position_y").append_attribute("value") = position.y;
-	if(gravitySwapped) node.append_child("gravity_swapped").append_attribute("value") = 1;
-	else node.append_child("gravity_swapped").append_attribute("value") = 0;
+	node.append_child("position_x").append_attribute("value")		= position.x;
+	node.append_child("position_y").append_attribute("value")		= position.y;
+	node.append_child("num_lives").append_attribute("value")		= numLives;
+	node.append_child("gravity_swapped").append_attribute("value")	= gravitySwapped;
+	//TODO: Make sure all the necessary data is taken into account
 	return true;
 }
 bool j1Player::Load(pugi::xml_node& node) {
-	position.x = node.child("position_x").attribute("value").as_float();
-	position.y = node.child("position_y").attribute("value").as_float();
-	int gravity = node.child("gravity_swapped").attribute("value").as_int();
-	if (gravity == 0) {
-		if (gravitySwapped) {
-			gravitySwapped = false;
-			gravity = 10;
-		}
-	}
-	else if (gravity == 1) {
-		if (!gravitySwapped) {
-			gravitySwapped = true;
-			gravity = -10;
-		}
-	}
+	position.x		= node.child("position_x").attribute("value").as_float();
+	position.y		= node.child("position_y").attribute("value").as_float();
+	numLives		= node.child("num_lives").attribute("value").as_uint();
+	gravitySwapped	= node.child("gravity_swapped").attribute("value").as_bool();
+	velocity.y = 0;
 	return true;
 }
 
@@ -386,13 +383,11 @@ bool j1Player::ChangeGravity(bool withImpulse) {
 	BROFILER_CATEGORY("Player_ChangeGravity", Profiler::Color::SteelBlue)
 
 	if (!gravitySwapped) { 
-		gravity = gravity * (-1);
 		if(withImpulse) velocity.y -= impulse;
 		gravitySwapped = true;
 		return true; 
 	}
 	else { 
-		gravity = gravity * (-1);
 		if (withImpulse) velocity.y += impulse;
 		gravitySwapped = false;
 		return false; 
@@ -487,14 +482,14 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			App->SaveRequest = true;
 		}
 
-		if (c2->type == COLLIDER_CHECKPOINT) {
+		else if (c2->type == COLLIDER_CHECKPOINT) {
 			checkpoint_1->to_delete;
 			checkpoint_1 = nullptr;
 			autosave_1 = true;
 			App->SaveRequest = true;
 		}
 
-		if (c2->type == COLLIDER_WIN && !doorLocked) {
+		else if (c2->type == COLLIDER_WIN && !doorLocked) {
 			if (App->scene->current_scene == 1) {
 				App->scene->changeSceneTo(2);
 			}
@@ -503,7 +498,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 		}
 
-		if (c2->type == COLLIDER_DEATH) {
+		else if (c2->type == COLLIDER_DEATH || c2->type == COLLIDER_ENEMY || c2->type == COLLIDER_ENEMY_SHOT) {
 			if (App->scene->current_scene == 1) {
 				position.x = originalPosition_1.x;
 				position.y = originalPosition_1.y;
@@ -514,10 +509,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			}		
            	velocity.y = 0;
 			grounded = true;
-			if(gravitySwapped) ChangeGravity(false);
+			gravitySwapped = false;
+			numLives--;
 		}
 
-		if (c2->type == COLLIDER_GRAVITY && !justSwapped) {
+		else if (c2->type == COLLIDER_GRAVITY && !justSwapped) {
 			justSwapped = true;
 			swapTimer.Start();
 			ChangeGravity(true);

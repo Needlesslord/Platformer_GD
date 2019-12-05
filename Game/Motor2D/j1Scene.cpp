@@ -138,10 +138,16 @@ bool j1Scene::Update(float dt) {
 			if (current_scene == 1) {
 				App->player->position.x = App->player->originalPosition_1.x;
 				App->player->position.y = App->player->originalPosition_1.y;
+				if (App->player->gravitySwapped) {
+					App->player->gravitySwapped = false;
+				}
 			}
 			if (current_scene == 2) {
 				App->player->position.x = App->player->originalPosition_2.x;
 				App->player->position.y = App->player->originalPosition_2.y;
+				if (App->player->gravitySwapped) {
+					App->player->gravitySwapped = false;
+				}
 			}
 		}
 
@@ -188,7 +194,7 @@ bool j1Scene::Update(float dt) {
 	else if (current_scene == 2) App->render->Blit(background2_small, App->player->position.x - 250, App->player->position.y - 200);
 
 	App->map->Draw(-App->render->camera.x);
-	App->map->CollidersMap();
+
 
 	return true;
 }

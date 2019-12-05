@@ -24,6 +24,8 @@ j1Particles::~j1Particles()
 // Load assets
 bool j1Particles::Start() {
 	graphics = App->tex->Load("textures/Ninja_Frog.png");
+	onCooldown = false;
+	shurikensUsed = 0;
 	return true;
 }
 
@@ -49,14 +51,16 @@ bool j1Particles::PreUpdate() {
 }
 
 bool j1Particles::Update(float dt) {
-
 	BROFILER_CATEGORY("ParticlesUpdate", Profiler::Color::OrangeRed)
-
+	if (App->player->godMode) shurikensUsed = 0;
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)	{
 		Particle* p = active[i];
 
 		if (p == nullptr)
 			continue;
+
+		p->particleRect.x += p->speed.x * dt; //TODO: Initialize all variables from .XML
+		p->anim.speed = 20 * dt;
 
 		if (p->Update() == false) {
 			delete p;
@@ -66,7 +70,26 @@ bool j1Particles::Update(float dt) {
 			App->render->Blit(graphics, p->particleRect.x, p->particleRect.y, &(p->anim.GetCurrentFrame()));
 		}
 	}
-
+	if (shurikensUsed == 1) {
+		if (partialCooldown.ReadSec() >= 3) {
+			partialCooldown.Stop();
+			shurikensUsed = 0;
+		}
+	}
+	else if (shurikensUsed == 2) {
+		if (partialCooldown.ReadSec() >= 5) {
+			partialCooldown.Stop();
+			shurikensUsed = 0;
+		}
+	}
+	if (onCooldown) {
+		if (cooldown.ReadSec() >= 10) {
+			cooldown.Stop();
+			onCooldown = false;
+			shurikensUsed = 0;
+		}
+	}
+	if (App->player->godMode) shurikensUsed = 0;
 	return true;
 }
 
@@ -87,12 +110,12 @@ void j1Particles::AddParticle(Particle& particle, int x, int y, COLLIDER_TYPE ty
 			p->particleRect.w = 14;
 			p->particleRect.h = 14;
 			if (App->player->mirror) {
-				p->speed.x = -8;
+				p->speed.x = -320;
 				p->particleRect.x -= App->player->playerWidth + App->player->AnimationOffstet.x;
 			}
-			else p->speed.x = 8;
+			else p->speed.x = 320;
 
-			p->collider = App->collisions->AddCollider(p->particleRect, type, App->collisions);
+			p->collider = App->collisions->AddCollider(p->particleRect, type, App->particles);
 
 			active[i] = p;
 			break;
@@ -104,7 +127,7 @@ void j1Particles::AddParticle(Particle& particle, int x, int y, COLLIDER_TYPE ty
 void j1Particles::OnCollision(Collider* c1, Collider* c2) {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)	{
 		if (active[i] != nullptr && active[i]->collider == c1) {
-			if (c2->type == COLLIDER_ENEMY || c2->type == COLLIDER_PLATFORM || c2->type == COLLIDER_WALL) {
+			if (c2->type == COLLIDER_ENEMY || c2->type == COLLIDER_WALL) {
 				delete active[i];
 				active[i] = nullptr;
 				break;
@@ -143,11 +166,6 @@ bool Particle::Update()
 	}
 	else
 		if (anim.Finished()) ret = false;
-
-	//if (collider != nullptr && collider->type == COLLIDER_TYPE::COLLIDER_ENEMY_SHOT)
-	//	position.x -= speed.x;
-
-	particleRect.x += speed.x;
 
 	if (collider != nullptr)
 		collider->SetPos(particleRect.x, particleRect.y);
