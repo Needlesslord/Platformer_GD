@@ -199,8 +199,6 @@ bool j1Player::CleanUp() {
 	if (colRightside != nullptr) colRightside->to_delete = true;
 	if (colLeftside != nullptr) colLeftside->to_delete = true;
 
-	if (autosave_1)checkpoint_1->to_delete = true;
-
 	return true;
 }
 
