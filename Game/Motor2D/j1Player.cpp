@@ -80,8 +80,6 @@ j1Player::j1Player() : j1Module() {
 	//falling
 	player_falling.PushBack({ 192,  96,  32, 32 });
 
-	//TODO: ANIMATIONS MUST GO ACCORDING TO dt
-
 	////CHECKPOINTS
 	//// need coordinates!!!
 	//checkpoint_saved_1.PushBack({ 256,  377,  23, 32 });
@@ -300,8 +298,15 @@ bool j1Player::Update(float dt) {
 		position.y += impulse * dt;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !App->particles->onCooldown && App->particles->shurikensUsed < 3) {
 		App->particles->AddParticle(App->particles->shuriken, position.x + 20, position.y, COLLIDER_PLAYER_SHOT, 0);
+		App->particles->shurikensUsed++;
+		if (App->particles->shurikensUsed == 3) {
+			App->particles->onCooldown = true;
+			App->particles->cooldown.Start();
+			App->particles->partialCooldown.Stop();
+		}
+		else if (App->particles->shurikensUsed == 2 || App->particles->shurikensUsed == 1) App->particles->partialCooldown.Start();
 	}
 		
 	MoveEverything(gravitySwapped, dt);

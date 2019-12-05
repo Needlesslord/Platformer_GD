@@ -251,10 +251,10 @@ bool j1Map::Load(const char* file_name)
 			item_layer = item_layer->next;
 		}
 	}
-
+	map_loaded = ret;
 	CollidersMap();
 
-	map_loaded = ret;
+
 
 	return ret;
 }

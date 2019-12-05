@@ -188,7 +188,7 @@ bool j1Scene::Update(float dt) {
 	else if (current_scene == 2) App->render->Blit(background2_small, App->player->position.x - 250, App->player->position.y - 200);
 
 	App->map->Draw(-App->render->camera.x);
-	App->map->CollidersMap();
+
 
 	return true;
 }
