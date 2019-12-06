@@ -19,6 +19,8 @@ class j1Map;
 class j1EntityManager;
 class j1PathFinding;
 class j1Particles;
+class j1Fonts;
+class j1UI;
 
 //Missing other classes
 
@@ -72,11 +74,12 @@ public:
 	j1Scene*			scene;
 	j1Map*				map;
 	j1Collisions*		collisions;
-	//j1Animation*		animation;
 	j1Player*			player;
 	j1EntityManager*	entity_manager;
 	j1PathFinding*		pathfinding;
 	j1Particles*		particles;
+	j1Fonts*			fonts;
+	j1UI*				UI;
 	bool SaveRequest = false;
 	bool LoadRequest = false;
 
