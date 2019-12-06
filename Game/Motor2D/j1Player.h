@@ -116,8 +116,13 @@ public:
 	bool autosave_1 = false;
 
 	bool gravitySwapped;
+
 	bool justSwapped = false;
 	j1Timer swapTimer;
+
+	bool justDied = false;
+	j1Timer dieTimer;
+
 	j1Timer past2Sec;
 
 	p2SString			folder;
@@ -129,6 +134,8 @@ public:
 
 	uint numLives;
 	uint initialLives;
+
+	bool isDead;
 };
 
 #endif

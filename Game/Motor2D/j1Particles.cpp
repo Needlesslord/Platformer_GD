@@ -5,6 +5,7 @@
 #include "j1Collisions.h"
 #include "j1Particles.h"
 #include "j1Player.h"
+#include "j1UI.h"
 #include "Brofiler.h"
 #include "SDL/include/SDL_timer.h"
 
@@ -70,19 +71,23 @@ bool j1Particles::Update(float dt) {
 			App->render->Blit(graphics, p->particleRect.x, p->particleRect.y, &(p->anim.GetCurrentFrame()));
 		}
 	}
-	if (shurikensUsed == 1) {
+	if (shurikensUsed == 0)	App->UI->shurikens = 3;
+	else if (shurikensUsed == 1) {
+		App->UI->shurikens = 2;
 		if (partialCooldown.ReadSec() >= 3) {
 			partialCooldown.Stop();
 			shurikensUsed = 0;
 		}
 	}
 	else if (shurikensUsed == 2) {
+		App->UI->shurikens = 1;
 		if (partialCooldown.ReadSec() >= 5) {
 			partialCooldown.Stop();
 			shurikensUsed = 0;
 		}
 	}
 	if (onCooldown) {
+		App->UI->shurikens = 0;
 		if (cooldown.ReadSec() >= 10) {
 			cooldown.Stop();
 			onCooldown = false;

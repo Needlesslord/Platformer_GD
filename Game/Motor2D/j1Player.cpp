@@ -254,6 +254,10 @@ bool j1Player::Update(float dt) {
 		justSwapped = false;
 		swapTimer.Stop();
 	}
+	if (justDied && dieTimer.ReadSec() > 1) {
+		justDied = false;
+		dieTimer.Stop();
+	}
 
 	//DOUBLE JUMP
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !hasDoubleJumped && !godMode) {
@@ -324,9 +328,6 @@ bool j1Player::Update(float dt) {
 	else if (gravitySwapped && !godMode) App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - 5/*TODO: initialize AnimationOffsetGravitySwapped so no magic number*/, &(current_animation->GetCurrentFrame()));
 	else App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
 	
-	//if (gravitySwapped) App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - 5/*TODO: initialize AnimationOffsetGravitySwapped so no magic number*/, &(current_animation->GetCurrentFrame()));
-	//else App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
-
 	return true;
 }
 
@@ -498,7 +499,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 		}
 
-		else if (c2->type == COLLIDER_DEATH || c2->type == COLLIDER_ENEMY || c2->type == COLLIDER_ENEMY_SHOT) {
+		else if (c2->type == COLLIDER_DEATH || c2->type == COLLIDER_ENEMY || c2->type == COLLIDER_ENEMY_SHOT && !justDied) {
 			if (App->scene->current_scene == 1) {
 				position.x = originalPosition_1.x;
 				position.y = originalPosition_1.y;
@@ -511,6 +512,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			grounded = true;
 			gravitySwapped = false;
 			numLives--;
+			if (numLives < 0) isDead;//TODO: Make the restart function restart numLives to 3 as well (and isDead to false, duh)
+			justDied = true;
 		}
 
 		else if (c2->type == COLLIDER_GRAVITY && !justSwapped) {

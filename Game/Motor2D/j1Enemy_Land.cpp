@@ -152,6 +152,10 @@ void j1Enemy_Land::OnCollision(Collider* c1, Collider* c2) {
 			c2->to_delete = true;
 			c1->to_delete = true;
 		}
+		if (c2->type == PLAYER) {
+			isAlive = false;
+			c1->to_delete = true;
+		}
 	}
 }
 

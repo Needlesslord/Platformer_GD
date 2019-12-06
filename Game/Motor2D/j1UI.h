@@ -7,16 +7,20 @@ class j1UI : public j1Module {
 public:
 	j1UI();
 	virtual ~j1UI();
-
+	bool Awake(pugi::xml_node&);
 	bool Start();
 	bool PreUpdate();
-	bool Update();
+	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
 
 public:
-	SDL_Texture* game_over = nullptr;
+	uint shurikens;
+	SDL_Texture* shuriken_tex;
+	SDL_Texture* shuriken_tex_transparent;
+
+	uint lives;
+	SDL_Texture* lives_tex;
 
 	int numbers = 0;
-	char numbers_string[10];
 };
