@@ -513,6 +513,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			gravitySwapped = false;
 			numLives--;
 			if (numLives < 0) isDead;//TODO: Make the restart function restart numLives to 3 as well (and isDead to false, duh)
+			dieTimer.Start();
 			justDied = true;
 		}
 

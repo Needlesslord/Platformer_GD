@@ -60,10 +60,10 @@ bool j1UI::Update(float dt) {
 		App->render->Blit(shuriken_tex, App->player->position.x - 199, App->player->position.y - 130);
 		App->render->Blit(shuriken_tex, App->player->position.x - 164, App->player->position.y - 130);
 	}
-
-	App->render->Blit(lives_tex, App->player->col->rect.x - 235, App->player->col->rect.y - 160);
-	App->render->Blit(lives_tex, App->player->col->rect.x - 200, App->player->col->rect.y - 160);
-	App->render->Blit(lives_tex, App->player->col->rect.x - 165, App->player->col->rect.y - 160);
+	lives = App->player->numLives;
+	if (lives > 0) App->render->Blit(lives_tex, App->player->col->rect.x - 235, App->player->col->rect.y - 160);
+	if (lives > 1) App->render->Blit(lives_tex, App->player->col->rect.x - 200, App->player->col->rect.y - 160);
+	if (lives > 2) App->render->Blit(lives_tex, App->player->col->rect.x - 165, App->player->col->rect.y - 160);
 	return true;
 }
 
