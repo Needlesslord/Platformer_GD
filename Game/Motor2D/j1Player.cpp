@@ -216,121 +216,125 @@ bool j1Player::PreUpdate() {
 
 // Update: draw background
 bool j1Player::Update(float dt) {
-	
+
 	BROFILER_CATEGORY("Player_Update", Profiler::Color::Blue)
 
-	current_animation->speed = dt * 10;
+		if (!paused) {
+			current_animation->speed = dt * 10;
 
-	if(mirror && gravitySwapped)		current_animation = &player_idle_mirror_gravitySwapped;
-	else if (mirror && !gravitySwapped)	current_animation = &player_idle_mirror;
-	else if(!mirror && gravitySwapped)	current_animation = &player_idle_gravitySwapped;
-	else								current_animation = &player_idle;
+			if (mirror && gravitySwapped)		current_animation = &player_idle_mirror_gravitySwapped;
+			else if (mirror && !gravitySwapped)	current_animation = &player_idle_mirror;
+			else if (!mirror && gravitySwapped)	current_animation = &player_idle_gravitySwapped;
+			else								current_animation = &player_idle;
 
-	if (!grounded && !againstRoof) {
-		if (mirror && gravitySwapped)		current_animation = &player_jumping_mirror_gravitySwapped;
-		else if (mirror && !gravitySwapped)	current_animation = &player_jumping_mirror;
-		else if (!mirror && gravitySwapped)	current_animation = &player_jumping_gravitySwapped;
-		else								current_animation = &player_jumping;
-	}
-	if (!godMode && past2Sec.ReadSec() > 1) {
-		if(!gravitySwapped)	velocity.y -= gravity * dt;
-		if (gravitySwapped) velocity.y += gravity * dt;
-	}
+			if (!grounded && !againstRoof) {
+				if (mirror && gravitySwapped)		current_animation = &player_jumping_mirror_gravitySwapped;
+				else if (mirror && !gravitySwapped)	current_animation = &player_jumping_mirror;
+				else if (!mirror && gravitySwapped)	current_animation = &player_jumping_gravitySwapped;
+				else								current_animation = &player_jumping;
+			}
+			if (!godMode && past2Sec.ReadSec() > 1) {
+				if (!gravitySwapped)	velocity.y -= gravity * dt;
+				if (gravitySwapped) velocity.y += gravity * dt;
+			}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !againstLeftSide) {
-		position.x -= velocity.x * dt;
-		if (gravitySwapped && againstRoof)current_animation = &player_walking_mirror_gravitySwapped;
-		else if (!gravitySwapped && grounded)current_animation = &player_walking_mirror;
-		mirror = true;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) /*RESET*/ { player_walking_mirror_gravitySwapped.Reset(); player_walking_mirror.Reset(); }
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !againstLeftSide) {
+				position.x -= velocity.x * dt;
+				if (gravitySwapped && againstRoof)current_animation = &player_walking_mirror_gravitySwapped;
+				else if (!gravitySwapped && grounded)current_animation = &player_walking_mirror;
+				mirror = true;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) /*RESET*/ { player_walking_mirror_gravitySwapped.Reset(); player_walking_mirror.Reset(); }
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !againstRightSide) {
-		position.x += velocity.x * dt;
-		if (gravitySwapped && againstRoof) current_animation = &player_walking_gravitySwapped;
-		else if (!gravitySwapped && grounded)current_animation = &player_walking;
-		mirror = false;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) /*RESET*/ { player_walking_gravitySwapped.Reset(); player_walking.Reset(); }
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !againstRightSide) {
+				position.x += velocity.x * dt;
+				if (gravitySwapped && againstRoof) current_animation = &player_walking_gravitySwapped;
+				else if (!gravitySwapped && grounded)current_animation = &player_walking;
+				mirror = false;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) /*RESET*/ { player_walking_gravitySwapped.Reset(); player_walking.Reset(); }
 
-	if (justSwapped && swapTimer.ReadSec() > 1) { // CAN ONLY SWAP GRAVITY ONCE PER SECOND
-		justSwapped = false;
-		swapTimer.Stop();
-	}
-	if (justDied && dieTimer.ReadSec() > 1) {
-		justDied = false;
-		dieTimer.Stop();
-	}
+			if (justSwapped && swapTimer.ReadSec() > 1) { // CAN ONLY SWAP GRAVITY ONCE PER SECOND
+				justSwapped = false;
+				swapTimer.Stop();
+			}
+			if (justDied && dieTimer.ReadSec() > 1) {
+				justDied = false;
+				dieTimer.Stop();
+			}
 
-	//DOUBLE JUMP
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !hasDoubleJumped && !godMode) {
-		if (gravitySwapped) { //INVERTED GRAVITY
-			if (velocity.y < 0 && !againstRoof) {
-				velocity.y = -impulse;
-				hasDoubleJumped = true;
+			//DOUBLE JUMP
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !hasDoubleJumped && !godMode) {
+				if (gravitySwapped) { //INVERTED GRAVITY
+					if (velocity.y < 0 && !againstRoof) {
+						velocity.y = -impulse;
+						hasDoubleJumped = true;
+					}
+				}
+				else {
+					if (velocity.y > 0 && !grounded) {
+						velocity.y = impulse;
+						hasDoubleJumped = true;
+					}
+				}
+			}
+
+			//JUMP
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !godMode) {
+				if (gravitySwapped) { //INVERTED GRAVITY
+					if (againstRoof) {
+						againstRoof = false;
+						velocity.y = -impulse;
+						hasDoubleJumped = false;
+						//TODO: Play an Fx for jumping
+					}
+				}
+				else {
+					if (grounded) {
+						grounded = false;
+						velocity.y = impulse;
+						hasDoubleJumped = false;
+					}
+				}
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode) {
+				position.y -= impulse * dt;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode) {
+				position.y += impulse * dt;
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !App->particles->onCooldown && App->particles->shurikensUsed < 3) {
+				App->particles->AddParticle(App->particles->shuriken, position.x + 20, position.y, COLLIDER_PLAYER_SHOT, 0);
+				App->particles->shurikensUsed++;
+				if (App->particles->shurikensUsed == 3) {
+					App->particles->onCooldown = true;
+					App->particles->cooldown.Start();
+					App->particles->partialCooldown.Stop();
+				}
+				else App->particles->partialCooldown.Start();
+			}
+
+			MoveEverything(gravitySwapped, dt);
+
+			if (App->scene->current_scene == 1 && doorLocked) {
+				App->render->Blit(lockedDoor, directWin_1.x + 18, directWin_1.y - 35);
+				App->render->Blit(key_tex, key->rect.x, key->rect.y);
+			}
+			else if (App->scene->current_scene == 2 && doorLocked) {
+				App->render->Blit(lockedDoor, directWin_2.x - 90, directWin_2.y - 8);
+				App->render->Blit(key_tex, 4517, 6298);
 			}
 		}
-		else { 
-			if (velocity.y > 0 && !grounded) {
-				velocity.y = impulse;
-				hasDoubleJumped = true;
-			}
-		}
-	}
-
-	//JUMP
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !godMode) {
-		if (gravitySwapped) { //INVERTED GRAVITY
-			if (againstRoof) {
-				againstRoof = false;
-				velocity.y = -impulse;
-				hasDoubleJumped = false;
-				//TODO: Play an Fx for jumping
-			}
-		}
-		else {
-			if (grounded) {
-				grounded = false;
-				velocity.y = impulse;
-				hasDoubleJumped = false;
-			}
-		}
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode) {
-		position.y -= impulse * dt;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode) {
-		position.y += impulse * dt;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !App->particles->onCooldown && App->particles->shurikensUsed < 3) {
-		App->particles->AddParticle(App->particles->shuriken, position.x + 20, position.y, COLLIDER_PLAYER_SHOT, 0);
-		App->particles->shurikensUsed++;
-		if (App->particles->shurikensUsed == 3) {
-			App->particles->onCooldown = true;
-			App->particles->cooldown.Start();
-			App->particles->partialCooldown.Stop();
-		}
-		else App->particles->partialCooldown.Start();
-	}
+		if (gravitySwapped && godMode) App->render->Blit(player_textures_godmode, position.x - AnimationOffstet.x, position.y - 5/*TODO: initialize AnimationOffsetGravitySwapped so no magic number*/, &(current_animation->GetCurrentFrame()));
+		else if (!gravitySwapped && godMode) App->render->Blit(player_textures_godmode, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
+		else if (gravitySwapped && !godMode) App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - 5/*TODO: initialize AnimationOffsetGravitySwapped so no magic number*/, &(current_animation->GetCurrentFrame()));
+		else App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
 		
-	MoveEverything(gravitySwapped, dt);
-
-	if (App->scene->current_scene == 1 && doorLocked) {
-		App->render->Blit(lockedDoor, directWin_1.x + 18, directWin_1.y - 35);
-		App->render->Blit(key_tex, key->rect.x, key->rect.y);
-	}
-	else if (App->scene->current_scene == 2 && doorLocked) {
-		App->render->Blit(lockedDoor, directWin_2.x - 90, directWin_2.y - 8);
-		App->render->Blit(key_tex, 4517, 6298);
-	}
-
-	if (gravitySwapped && godMode) App->render->Blit(player_textures_godmode, position.x - AnimationOffstet.x, position.y - 5/*TODO: initialize AnimationOffsetGravitySwapped so no magic number*/, &(current_animation->GetCurrentFrame()));
-	else if (!gravitySwapped && godMode) App->render->Blit(player_textures_godmode, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
-	else if (gravitySwapped && !godMode) App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - 5/*TODO: initialize AnimationOffsetGravitySwapped so no magic number*/, &(current_animation->GetCurrentFrame()));
-	else App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
-	
+		if (paused) {
+			
+		}
 	return true;
 }
 

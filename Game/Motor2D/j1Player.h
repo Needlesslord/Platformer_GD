@@ -136,6 +136,7 @@ public:
 	uint initialLives;
 
 	bool isDead;
+	bool paused = false;
 };
 
 #endif

@@ -27,6 +27,9 @@ bool j1UI::Start() {
 	lives_tex = App->tex->Load("textures/UI/hearts.png");
 	renderKey = false;
 	renderTimer = false;
+
+	minutes = 0;
+		
 	return true;
 }
 
@@ -43,39 +46,49 @@ bool j1UI::PreUpdate() {
 
 bool j1UI::Update(float dt) {
 	if (shurikens == 0) {
-		App->render->Blit(shuriken_tex_transparent, App->player->position.x - 234, App->player->position.y - 130);
-		App->render->Blit(shuriken_tex_transparent, App->player->position.x - 199, App->player->position.y - 130);
-		App->render->Blit(shuriken_tex_transparent, App->player->position.x - 164, App->player->position.y - 130);
+		App->render->Blit(shuriken_tex_transparent, 11, 40, NULL, 0.00f);
+		App->render->Blit(shuriken_tex_transparent, 46, 40, NULL, 0.00f);
+		App->render->Blit(shuriken_tex_transparent, 81, 40, NULL, 0.00f);
 	}
 	else if (shurikens == 1) {
-		App->render->Blit(shuriken_tex, App->player->position.x - 234, App->player->position.y - 130);
-		App->render->Blit(shuriken_tex_transparent, App->player->position.x - 199, App->player->position.y - 130);
-		App->render->Blit(shuriken_tex_transparent, App->player->position.x - 164, App->player->position.y - 130);
+		App->render->Blit(shuriken_tex, 11, 40, NULL, 0.00f);
+		App->render->Blit(shuriken_tex_transparent, 46, 40, NULL, 0.00f);
+		App->render->Blit(shuriken_tex_transparent, 81, 40, NULL, 0.00f);
 	}
 	else if (shurikens == 2) {
-		App->render->Blit(shuriken_tex, App->player->position.x - 234, App->player->position.y - 130);
-		App->render->Blit(shuriken_tex, App->player->position.x - 199, App->player->position.y - 130);
-		App->render->Blit(shuriken_tex_transparent, App->player->position.x - 164, App->player->position.y - 130);
+		App->render->Blit(shuriken_tex, 11, 40, NULL, 0.00f);
+		App->render->Blit(shuriken_tex, 46, 40, NULL, 0.00f);
+		App->render->Blit(shuriken_tex_transparent, 81, 40, NULL, 0.00f);
 	}
 	else if (shurikens == 3) {
-		App->render->Blit(shuriken_tex, App->player->position.x - 234, App->player->position.y - 130);
-		App->render->Blit(shuriken_tex, App->player->position.x - 199, App->player->position.y - 130);
-		App->render->Blit(shuriken_tex, App->player->position.x - 164, App->player->position.y - 130);
+		App->render->Blit(shuriken_tex, 11, 40, NULL, 0.00f);
+		App->render->Blit(shuriken_tex, 46, 40, NULL, 0.00f);
+		App->render->Blit(shuriken_tex, 81, 40, NULL, 0.00f);
 	}
 
 
 	lives = App->player->numLives;
-	if (lives > 0) App->render->Blit(lives_tex, /*App->player->position.x - 235, App->player->position.y - 160*/100, 100, NULL, 0.00f);
-	if (lives > 1) App->render->Blit(lives_tex,/* App->player->position.x - 200, App->player->position.y - 160,*/130, 100, NULL, 0.00f);
-	if (lives > 2) App->render->Blit(lives_tex, /*App->player->position.x - 165, App->player->position.y - 160,*/160, 100, NULL, 0.00f);
+	if (lives > 0) App->render->Blit(lives_tex, 10, 10, NULL, 0.00f);
+	if (lives > 1) App->render->Blit(lives_tex, 45, 10, NULL, 0.00f);
+	if (lives > 2) App->render->Blit(lives_tex, 80, 10, NULL, 0.00f);
 
 
-	if (renderKey) App->render->Blit(App->player->key_tex, App->player->position.x + 240, App->player->position.y + 150);
+	if (!renderKey) App->render->Blit(App->player->key_tex, 485, 320, NULL, 0.00f);
 
 
+	seconds = gameTime.ReadSec();
+	for (int i = 0; i < 9; i++) {
+		if (seconds > 59) {
+			seconds -= 60;
+			if (minutes == i) minutes++;
+		}
+	}
 	if (!/*TODO: change*/renderTimer) {
-		sprintf_s(time_string, 10, "%1d", time);
-		App->fonts->BlitText(155, 73, numbers, time_string);
+		sprintf_s(minutes_string, 10, "%1d", minutes);
+		App->fonts->BlitText(200, 10, numbers, minutes_string);
+
+		sprintf_s(seconds_string, 10, "%1d", seconds);
+		App->fonts->BlitText(235, 10, numbers, seconds_string);
 	}
 
 	return true;

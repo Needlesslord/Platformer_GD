@@ -29,8 +29,10 @@ public:
 
 	int numbers = 0;
 
-	uint time;
-	char time_string[10];
+	uint seconds;
+	char seconds_string[10];
+	uint minutes;
+	char minutes_string[10];
 	j1Timer gameTime;
 	
 };
