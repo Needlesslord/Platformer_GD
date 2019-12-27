@@ -12,19 +12,19 @@
 	</scene>
 	<collisions />
 	<player>
-		<position_x value="443.799866" />
-		<position_y value="1111.05762" />
-		<num_lives value="1" />
-		<gravity_swapped value="false" />
+		<position_x value="737.203369" />
+		<position_y value="1430.99402" />
+		<num_lives value="3" />
+		<gravity_swapped value="true" />
 	</player>
 	<:anonymous />
 	<pathfinding />
 	<:anonymous />
 	<:anonymous />
 	<UI>
-		<render_key value="false" />
+		<render_key value="true" />
 	</UI>
 	<renderer>
-		<camera x="-403" y="-1886" />
+		<camera x="-990" y="-2525" />
 	</renderer>
 </save>
