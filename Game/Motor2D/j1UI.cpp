@@ -25,6 +25,8 @@ bool j1UI::Start() {
 	shuriken_tex = App->tex->Load("textures/UI/shurikens_normal.png");
 	shuriken_tex_transparent = App->tex->Load("textures/UI/shurikens_transparent.png");
 	lives_tex = App->tex->Load("textures/UI/hearts.png");
+	renderKey = false;
+	renderTimer = false;
 	return true;
 }
 
@@ -60,14 +62,37 @@ bool j1UI::Update(float dt) {
 		App->render->Blit(shuriken_tex, App->player->position.x - 199, App->player->position.y - 130);
 		App->render->Blit(shuriken_tex, App->player->position.x - 164, App->player->position.y - 130);
 	}
+
+
 	lives = App->player->numLives;
-	if (lives > 0) App->render->Blit(lives_tex, App->player->col->rect.x - 235, App->player->col->rect.y - 160);
-	if (lives > 1) App->render->Blit(lives_tex, App->player->col->rect.x - 200, App->player->col->rect.y - 160);
-	if (lives > 2) App->render->Blit(lives_tex, App->player->col->rect.x - 165, App->player->col->rect.y - 160);
+	if (lives > 0) App->render->Blit(lives_tex, /*App->player->position.x - 235, App->player->position.y - 160*/100, 100, NULL, 0.00f);
+	if (lives > 1) App->render->Blit(lives_tex,/* App->player->position.x - 200, App->player->position.y - 160,*/130, 100, NULL, 0.00f);
+	if (lives > 2) App->render->Blit(lives_tex, /*App->player->position.x - 165, App->player->position.y - 160,*/160, 100, NULL, 0.00f);
+
+
+	if (renderKey) App->render->Blit(App->player->key_tex, App->player->position.x + 240, App->player->position.y + 150);
+
+
+	if (!/*TODO: change*/renderTimer) {
+		sprintf_s(time_string, 10, "%1d", time);
+		App->fonts->BlitText(155, 73, numbers, time_string);
+	}
+
 	return true;
 }
 
 bool j1UI::PostUpdate() {
+	return true;
+}
+
+bool j1UI::Load(pugi::xml_node& node) {
+	renderKey = node.child("render_key").attribute("value").as_bool();
+
+	return true;
+}
+bool j1UI::Save(pugi::xml_node& node) {
+	node.append_child("render_key").append_attribute("value") = renderKey;
+
 	return true;
 }
 

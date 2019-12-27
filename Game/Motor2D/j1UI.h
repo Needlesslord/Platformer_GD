@@ -13,6 +13,8 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
+	bool Load(pugi::xml_node& node);
+	bool Save(pugi::xml_node& node);
 
 public:
 	uint shurikens;
@@ -22,5 +24,13 @@ public:
 	uint lives;
 	SDL_Texture* lives_tex;
 
+	bool renderKey;
+	bool renderTimer;
+
 	int numbers = 0;
+
+	uint time;
+	char time_string[10];
+	j1Timer gameTime;
+	
 };

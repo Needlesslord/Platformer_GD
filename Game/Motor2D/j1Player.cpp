@@ -12,6 +12,7 @@
 #include "j1Player.h"
 #include "j1Animation.h"
 #include "j1Timer.h"
+#include "j1UI.h"
 #include "Brofiler.h"
 
 
@@ -176,6 +177,8 @@ bool j1Player::Start() {
 		// KEY POSITION COLLIDER
 		key = App->collisions->AddCollider({ 700, 1405, 12, 48 }, COLLIDER_KEY, this);
 	}
+	App->UI->gameTime.Start();
+
 	return true;
 }
 
@@ -250,7 +253,7 @@ bool j1Player::Update(float dt) {
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) /*RESET*/ { player_walking_gravitySwapped.Reset(); player_walking.Reset(); }
 
-	if (justSwapped && swapTimer.ReadSec() > 1) {
+	if (justSwapped && swapTimer.ReadSec() > 1) { // CAN ONLY SWAP GRAVITY ONCE PER SECOND
 		justSwapped = false;
 		swapTimer.Stop();
 	}
@@ -480,6 +483,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			key->to_delete;
 			key = nullptr;
 			doorLocked = false;
+			App->UI->renderKey = true;
 			App->SaveRequest = true;
 		}
 
@@ -512,7 +516,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			grounded = true;
 			gravitySwapped = false;
 			numLives--;
-			if (numLives < 0) isDead;//TODO: Make the restart function restart numLives to 3 as well (and isDead to false, duh)
+			if (numLives < 0) isDead = true;//TODO: Make the restart function restart numLives to 3 as well (and isDead to false, duh)
 			dieTimer.Start();
 			justDied = true;
 		}
