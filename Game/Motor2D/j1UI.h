@@ -20,6 +20,7 @@ public:
 	uint shurikens;
 	SDL_Texture* shuriken_tex;
 	SDL_Texture* shuriken_tex_transparent;
+	SDL_Texture* key_small;
 
 	uint lives;
 	SDL_Texture* lives_tex;
@@ -28,6 +29,7 @@ public:
 	bool renderTimer;
 
 	int numbers = 0;
+	SDL_Texture* twoDots;
 
 	uint seconds;
 	char seconds_string[10];

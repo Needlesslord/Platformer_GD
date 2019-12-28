@@ -151,7 +151,7 @@ bool j1Player::Start() {
 	player_textures_godmode = App->tex->Load("textures/Ninja_Frog_GODMODE.png");
 	imgwin = App->tex->Load("textures/imgwin.png");
 	lockedDoor = App->tex->Load("textures/candado.png");
-	key_tex = App->tex->Load("textures/llave.png");
+	key_tex = App->tex->Load("textures/key_normal.png");
 
 	if (App->scene->current_scene == 0) {
 		position.x = originalPosition_1.x;
