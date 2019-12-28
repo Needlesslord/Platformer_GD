@@ -24,7 +24,7 @@ bool j1UI::Start() {
 	numbers = App->fonts->Load("textures/UI/Numbers.png", "0123456789", 1);
 	twoDots = App->tex->Load("textures/UI/2dots.png");
 	shuriken_tex = App->tex->Load("textures/UI/shurikens_small.png");
-	shuriken_tex_transparent = App->tex->Load("textures/UI/shurikens_transparent.png");
+	shuriken_tex_transparent = App->tex->Load("textures/UI/shurikens_transparent_small.png");
 	lives_tex = App->tex->Load("textures/UI/Heart_Small.png");
 	key_small = App->tex->Load("textures/key_small.png");
 	renderKey = false;
