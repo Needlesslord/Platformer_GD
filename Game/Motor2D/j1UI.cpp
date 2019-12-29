@@ -8,6 +8,7 @@
 #include "j1Fonts.h"
 #include "j1Player.h"
 #include "j1Collisions.h"
+#include "j1Input.h"
 
 j1UI::j1UI() : j1Module() {
 	name.create("UI");
@@ -55,10 +56,14 @@ bool j1UI::PreUpdate() {
 }
 
 bool j1UI::Update(float dt) {
-	if (!mainMenu) {
-
+	if (mainMenu) { // UI ELEMENTS
+		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
+			scene = true;
+			mainMenu = false;
+			App->scene->SetUpScene();
+		}
 	}
-	else if (!scene) { //HUD
+	else if (scene) { // HUD
 		if (shurikens == 0) {
 			App->render->Blit(shuriken_tex_transparent, 11, 50, NULL, 0.00f);
 			App->render->Blit(shuriken_tex_transparent, 46, 50, NULL, 0.00f);
@@ -97,6 +102,7 @@ bool j1UI::Update(float dt) {
 				App->render->Blit(lives_tex, 45, heart2.y, NULL, 0.00f);
 			}
 		}
+
 
 		if (renderKey) App->render->Blit(key_small, 485, 330, NULL, 0.00f);
 

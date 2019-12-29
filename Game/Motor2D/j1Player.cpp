@@ -146,7 +146,6 @@ bool j1Player::Start() {
 	col				= App->collisions->AddCollider({ originalPosition_1.x, originalPosition_1.y, playerWidth, playerHeight }, COLLIDER_PLAYER, this);
 	gravitySwapped	= false;
 	numLives = initialLives;
-	past2Sec.Start();
 	player_textures = App->tex->Load("textures/Ninja_Frog.png");
 	player_textures_godmode = App->tex->Load("textures/Ninja_Frog_GODMODE.png");
 	imgwin = App->tex->Load("textures/imgwin.png");
@@ -177,8 +176,6 @@ bool j1Player::Start() {
 		// KEY POSITION COLLIDER
 		key = App->collisions->AddCollider({ 700, 1405, 12, 48 /*Should come from XML*/}, COLLIDER_KEY, this);
 	}
-	App->UI->gameTime.Start();
-
 	return true;
 }
 
@@ -218,21 +215,22 @@ bool j1Player::PreUpdate() {
 bool j1Player::Update(float dt) {
 
 	BROFILER_CATEGORY("Player_Update", Profiler::Color::Blue)
+	if (App->UI->scene) {
+		current_animation->speed = dt * 10;
 
+		if (mirror && gravitySwapped)		current_animation = &player_idle_mirror_gravitySwapped;
+		else if (mirror && !gravitySwapped)	current_animation = &player_idle_mirror;
+		else if (!mirror && gravitySwapped)	current_animation = &player_idle_gravitySwapped;
+		else								current_animation = &player_idle;
+
+		if (!grounded && !againstRoof) {
+			if (mirror && gravitySwapped)		current_animation = &player_jumping_mirror_gravitySwapped;
+			else if (mirror && !gravitySwapped)	current_animation = &player_jumping_mirror;
+			else if (!mirror && gravitySwapped)	current_animation = &player_jumping_gravitySwapped;
+			else								current_animation = &player_jumping;
+		}
 		if (!paused) {
-			current_animation->speed = dt * 10;
 
-			if (mirror && gravitySwapped)		current_animation = &player_idle_mirror_gravitySwapped;
-			else if (mirror && !gravitySwapped)	current_animation = &player_idle_mirror;
-			else if (!mirror && gravitySwapped)	current_animation = &player_idle_gravitySwapped;
-			else								current_animation = &player_idle;
-
-			if (!grounded && !againstRoof) {
-				if (mirror && gravitySwapped)		current_animation = &player_jumping_mirror_gravitySwapped;
-				else if (mirror && !gravitySwapped)	current_animation = &player_jumping_mirror;
-				else if (!mirror && gravitySwapped)	current_animation = &player_jumping_gravitySwapped;
-				else								current_animation = &player_jumping;
-			}
 			if (!godMode && past2Sec.ReadSec() > 1) {
 				if (!gravitySwapped)	velocity.y -= gravity * dt;
 				if (gravitySwapped) velocity.y += gravity * dt;
@@ -331,10 +329,11 @@ bool j1Player::Update(float dt) {
 		else if (!gravitySwapped && godMode) App->render->Blit(player_textures_godmode, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
 		else if (gravitySwapped && !godMode) App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - 5/*TODO: initialize AnimationOffsetGravitySwapped so no magic number*/, &(current_animation->GetCurrentFrame()));
 		else App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
-		
+
 		if (paused) {
-			
+
 		}
+	}
 	return true;
 }
 
