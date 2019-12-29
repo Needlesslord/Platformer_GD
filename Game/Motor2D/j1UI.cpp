@@ -81,6 +81,7 @@ bool j1UI::Start() {
 	background_tex = App->tex->Load("maps/fondo2_big.png");
 	terrain_tex = App->tex->Load("textures/UI/buttons/main_menu/terrain.png");
 
+	credits = App->tex->Load("textures/UI/submenus/credits.png");
 	App->audio->PlayMusic("audio/music/intro.ogg");
 	return true;
 }
@@ -101,7 +102,7 @@ bool j1UI::Update(float dt) {
 		App->render->Blit(background_tex, 0, 0, NULL, 0.00f);
 		App->render->Blit(title1_tex, 55, 30, NULL, 0.00f);
 		App->render->Blit(terrain_tex, 155, 142, NULL, 0.00f);
-
+		
 
 		for (p2List_item<UIButton*>* item = buttons.start; item != nullptr; item = item->next) {
 			item->data->UpdateMouse();
@@ -113,6 +114,14 @@ bool j1UI::Update(float dt) {
 					App->scene->SetUpScene();
 				}
 				else if (item->data->type == EXIT) return false;
+				else if (item->data->type == CREDITS) {
+					showCredits = false;
+				}
+			}
+			else if (item->data->state == SELECTED) {
+				if (item->data->type == CREDITS) {
+					showCredits = true;
+				}
 			}
 		}
 		
@@ -126,6 +135,8 @@ bool j1UI::Update(float dt) {
 		App->player->current_animation = &App->player->player_idle_gravitySwapped;
 		App->player->current_animation->speed = dt * 10;
 		App->render->Blit(App->player->player_textures, 320, 336, &(App->player->current_animation->GetCurrentFrame()), 0.00f);
+
+		if (showCredits)App->render->Blit(credits, 0, 0, NULL, 0.00f);
 
 		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
 			scene = true;

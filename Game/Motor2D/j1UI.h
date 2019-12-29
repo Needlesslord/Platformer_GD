@@ -115,4 +115,6 @@ public:
 	SDL_Texture* background_tex;
 	SDL_Texture* terrain_tex;
 
+	SDL_Texture* credits;
+	bool showCredits = false;
 };
