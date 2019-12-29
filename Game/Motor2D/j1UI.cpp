@@ -10,6 +10,7 @@
 #include "j1Collisions.h"
 #include "j1Input.h"
 #include "Brofiler.h"
+#include "j1Audio.h"
 
 j1UI::j1UI() : j1Module() {
 	name.create("UI");
@@ -48,6 +49,7 @@ bool j1UI::Start() {
 
 	minutes = 0;
 
+	
 	//init blit buttons
 								//play
 	play_button_hovering_tex = App->tex->Load("textures/UI/buttons/main_menu/play_hover.png");
@@ -71,11 +73,20 @@ bool j1UI::Start() {
 	exit_button_selected_tex = App->tex->Load("textures/UI/buttons/main_menu/exit_selected.png");
 	exit_button_idle_tex = App->tex->Load("textures/UI/buttons/main_menu/exit_base.png");
 
+	//Play Button
+	AddButton(550, 120, PLAY, false, play_button_idle_tex, play_button_selected_tex, play_button_hovering_tex, nullptr, true);
+	AddButton(550, 170, CONTINUE, true, continue_button_idle_tex, continue_button_selected_tex, continue_button_hovering_tex, continue_button_locked_tex, true);
+	AddButton(550, 220, SETTINGS, false, settings_button_idle_tex, settings_button_selected_tex, settings_button_hovering_tex, nullptr, true);
+	AddButton(550, 270, CREDITS, false, creditsbutton_idle_tex, credits_button_selected_tex, credits_button_hovering_tex, nullptr, true);
+	AddButton(550, 320, EXIT, false, exit_button_idle_tex, exit_button_selected_tex, exit_button_hovering_tex, nullptr, true);
+
 	//title
 	title1_tex = App->tex->Load("textures/UI/buttons/main_menu/title1.png");
 	background_tex = App->tex->Load("maps/fondo2_big.png");
 	terrain_tex = App->tex->Load("textures/UI/buttons/main_menu/terrain.png");
 
+	credits = App->tex->Load("textures/UI/submenus/credits.png");
+	App->audio->PlayMusic("audio/music/intro.ogg");
 	return true;
 }
 
@@ -101,35 +112,32 @@ bool j1UI::Update(float dt) {
 	BROFILER_CATEGORY("UI_Update", Profiler::Color::OrangeRed)
 
 	if (mainMenu) { // UI ELEMENTS
-
 		App->render->Blit(background_tex, 0, 0, NULL, 0.00f);
 		App->render->Blit(title1_tex, 55, 30, NULL, 0.00f);
 		App->render->Blit(terrain_tex, 155, 142, NULL, 0.00f);
+		
 
-		//buttons
-		//play
-		if (play_button_hovering){}
-		if (play_button_selected){}
-		if (play_button_idle) App->render->Blit(play_button_idle_tex, 550, 120, NULL, 0.00f);
-
-		//continue
-		if (continue_button_hovering){}
-		if (continue_button_selected){}
-		if (continue_button_idle){}
-		if (continue_button_locked) App->render->Blit(continue_button_locked_tex, 550, 170, NULL, 0.00f);
-		//settings
-		if (settings_button_hovering){}
-		if (settings_button_selected){}
-		if (settings_button_idle) App->render->Blit(settings_button_idle_tex, 550, 220, NULL, 0.00f);
-		//credits
-		if (credits_button_hovering){}
-		if (credits_button_selected){}
-		if (creditsbutton_idle) App->render->Blit(creditsbutton_idle_tex, 550, 270, NULL, 0.00f);
-		//exit
-		if (exit_button_hovering){}
-		if (exit_button_selected){}
-		if (exit_button_idle) App->render->Blit(exit_button_idle_tex, 550, 320, NULL, 0.00f);
-
+		for (p2List_item<UIButton*>* item = buttons.start; item != nullptr; item = item->next) {
+			item->data->UpdateMouse();
+			if (item->data->hasToBeRendered) item->data->Draw();
+			if (item->data->state == ACTING) {
+				if (item->data->type == PLAY) {
+					scene = true;
+					mainMenu = false;
+					App->scene->SetUpScene();
+				}
+				else if (item->data->type == EXIT) return false;
+				else if (item->data->type == CREDITS) {
+					showCredits = false;
+				}
+			}
+			else if (item->data->state == SELECTED) {
+				if (item->data->type == CREDITS) {
+					showCredits = true;
+				}
+			}
+		}
+		
 		//to lvl1
 
 		//App->render->Blit(mainMenu_tex, 0, 0, NULL, 0.00f);
@@ -140,6 +148,8 @@ bool j1UI::Update(float dt) {
 		App->player->current_animation = &App->player->player_idle_gravitySwapped;
 		App->player->current_animation->speed = dt * 10;
 		App->render->Blit(App->player->player_textures, 320, 336, &(App->player->current_animation->GetCurrentFrame()), 0.00f);
+
+		if (showCredits)App->render->Blit(credits, 0, 0, NULL, 0.00f);
 
 		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
 			scene = true;
@@ -243,3 +253,42 @@ bool j1UI::Save(pugi::xml_node& node) {
 	return true;
 }
 
+UIButton::UIButton(){}
+UIButton::~UIButton() {}
+
+void UIButton::Draw() {
+	if(locked) App->render->Blit(locked_tex, position.x, position.y, NULL, 0.00f);
+	else if(state==HOVERING) App->render->Blit(hovering_tex, position.x, position.y, NULL, 0.00f);
+	else if(state==SELECTED) App->render->Blit(selected_tex, position.x, position.y, NULL, 0.00f);
+	else App->render->Blit(idle_tex, position.x, position.y, NULL, 0.00f);
+}
+
+void j1UI::AddButton(int x, int y, UIButton_type type, bool locked, SDL_Texture* idle_tex, SDL_Texture* selected_tex, SDL_Texture* hovering_tex, SDL_Texture* locked_tex, bool hasToBeRendered) {
+	UIButton* button;
+	button = new UIButton();
+	button->position.x = x;
+	button->position.y = y;
+	button->type = type;
+	button->locked = locked;
+	button->idle_tex = idle_tex;
+	button->selected_tex = selected_tex;
+	button->hovering_tex = hovering_tex;
+	button->locked_tex = locked_tex;
+	button->hasToBeRendered = hasToBeRendered;
+	buttons.add(button);
+}
+
+void UIButton::UpdateMouse() {
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	if (x > position.x && x < position.x + width && y > position.y && y < position.y + height && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
+		state = SELECTED;
+	}
+	else if (x > position.x&& x < position.x + width && y > position.y&& y < position.y + height && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
+		state = ACTING;
+	}
+	else if (x > position.x&& x < position.x + width && y > position.y && y < position.y + height) {
+		state = HOVERING;
+	}
+	else state = IDLE;
+}

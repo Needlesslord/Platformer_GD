@@ -3,27 +3,41 @@
 
 struct SDL_Texture;
 
-enum UIElement_type {
-	UI_BUTTON,
-	UI_TEXT,
-	UI_BOX,
-	UI_NO_TYPE
+enum UIButton_state {
+	IDLE,
+	HOVERING,
+	SELECTED,
+	ACTING
 };
-class UIElement {
+
+enum UIButton_type {
+	PLAY,
+	CONTINUE,
+	SETTINGS,
+	CREDITS,
+	EXIT,
+	NO_TYPE
+};
+
+class UIButton {
 public:
-	UIElement(UIElement_type type, int x, int y, SDL_Texture* sprites = nullptr) : type(type), position(x, y), initialPosition(x, y), sprites(sprites) {}
-	~UIElement() {}
-
-	virtual void Draw(int x = 0, int y = 0) {}
+	UIButton();
+	virtual ~UIButton();
+	void Draw();
 
 public:
-	UIElement_type type;
-	bool visible = true;
-
-	iPoint initialPosition;
+	UIButton_state state = IDLE;
+	UIButton_type type = NO_TYPE;
+	bool locked = false;
+	bool hasToBeRendered;
+	void UpdateMouse();
 	iPoint position;
-
-	SDL_Texture* sprites = nullptr;
+	uint width = 90;
+	uint height = 30;
+	SDL_Texture* hovering_tex = nullptr;
+	SDL_Texture* selected_tex = nullptr;
+	SDL_Texture* idle_tex = nullptr;
+	SDL_Texture* locked_tex = nullptr;
 };
 
 class j1UI : public j1Module {
@@ -70,28 +84,6 @@ public:
 	bool mainMenu = true;
 	bool scene = false;
 
-	//buttons working
-	//play
-	bool play_button_hovering = false;
-	bool play_button_selected = false;
-	bool play_button_idle = true;
-	//continue
-	bool continue_button_hovering = false;
-	bool continue_button_selected = false;
-	bool continue_button_idle = false;
-	bool continue_button_locked = true;
-	//settings
-	bool settings_button_hovering = false;
-	bool settings_button_selected = false;
-	bool settings_button_idle = true;
-	//credits
-	bool credits_button_hovering = false;
-	bool credits_button_selected = false;
-	bool creditsbutton_idle = true;
-	//exit
-	bool exit_button_hovering = false;
-	bool exit_button_selected = false;
-	bool exit_button_idle = true;
 	//buttons img
 	//play
 	SDL_Texture* play_button_hovering_tex;
@@ -115,8 +107,14 @@ public:
 	SDL_Texture* exit_button_selected_tex;
 	SDL_Texture* exit_button_idle_tex;
 
+
+	void AddButton(int x, int y, UIButton_type type, bool locked, SDL_Texture* idle_tex, SDL_Texture* selected_tex, SDL_Texture* hovering_tex, SDL_Texture* locked_tex, bool hasToBeRendered);
+	p2List<UIButton*> buttons;
+
 	SDL_Texture* title1_tex;
 	SDL_Texture* background_tex;
 	SDL_Texture* terrain_tex;
 
+	SDL_Texture* credits;
+	bool showCredits = false;
 };

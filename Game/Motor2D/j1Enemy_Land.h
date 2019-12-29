@@ -31,7 +31,7 @@ private:
 
 	j1Animation* current_animation;
 
-	j1Animation idle;
+	/*j1Animation idle;
 	j1Animation idle_gravity_Swapped;
 	j1Animation run;
 	j1Animation runM;
@@ -48,7 +48,7 @@ private:
 	j1Animation hit;
 	j1Animation hitM;
 	j1Animation hit_gravity_Swapped;
-	j1Animation hitM_gravity_Swapped;
+	j1Animation hitM_gravity_Swapped;*/
 
 	int distance; 
 	float move_direction;
