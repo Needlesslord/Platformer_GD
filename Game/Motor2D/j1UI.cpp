@@ -69,12 +69,24 @@ bool j1UI::Start() {
 	exit_button_selected_tex = App->tex->Load("textures/UI/buttons/main_menu/exit_selected.png");
 	exit_button_idle_tex = App->tex->Load("textures/UI/buttons/main_menu/exit_base.png");
 
+	resume_button_hovering_tex = App->tex->Load("textures/UI/buttons/pause_menu/resume_hover.png");
+	resume_button_selected_tex = App->tex->Load("textures/UI/buttons/pause_menu/resume_selected.png");
+	resume_button_idle_tex = App->tex->Load("textures/UI/buttons/pause_menu/resume_base.png");
+
+	back_button_hovering_tex = App->tex->Load("textures/UI/buttons/pause_menu/backToMenu_hover.png");
+	back_button_selected_tex = App->tex->Load("textures/UI/buttons/pause_menu/backToMenu_selected.png");
+	back_button_idle_tex = App->tex->Load("textures/UI/buttons/pause_menu/backToMenu_base.png");
+
 	//Play Button
 	AddButton(550, 120, PLAY, false, play_button_idle_tex, play_button_selected_tex, play_button_hovering_tex, nullptr, true);
 	AddButton(550, 170, CONTINUE, true, continue_button_idle_tex, continue_button_selected_tex, continue_button_hovering_tex, continue_button_locked_tex, true);
 	AddButton(550, 220, SETTINGS, false, settings_button_idle_tex, settings_button_selected_tex, settings_button_hovering_tex, nullptr, true);
 	AddButton(550, 270, CREDITS, false, creditsbutton_idle_tex, credits_button_selected_tex, credits_button_hovering_tex, nullptr, true);
 	AddButton(550, 320, EXIT, false, exit_button_idle_tex, exit_button_selected_tex, exit_button_hovering_tex, nullptr, true);
+
+	AddButton(300, 50, CONTINUE, true, resume_button_idle_tex, resume_button_selected_tex, resume_button_hovering_tex, nullptr, false);
+	AddButton(300, 100, BACK, true, back_button_idle_tex, back_button_selected_tex, back_button_hovering_tex, nullptr, false);
+	AddButton(300, 150, EXIT, true, exit_button_idle_tex, exit_button_selected_tex, exit_button_hovering_tex, nullptr, false);
 
 	//title
 	title1_tex = App->tex->Load("textures/UI/buttons/main_menu/title1.png");
@@ -144,6 +156,14 @@ bool j1UI::Update(float dt) {
 			App->scene->SetUpScene();
 		}
 	}
+	else if (App->player->paused) {
+		App->render->Blit(App->player->subMenuBackground_tex, 0, 0, NULL, 0.00f);
+		App->render->Blit(App->player->subMenu_tex, -30, 0, NULL, 0.00f);
+		for (p2List_item<UIButton*>* item = buttons.start; item != nullptr; item = item->next) {
+			item->data->UpdateMouse();
+			if (!item->data->hasToBeRendered) item->data->Draw();
+		}
+	}
 	else if (scene) { // HUD
 		if (shurikens == 0) {
 			App->render->Blit(shuriken_tex_transparent, 11, 50, NULL, 0.00f);
@@ -198,24 +218,19 @@ bool j1UI::Update(float dt) {
 		}
 		if (!/*TODO: change*/renderTimer) {
 			sprintf_s(minutes_string, 10, "%1d", minutes);
-			App->fonts->BlitText(185+150, 10, numbers, minutes_string);
+			App->fonts->BlitText(185 + 150, 10, numbers, minutes_string);
 
 			sprintf_s(seconds_string, 10, "%1d", seconds);
-			App->fonts->BlitText(230+150, 10, numbers, seconds_string);
+			App->fonts->BlitText(230 + 150, 10, numbers, seconds_string);
 
-			App->render->Blit(twoDots, 239+150, 10, NULL, 0.00f);
+			App->render->Blit(twoDots, 239 + 150, 10, NULL, 0.00f);
 		}
 		if (App->player->score < 10000) sprintf_s(score_string, 10, "%1d", App->player->score);
 		if (App->player->score < 1000) sprintf_s(score_string, 10, "0%1d", App->player->score);
 		if (App->player->score < 100) sprintf_s(score_string, 10, "00%1d", App->player->score);
 		if (App->player->score < 10) sprintf_s(score_string, 10, "000%1d", App->player->score);
-		App->fonts->BlitText(385+250, 10, numbers, score_string);
-		
-		if (App->player->paused) {
-			App->render->Blit(App->player->subMenuBackground_tex, 0, 0, NULL, 0.00f);
-			App->render->Blit(App->player->subMenu_tex, -30, 0, NULL, 0.00f);
+		App->fonts->BlitText(385 + 250, 10, numbers, score_string);
 
-		}
 	}
 
 
