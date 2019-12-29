@@ -24,14 +24,14 @@
 
 	GitHub: tomascarreras1000
 
-	Tomás has been in charge of the base code, the player (lead role), save/load, map's collisions design, config, camera, music, debug, entity manager, pathfinding, particles, fps
+	Tomás has been in charge of the base code, the player (lead role), save/load, map's collisions design, config, camera, music, debug, entity manager, pathfinding, particles, fps, ui
 
 
 **Lead Design, Programmer and Management:** Núria Lamonja
 
 	GitHub:	 needlesslord
 
-	Núria has been in charge of the base code, the level design and implementation, music and sprites (choosing and arranging them), implemented map's collisions, readme, web page, delivery, enemies, pathfinding, uml, particles
+	Núria has been in charge of the base code, the level design and implementation, music and sprites (choosing and arranging them), implemented map's collisions, readme, web page, delivery, enemies, pathfinding, uml, particles, ui
 
 
 
@@ -112,7 +112,7 @@ Here you can go to the release page and download the different versions availabl
 Instructions can be found in this same web page or in the readme.md file included in the zip.
 
 
-[Releases](https://github.com/nurialp12/Platformer_GD/releases)
+[Releases](https://github.com/Needlesslord/Platformer_GD/releases)
 
 
 
@@ -125,14 +125,14 @@ CONTROLS:
 	COMPUTER KEYBOARD ONLY
 
 	PLAYER 
-	A 	move left
-	D 	move right
-	W	jump + double jump (only when going upwards)
-	SPACE	shurikens
+	A 		move left
+	D 		move right
+	W		jump + double jump (only when jumping, not when already falling)
+	SPACE		shurikens
 	
-	ESC 	to leave the game	
+	ESC 		to pause the game	
 	
-	+ - 	to control the volume
+	P (+) O (-)	to control the volume
 
 
 	DEBUG:
@@ -148,7 +148,9 @@ CONTROLS:
 	F7	Frees camera
 	F8 	direct win				
 	F9 	Logic/collisions
-	F10 	God mode				
+	F10 	God mode	
+
+	RETURN 	Exit at any time			
 
 
 	CAMERA (with F7)
@@ -158,16 +160,12 @@ CONTROLS:
 
 ## Content
 
-
-	_under construction_
-
-
 	### Innovation
 
 
 		Gravity change
-		Maximum 3 shurikens
-		Checkpoints and autosave with keys
+		Maximum 3 shurikens, with different cooldowns
+		Checkpoints and autosave with keys, which open the exit
 
 
 
