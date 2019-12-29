@@ -39,14 +39,10 @@ public:
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
 	void GameOver();
-
-private:
+public:
 	SDL_Texture* player_textures = nullptr;
 	SDL_Texture* player_textures_godmode = nullptr;
-	SDL_Texture* img_m = nullptr;
-
-public:
-	SDL_Texture* imgwin = nullptr;
+	SDL_Texture* img_m = nullptr; SDL_Texture* imgwin = nullptr;
 	j1Animation* current_animation;
 
 	j1Animation player_idle;

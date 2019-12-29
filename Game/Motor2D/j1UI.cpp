@@ -22,6 +22,7 @@ bool j1UI::Awake(pugi::xml_node&) {
 
 bool j1UI::Start() {
 	LOG("Loading UI");
+	mainMenu_tex = App->tex->Load("ui/menu.png");
 	numbers = App->fonts->Load("textures/UI/Numbers.png", "0123456789", 1);
 	twoDots = App->tex->Load("textures/UI/2dots.png");
 	shuriken_tex = App->tex->Load("textures/UI/shurikens_normal.png");
@@ -110,6 +111,16 @@ bool j1UI::Update(float dt) {
 		if (exit_button_idle){}
 
 		//to lvl1
+
+		App->render->Blit(mainMenu_tex, 0, 0, NULL, 0.00f);
+		App->player->current_animation = &App->player->player_idle;
+		App->player->current_animation->speed = dt * 10;
+		App->render->Blit(App->player->player_textures, 300, 300, &(App->player->current_animation->GetCurrentFrame()), 0.00f);
+
+		App->player->current_animation = &App->player->player_idle_gravitySwapped;
+		App->player->current_animation->speed = dt * 10;
+		App->render->Blit(App->player->player_textures, 400, 350, &(App->player->current_animation->GetCurrentFrame()), 0.00f);
+
 		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
 			scene = true;
 			mainMenu = false;
