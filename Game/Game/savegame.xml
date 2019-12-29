@@ -8,7 +8,7 @@
 	</audio>
 	<map />
 	<scene>
-		<current_scene value="1" />
+		<current_scene value="2" />
 	</scene>
 	<collisions />
 	<player>
@@ -22,9 +22,9 @@
 	<:anonymous />
 	<:anonymous />
 	<UI>
-		<render_key value="true" />
+		<render_key value="false" />
 	</UI>
 	<renderer>
-		<camera x="-891" y="-2556" />
+		<camera x="-570" y="-10880" />
 	</renderer>
 </save>

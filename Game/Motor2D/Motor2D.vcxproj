@@ -84,6 +84,7 @@
     <ClCompile Include="j1Entity.cpp" />
     <ClCompile Include="j1EntityManager.cpp" />
     <ClCompile Include="j1Enemy_Land.cpp" />
+    <ClCompile Include="j1FadeToBlack.cpp" />
     <ClCompile Include="j1Fonts.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
@@ -104,6 +105,7 @@
     <ClCompile Include="j1Window.cpp" />
     <ClCompile Include="j1Player.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
+    <ClCompile Include="j1SceneIntro.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brofiler.h" />
@@ -114,6 +116,7 @@
     <ClInclude Include="j1Entity.h" />
     <ClInclude Include="j1EntityManager.h" />
     <ClInclude Include="j1Enemy_Land.h" />
+    <ClInclude Include="j1FadeToBlack.h" />
     <ClInclude Include="j1Fonts.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1NPC.h" />
@@ -121,6 +124,7 @@
     <ClInclude Include="j1PathFinding.h" />
     <ClInclude Include="j1PerfTimer.h" />
     <ClInclude Include="j1Scene.h" />
+    <ClInclude Include="j1SceneIntro.h" />
     <ClInclude Include="j1Timer.h" />
     <ClInclude Include="j1UI.h" />
     <ClInclude Include="p2DynArray.h" />
