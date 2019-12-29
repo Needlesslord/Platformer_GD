@@ -149,6 +149,16 @@ bool j1Scene::Update(float dt) {
 		App->map->Draw(-App->render->camera.x);
 	}
 
+	if (!App->UI->mainMenu) {
+		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+			App->player->paused = !App->player->paused;
+			if (App->UI->gameTime.counting) 
+				App->UI->gameTime.Stop();
+			else 
+				App->UI->gameTime.Resume();
+		}
+	}
+
 	return true;
 }
 

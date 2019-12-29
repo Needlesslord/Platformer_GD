@@ -178,6 +178,10 @@ bool j1Player::Start() {
 		// KEY POSITION COLLIDER
 		key = App->collisions->AddCollider({ 700, 1405, 12, 48 /*Should come from XML*/}, COLLIDER_KEY, this);
 	}
+
+	subMenu_tex = App->tex->Load("textures/UI/background/subm.png");
+	subMenuBackground_tex = App->tex->Load("textures/UI/background/transp.png");
+
 	return true;
 }
 
@@ -193,6 +197,8 @@ bool j1Player::CleanUp() {
 	App->tex->UnLoad(checkpoint_1_tex);
 	App->tex->UnLoad(key_tex_not);
 
+	App->tex->UnLoad(subMenuBackground_tex);
+	App->tex->UnLoad(subMenu_tex);
 
 	if (col != nullptr)col->to_delete = true;
 	if (colFeet != nullptr)colFeet->to_delete = true;
@@ -334,6 +340,8 @@ bool j1Player::Update(float dt) {
 		else App->render->Blit(player_textures, position.x - AnimationOffstet.x, position.y - AnimationOffstet.y, &(current_animation->GetCurrentFrame()));
 
 		if (paused) {
+			App->render->Blit(subMenuBackground_tex, 0, 0);
+			App->render->Blit(subMenu_tex, 0, 0);
 
 		}
 	}

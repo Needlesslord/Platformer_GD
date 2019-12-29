@@ -106,6 +106,9 @@ public:
 	SDL_Texture* key_tex;
 	SDL_Texture* key_tex_not;
 
+	SDL_Texture* subMenu_tex;
+	SDL_Texture* subMenuBackground_tex;
+
 	// CHECKPOINTS
 	j1Animation checkpoint_saved_1;
 	j1Animation checkpoint_unsaved_1;
