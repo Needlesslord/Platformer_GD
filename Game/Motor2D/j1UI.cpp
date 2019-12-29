@@ -177,12 +177,6 @@ bool j1UI::Update(float dt) {
 		if (renderKey) App->render->Blit(key_small, 730, 350, NULL, 0.00f);
 		else App->render->Blit(key_small_toGet, 730, 350, NULL, 0.00f);
 
-		if (App->player->paused) {
-			App->render->Blit(App->player->subMenuBackground_tex, 0, 0);
-			App->render->Blit(App->player->subMenu_tex, 0, 0);
-
-		}
-
 
 		seconds = gameTime.ReadSec();
 		for (int i = 0; i < 9; i++) {
@@ -205,7 +199,15 @@ bool j1UI::Update(float dt) {
 		if (App->player->score < 100) sprintf_s(score_string, 10, "00%1d", App->player->score);
 		if (App->player->score < 10) sprintf_s(score_string, 10, "000%1d", App->player->score);
 		App->fonts->BlitText(385+250, 10, numbers, score_string);
+		
+		if (App->player->paused) {
+			App->render->Blit(App->player->subMenuBackground_tex, 0, 0, NULL, 0.00f);
+			App->render->Blit(App->player->subMenu_tex, -30, 0, NULL, 0.00f);
+
+		}
 	}
+
+
 	return true;
 }
 

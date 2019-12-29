@@ -151,11 +151,12 @@ bool j1Scene::Update(float dt) {
 
 	if (!App->UI->mainMenu) {
 		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
-			App->player->paused = !App->player->paused;
-			if (App->UI->gameTime.counting) 
+			if (!App->player->paused && App->UI->gameTime.counting) 
 				App->UI->gameTime.Stop();
-			else 
+			else
 				App->UI->gameTime.Resume();
+			App->player->paused = !App->player->paused;
+
 		}
 	}
 
