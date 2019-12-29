@@ -7,6 +7,7 @@ enum UIButton_state {
 	IDLE,
 	HOVERING,
 	SELECTED,
+	ACTING
 };
 
 enum UIButton_type {
@@ -29,7 +30,10 @@ public:
 	UIButton_type type = NO_TYPE;
 	bool locked = false;
 	bool hasToBeRendered;
+	void UpdateMouse();
 	iPoint position;
+	uint width = 90;
+	uint height = 30;
 	SDL_Texture* hovering_tex = nullptr;
 	SDL_Texture* selected_tex = nullptr;
 	SDL_Texture* idle_tex = nullptr;
@@ -106,5 +110,9 @@ public:
 
 	void AddButton(int x, int y, UIButton_type type, bool locked, SDL_Texture* idle_tex, SDL_Texture* selected_tex, SDL_Texture* hovering_tex, SDL_Texture* locked_tex, bool hasToBeRendered);
 	p2List<UIButton*> buttons;
+
+	SDL_Texture* title1_tex;
+	SDL_Texture* background_tex;
+	SDL_Texture* terrain_tex;
 
 };

@@ -14,8 +14,9 @@ public:
 	uint Read() const;
 	float ReadSec() const;
 
+	bool	counting;
+
 private:
-	bool counting;	
 	uint	started_at;
 	uint	stopped_at;
 };

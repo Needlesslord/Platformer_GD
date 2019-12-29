@@ -9,6 +9,7 @@
 #include "j1Player.h"
 #include "j1Collisions.h"
 #include "j1Input.h"
+#include "j1Audio.h"
 
 j1UI::j1UI() : j1Module() {
 	name.create("UI");
@@ -68,17 +69,26 @@ bool j1UI::Start() {
 	exit_button_selected_tex = App->tex->Load("textures/UI/buttons/main_menu/exit_selected.png");
 	exit_button_idle_tex = App->tex->Load("textures/UI/buttons/main_menu/exit_base.png");
 
-
 	//Play Button
-	AddButton(550, 122, PLAY, false, play_button_idle_tex, play_button_selected_tex, play_button_hovering_tex, nullptr, true);
+	AddButton(550, 120, PLAY, false, play_button_idle_tex, play_button_selected_tex, play_button_hovering_tex, nullptr, true);
 	AddButton(550, 170, CONTINUE, true, continue_button_idle_tex, continue_button_selected_tex, continue_button_hovering_tex, continue_button_locked_tex, true);
+	AddButton(550, 220, SETTINGS, false, settings_button_idle_tex, settings_button_selected_tex, settings_button_hovering_tex, nullptr, true);
+	AddButton(550, 270, CREDITS, false, creditsbutton_idle_tex, credits_button_selected_tex, credits_button_hovering_tex, nullptr, true);
+	AddButton(550, 320, EXIT, false, exit_button_idle_tex, exit_button_selected_tex, exit_button_hovering_tex, nullptr, true);
+
+	//title
+	title1_tex = App->tex->Load("textures/UI/buttons/main_menu/title1.png");
+	background_tex = App->tex->Load("maps/fondo2_big.png");
+	terrain_tex = App->tex->Load("textures/UI/buttons/main_menu/terrain.png");
+
+	App->audio->PlayMusic("audio/music/intro.ogg");
 	return true;
 }
 
 bool j1UI::CleanUp() {
 	LOG("Unloading UI");
 	App->fonts->UnLoad(numbers);
-
+	App->tex->UnLoad(background_tex);
 	return true;
 }
 
@@ -88,18 +98,34 @@ bool j1UI::PreUpdate() {
 
 bool j1UI::Update(float dt) {
 	if (mainMenu) { // UI ELEMENTS
+		App->render->Blit(background_tex, 0, 0, NULL, 0.00f);
+		App->render->Blit(title1_tex, 55, 30, NULL, 0.00f);
+		App->render->Blit(terrain_tex, 155, 142, NULL, 0.00f);
+
 
 		for (p2List_item<UIButton*>* item = buttons.start; item != nullptr; item = item->next) {
+			item->data->UpdateMouse();
 			if (item->data->hasToBeRendered) item->data->Draw();
+			if (item->data->state == ACTING) {
+				if (item->data->type == PLAY) {
+					scene = true;
+					mainMenu = false;
+					App->scene->SetUpScene();
+				}
+				else if (item->data->type == EXIT) return false;
+			}
 		}
+		
+		//to lvl1
 
+		//App->render->Blit(mainMenu_tex, 0, 0, NULL, 0.00f);
 		App->player->current_animation = &App->player->player_idle;
 		App->player->current_animation->speed = dt * 10;
-		App->render->Blit(App->player->player_textures, 300, 300, &(App->player->current_animation->GetCurrentFrame()), 0.00f);
+		App->render->Blit(App->player->player_textures, 170, 114, &(App->player->current_animation->GetCurrentFrame()), 0.00f);
 
 		App->player->current_animation = &App->player->player_idle_gravitySwapped;
 		App->player->current_animation->speed = dt * 10;
-		App->render->Blit(App->player->player_textures, 400, 350, &(App->player->current_animation->GetCurrentFrame()), 0.00f);
+		App->render->Blit(App->player->player_textures, 320, 336, &(App->player->current_animation->GetCurrentFrame()), 0.00f);
 
 		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
 			scene = true;
@@ -148,8 +174,15 @@ bool j1UI::Update(float dt) {
 		}
 
 
-		if (renderKey) App->render->Blit(key_small, 485, 330, NULL, 0.00f);
-		else App->render->Blit(key_small_toGet, 485, 330, NULL, 0.00f);
+		if (renderKey) App->render->Blit(key_small, 730, 350, NULL, 0.00f);
+		else App->render->Blit(key_small_toGet, 730, 350, NULL, 0.00f);
+
+		if (App->player->paused) {
+			App->render->Blit(App->player->subMenuBackground_tex, 0, 0);
+			App->render->Blit(App->player->subMenu_tex, 0, 0);
+
+		}
+
 
 		seconds = gameTime.ReadSec();
 		for (int i = 0; i < 9; i++) {
@@ -160,18 +193,18 @@ bool j1UI::Update(float dt) {
 		}
 		if (!/*TODO: change*/renderTimer) {
 			sprintf_s(minutes_string, 10, "%1d", minutes);
-			App->fonts->BlitText(185, 10, numbers, minutes_string);
+			App->fonts->BlitText(185+150, 10, numbers, minutes_string);
 
 			sprintf_s(seconds_string, 10, "%1d", seconds);
-			App->fonts->BlitText(230, 10, numbers, seconds_string);
+			App->fonts->BlitText(230+150, 10, numbers, seconds_string);
 
-			App->render->Blit(twoDots, 239, 10, NULL, 0.00f);
+			App->render->Blit(twoDots, 239+150, 10, NULL, 0.00f);
 		}
 		if (App->player->score < 10000) sprintf_s(score_string, 10, "%1d", App->player->score);
 		if (App->player->score < 1000) sprintf_s(score_string, 10, "0%1d", App->player->score);
 		if (App->player->score < 100) sprintf_s(score_string, 10, "00%1d", App->player->score);
 		if (App->player->score < 10) sprintf_s(score_string, 10, "000%1d", App->player->score);
-		App->fonts->BlitText(385, 10, numbers, score_string);
+		App->fonts->BlitText(385+250, 10, numbers, score_string);
 	}
 	return true;
 }
@@ -214,4 +247,19 @@ void j1UI::AddButton(int x, int y, UIButton_type type, bool locked, SDL_Texture*
 	button->locked_tex = locked_tex;
 	button->hasToBeRendered = hasToBeRendered;
 	buttons.add(button);
+}
+
+void UIButton::UpdateMouse() {
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	if (x > position.x && x < position.x + width && y > position.y && y < position.y + height && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
+		state = SELECTED;
+	}
+	else if (x > position.x&& x < position.x + width && y > position.y&& y < position.y + height && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
+		state = ACTING;
+	}
+	else if (x > position.x&& x < position.x + width && y > position.y && y < position.y + height) {
+		state = HOVERING;
+	}
+	else state = IDLE;
 }
