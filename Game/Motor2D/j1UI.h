@@ -40,6 +40,8 @@ public:
 	bool Save(pugi::xml_node& node);
 
 public:
+	SDL_Texture* mainMenu_tex;
+
 	uint shurikens;
 	SDL_Texture* shuriken_tex;
 	SDL_Texture* shuriken_tex_transparent;
