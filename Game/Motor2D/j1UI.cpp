@@ -44,6 +44,7 @@ bool j1UI::Start() {
 
 	minutes = 0;
 
+	
 	//init blit buttons
 								//play
 	play_button_hovering_tex = App->tex->Load("textures/UI/buttons/main_menu/play_hover.png");
@@ -68,7 +69,9 @@ bool j1UI::Start() {
 	exit_button_idle_tex = App->tex->Load("textures/UI/buttons/main_menu/exit_base.png");
 
 
-
+	//Play Button
+	AddButton(550, 122, PLAY, false, play_button_idle_tex, play_button_selected_tex, play_button_hovering_tex, nullptr, true);
+	AddButton(550, 170, CONTINUE, true, continue_button_idle_tex, continue_button_selected_tex, continue_button_hovering_tex, continue_button_locked_tex, true);
 	return true;
 }
 
@@ -86,33 +89,10 @@ bool j1UI::PreUpdate() {
 bool j1UI::Update(float dt) {
 	if (mainMenu) { // UI ELEMENTS
 
-		//buttons
-		//play
-		if (play_button_hovering){}
-		if (play_button_selected){}
-		if (play_button_idle) App->render->Blit(play_button_idle_tex, 11, 50, NULL, 0.00f);
+		for (p2List_item<UIButton*>* item = buttons.start; item != nullptr; item = item->next) {
+			if (item->data->hasToBeRendered) item->data->Draw();
+		}
 
-		//continue
-		if (continue_button_hovering){}
-		if (continue_button_selected){}
-		if (continue_button_idle){}
-		if (continue_button_locked){}
-		//settings
-		if (settings_button_hovering){}
-		if (settings_button_selected){}
-		if (settings_button_idle){}
-		//credits
-		if (credits_button_hovering){}
-		if (credits_button_selected){}
-		if (creditsbutton_idle){}
-		//exit
-		if (exit_button_hovering){}
-		if (exit_button_selected){}
-		if (exit_button_idle){}
-
-		//to lvl1
-
-		App->render->Blit(mainMenu_tex, 0, 0, NULL, 0.00f);
 		App->player->current_animation = &App->player->player_idle;
 		App->player->current_animation->speed = dt * 10;
 		App->render->Blit(App->player->player_textures, 300, 300, &(App->player->current_animation->GetCurrentFrame()), 0.00f);
@@ -211,3 +191,27 @@ bool j1UI::Save(pugi::xml_node& node) {
 	return true;
 }
 
+UIButton::UIButton(){}
+UIButton::~UIButton() {}
+
+void UIButton::Draw() {
+	if(locked) App->render->Blit(locked_tex, position.x, position.y, NULL, 0.00f);
+	else if(state==HOVERING) App->render->Blit(hovering_tex, position.x, position.y, NULL, 0.00f);
+	else if(state==SELECTED) App->render->Blit(selected_tex, position.x, position.y, NULL, 0.00f);
+	else App->render->Blit(idle_tex, position.x, position.y, NULL, 0.00f);
+}
+
+void j1UI::AddButton(int x, int y, UIButton_type type, bool locked, SDL_Texture* idle_tex, SDL_Texture* selected_tex, SDL_Texture* hovering_tex, SDL_Texture* locked_tex, bool hasToBeRendered) {
+	UIButton* button;
+	button = new UIButton();
+	button->position.x = x;
+	button->position.y = y;
+	button->type = type;
+	button->locked = locked;
+	button->idle_tex = idle_tex;
+	button->selected_tex = selected_tex;
+	button->hovering_tex = hovering_tex;
+	button->locked_tex = locked_tex;
+	button->hasToBeRendered = hasToBeRendered;
+	buttons.add(button);
+}
