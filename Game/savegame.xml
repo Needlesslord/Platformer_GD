@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<save>
+	<input />
+	<window />
+	<textures />
+	<audio>
+		<volume value="64" />
+	</audio>
+	<map />
+	<scene>
+		<current_scene value="1" />
+	</scene>
+	<collisions />
+	<player>
+		<position_x value="696.100037" />
+		<position_y value="1437.92712" />
+		<num_lives value="3" />
+		<gravity_swapped value="false" />
+	</player>
+	<:anonymous />
+	<pathfinding />
+	<:anonymous />
+	<:anonymous />
+	<UI>
+		<render_key value="true" />
+	</UI>
+	<renderer>
+		<camera x="-652" y="-2491" />
+	</renderer>
+</save>

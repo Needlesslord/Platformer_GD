@@ -16,6 +16,7 @@ enum UIButton_type {
 	SETTINGS,
 	CREDITS,
 	EXIT,
+	BACK,
 	NO_TYPE
 };
 
@@ -107,6 +108,13 @@ public:
 	SDL_Texture* exit_button_selected_tex;
 	SDL_Texture* exit_button_idle_tex;
 
+	SDL_Texture* resume_button_hovering_tex;
+	SDL_Texture* resume_button_selected_tex;
+	SDL_Texture* resume_button_idle_tex;
+
+	SDL_Texture* back_button_hovering_tex;
+	SDL_Texture* back_button_selected_tex;
+	SDL_Texture* back_button_idle_tex;
 
 	void AddButton(int x, int y, UIButton_type type, bool locked, SDL_Texture* idle_tex, SDL_Texture* selected_tex, SDL_Texture* hovering_tex, SDL_Texture* locked_tex, bool hasToBeRendered);
 	p2List<UIButton*> buttons;

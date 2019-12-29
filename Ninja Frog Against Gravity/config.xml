@@ -1,0 +1,68 @@
+<!-- Config file for the game -->
+
+<config>
+  <app framerate_cap="30">
+    <title>Ninja Frog Against Gravity</title>
+    <organization>Nuto Studios + UPC</organization>
+  </app>
+	
+  <renderer>
+    <vsync value="false"/>
+  </renderer>
+
+  <audio>
+    <volume value="64"></volume>
+  </audio>
+
+  <window>
+    <resolution width="1024" height="768" scale="2.5"/>
+    <fullscreen value="false"/>
+    <borderless value="false"/>
+    <resizable value="true"/>
+    <fullscreen_window value="true"/>
+  </window>
+
+  <map>
+    <folder>maps/</folder>
+  </map>
+  
+  <player>
+    <position_turorial x="500" y="1111"/>
+    <position_scene_1 x="500" y="1111"/>
+    <position_scene_2 x="490" y="5800"/>
+    <win_position_1 x="4206" y="515"/>
+    <win_position_2 x="2394" y="2728"/>
+    <size w="14" h="24"/>
+    <velocity x="100" y="0"/>
+    <max_speed x="300" y="480"/>
+    <jump_impulse y="200"/>
+    <gravity value="400"/>
+    <feet h="1"/>
+    <head h="1"/>
+    <right_side w="1"/>
+    <left_side w="1"/>
+    <grounded value="false"/>
+    <has_doublejumped value="false"/>
+    <mirror value="false"/>
+    <folder>textures/</folder>
+    <texture tex ="Ninja_Frog.png"/>
+    <animation_offset x="5" y="3"/>
+    <num_lives value="3"/>
+  </player>
+
+  <enemies>
+    <enemy_air_1>
+      <position_turorial x="500" y="1111"/>
+      <position_scene_1 x="500" y="1111"/>
+      <position_scene_2 x="490" y="3400"/>
+      <velocity x="60" y="60"/>
+      <mirror value="false"/>
+    </enemy_air_1>
+  </enemies>
+
+  <scene current_scene ="1"/>
+
+  <collisions>
+    <debug value="0"/>
+  </collisions>
+</config>
