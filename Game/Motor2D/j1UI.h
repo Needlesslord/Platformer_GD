@@ -115,4 +115,8 @@ public:
 	SDL_Texture* exit_button_selected_tex;
 	SDL_Texture* exit_button_idle_tex;
 
+	SDL_Texture* title1_tex;
+	SDL_Texture* background_tex;
+	SDL_Texture* terrain_tex;
+
 };
