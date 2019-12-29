@@ -46,6 +46,7 @@ public:
 
 	bool renderKey;
 	SDL_Texture* key_small;
+	SDL_Texture* key_small_toGet;
 
 	uint lives;
 	iPoint heart1;
@@ -66,4 +67,50 @@ public:
 
 	bool mainMenu = true;
 	bool scene = false;
+
+	//buttons working
+	//play
+	bool play_button_hovering = false;
+	bool play_button_selected = false;
+	bool play_button_idle = true;
+	//continue
+	bool continue_button_hovering = false;
+	bool continue_button_selected = false;
+	bool continue_button_idle = false;
+	bool continue_button_locked = true;
+	//settings
+	bool settings_button_hovering = false;
+	bool settings_button_selected = false;
+	bool settings_button_idle = true;
+	//credits
+	bool credits_button_hovering = false;
+	bool credits_button_selected = false;
+	bool creditsbutton_idle = true;
+	//exit
+	bool exit_button_hovering = false;
+	bool exit_button_selected = false;
+	bool exit_button_idle = true;
+	//buttons img
+	//play
+	SDL_Texture* play_button_hovering_tex;
+	SDL_Texture* play_button_selected_tex;
+	SDL_Texture* play_button_idle_tex;
+	//continue
+	SDL_Texture* continue_button_hovering_tex;
+	SDL_Texture* continue_button_selected_tex;
+	SDL_Texture* continue_button_idle_tex;
+	SDL_Texture* continue_button_locked_tex;
+	//settings
+	SDL_Texture* settings_button_hovering_tex;
+	SDL_Texture* settings_button_selected_tex;
+	SDL_Texture* settings_button_idle_tex;
+	//credits
+	SDL_Texture* credits_button_hovering_tex;
+	SDL_Texture* credits_button_selected_tex;
+	SDL_Texture* creditsbutton_idle_tex;
+	//exit
+	SDL_Texture* exit_button_hovering_tex;
+	SDL_Texture* exit_button_selected_tex;
+	SDL_Texture* exit_button_idle_tex;
+
 };

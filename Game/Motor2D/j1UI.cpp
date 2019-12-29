@@ -28,6 +28,7 @@ bool j1UI::Start() {
 	shuriken_tex_transparent = App->tex->Load("textures/UI/shurikens_transparent_normal.png");
 	lives_tex = App->tex->Load("textures/UI/heart_normal.png");
 	key_small = App->tex->Load("textures/key_normal.png");
+	key_small_toGet = App->tex->Load("textures/key_small_locked.png");
 	renderKey = false;
 	renderTimer = false;
 
@@ -41,6 +42,32 @@ bool j1UI::Start() {
 	heart3.y = 10;
 
 	minutes = 0;
+
+	//init blit buttons
+								//play
+	play_button_hovering_tex = App->tex->Load("textures/UI/buttons/main_menu/play_hover.png");
+	play_button_selected_tex = App->tex->Load("textures/UI/buttons/main_menu/play_selected.png");
+	play_button_idle_tex = App->tex->Load("textures/UI/buttons/main_menu/play_base.png");
+								//continue
+	continue_button_hovering_tex = App->tex->Load("textures/UI/buttons/main_menu/continue_hover.png");
+	continue_button_selected_tex = App->tex->Load("textures/UI/buttons/main_menu/continue_selected.png");
+	continue_button_idle_tex = App->tex->Load("textures/UI/buttons/main_menu/continue_base.png");
+	continue_button_locked_tex = App->tex->Load("textures/UI/buttons/main_menu/continue_locked.png");
+								//settings
+	settings_button_hovering_tex = App->tex->Load("textures/UI/buttons/main_menu/settings_hover.png");
+	settings_button_selected_tex = App->tex->Load("textures/UI/buttons/main_menu/settings_selected.png");
+	settings_button_idle_tex = App->tex->Load("textures/UI/buttons/main_menu/settings_base.png");
+								//credits
+	credits_button_hovering_tex = App->tex->Load("textures/UI/buttons/main_menu/credits_hover.png");
+	credits_button_selected_tex = App->tex->Load("textures/UI/buttons/main_menu/credits_selected.png");
+	creditsbutton_idle_tex = App->tex->Load("textures/UI/buttons/main_menu/credits_base.png");
+								//exit
+	exit_button_hovering_tex = App->tex->Load("textures/UI/buttons/main_menu/exit_hover.png");
+	exit_button_selected_tex = App->tex->Load("textures/UI/buttons/main_menu/exit_selected.png");
+	exit_button_idle_tex = App->tex->Load("textures/UI/buttons/main_menu/exit_base.png");
+
+
+
 	return true;
 }
 
@@ -57,6 +84,32 @@ bool j1UI::PreUpdate() {
 
 bool j1UI::Update(float dt) {
 	if (mainMenu) { // UI ELEMENTS
+
+		//buttons
+		//play
+		if (play_button_hovering){}
+		if (play_button_selected){}
+		if (play_button_idle) App->render->Blit(play_button_idle_tex, 11, 50, NULL, 0.00f);
+
+		//continue
+		if (continue_button_hovering){}
+		if (continue_button_selected){}
+		if (continue_button_idle){}
+		if (continue_button_locked){}
+		//settings
+		if (settings_button_hovering){}
+		if (settings_button_selected){}
+		if (settings_button_idle){}
+		//credits
+		if (credits_button_hovering){}
+		if (credits_button_selected){}
+		if (creditsbutton_idle){}
+		//exit
+		if (exit_button_hovering){}
+		if (exit_button_selected){}
+		if (exit_button_idle){}
+
+		//to lvl1
 		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
 			scene = true;
 			mainMenu = false;
@@ -105,7 +158,7 @@ bool j1UI::Update(float dt) {
 
 
 		if (renderKey) App->render->Blit(key_small, 485, 330, NULL, 0.00f);
-
+		else App->render->Blit(key_small_toGet, 485, 330, NULL, 0.00f);
 
 		seconds = gameTime.ReadSec();
 		for (int i = 0; i < 9; i++) {

@@ -12,8 +12,8 @@
 	</scene>
 	<collisions />
 	<player>
-		<position_x value="710.301697" />
-		<position_y value="1408.23083" />
+		<position_x value="703.800171" />
+		<position_y value="1424.67102" />
 		<num_lives value="3" />
 		<gravity_swapped value="false" />
 	</player>
@@ -25,6 +25,6 @@
 		<render_key value="true" />
 	</UI>
 	<renderer>
-		<camera x="-488" y="-2324" />
+		<camera x="-667" y="-2465" />
 	</renderer>
 </save>

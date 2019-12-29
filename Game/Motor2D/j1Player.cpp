@@ -151,6 +151,8 @@ bool j1Player::Start() {
 	imgwin = App->tex->Load("textures/imgwin.png");
 	lockedDoor = App->tex->Load("textures/candado.png");
 	key_tex = App->tex->Load("textures/key_normal.png");
+	key_tex_not = App->tex->Load("textures/key_small_locked.png");
+
 	score = 0;
 	if (App->scene->current_scene == 0) {
 		position.x = originalPosition_1.x;
@@ -189,6 +191,7 @@ bool j1Player::CleanUp() {
 	App->tex->UnLoad(lockedDoor);
 	App->tex->UnLoad(key_tex);
 	App->tex->UnLoad(checkpoint_1_tex);
+	App->tex->UnLoad(key_tex_not);
 
 
 	if (col != nullptr)col->to_delete = true;

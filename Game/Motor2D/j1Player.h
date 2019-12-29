@@ -108,6 +108,7 @@ public:
 	SDL_Texture* lockedDoor;
 	Collider* key;
 	SDL_Texture* key_tex;
+	SDL_Texture* key_tex_not;
 
 	// CHECKPOINTS
 	j1Animation checkpoint_saved_1;
