@@ -90,29 +90,29 @@ bool j1UI::Update(float dt) {
 		//play
 		if (play_button_hovering){}
 		if (play_button_selected){}
-		if (play_button_idle) App->render->Blit(play_button_idle_tex, 11, 50, NULL, 0.00f);
+		if (play_button_idle) App->render->Blit(play_button_idle_tex, 550, 120, NULL, 0.00f);
 
 		//continue
 		if (continue_button_hovering){}
 		if (continue_button_selected){}
 		if (continue_button_idle){}
-		if (continue_button_locked){}
+		if (continue_button_locked) App->render->Blit(play_button_idle_tex, 550, 170, NULL, 0.00f);
 		//settings
 		if (settings_button_hovering){}
 		if (settings_button_selected){}
-		if (settings_button_idle){}
+		if (settings_button_idle) App->render->Blit(play_button_idle_tex, 550, 220, NULL, 0.00f);
 		//credits
 		if (credits_button_hovering){}
 		if (credits_button_selected){}
-		if (creditsbutton_idle){}
+		if (creditsbutton_idle) App->render->Blit(play_button_idle_tex, 550, 270, NULL, 0.00f);
 		//exit
 		if (exit_button_hovering){}
 		if (exit_button_selected){}
-		if (exit_button_idle){}
+		if (exit_button_idle) App->render->Blit(play_button_idle_tex, 550, 320, NULL, 0.00f);
 
 		//to lvl1
 
-		App->render->Blit(mainMenu_tex, 0, 0, NULL, 0.00f);
+		//App->render->Blit(mainMenu_tex, 0, 0, NULL, 0.00f);
 		App->player->current_animation = &App->player->player_idle;
 		App->player->current_animation->speed = dt * 10;
 		App->render->Blit(App->player->player_textures, 300, 300, &(App->player->current_animation->GetCurrentFrame()), 0.00f);
