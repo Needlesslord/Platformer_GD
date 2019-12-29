@@ -48,7 +48,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args) {
 	AddModule(audio);
 	AddModule(map);
 	AddModule(scene);
-	AddModule(scene_intro);
+	//AddModule(scene_intro);
 	AddModule(collisions);
 	AddModule(player);
 	AddModule(entity_manager);
@@ -86,6 +86,7 @@ bool j1App::Awake() {
 	title.create(app_config.child("title").child_value());
 	organization.create(app_config.child("organization").child_value());
 	frameRateCap = config.child("app").attribute("framerate_cap").as_uint();
+
 
 	if(ret == true) {
 		p2List_item<j1Module*>* item;

@@ -12,6 +12,7 @@
 #include "j1Collisions.h"
 #include "j1Player.h"
 #include "j1EntityManager.h"
+#include "j1UI.h"
 #include "Brofiler.h"
 
 j1Scene::j1Scene() : j1Module() {
@@ -35,65 +36,7 @@ bool j1Scene::Start() {
 
 	BROFILER_CATEGORY("Scene_Start", Profiler::Color::Salmon)
 
-	if (current_scene == 0) {
-		background1_small = App->tex->Load("maps/fondo0_small.png");
-		App->map->Load("00 Tutorial.tmx");
-		//App->audio->PlayMusic("audio/music/intro.ogg");
-	}
-	else if (current_scene == 1) {
-		background1_small = App->tex->Load("maps/fondo1_small.png");
-		App->map->Load("01 Level1.tmx");
-		//App->audio->PlayMusic("audio/music/Scene1.ogg");
-	}
-	else if (current_scene == 2) {
-		background2_small = App->tex->Load("maps/fondo2_small.png");
-		App->map->Load("02 Level2v2.tmx");
-		//App->audio->PlayMusic("audio/music/intro.ogg");
-	}
-
-	// ENEMIES
-	if (current_scene == 1) {
-		//AIR
-		//App->entity_manager->CreateEntity(ENEMY_AIR, App->player->originalPosition_1.x + 120, App->player->originalPosition_1.y - 20);
-		App->entity_manager->CreateEntity(ENEMY_AIR, 1300, 1000);
-		App->entity_manager->CreateEntity(ENEMY_AIR, 2100, 740);
-		App->entity_manager->CreateEntity(ENEMY_AIR, 2100, 740);
-		App->entity_manager->CreateEntity(ENEMY_AIR, 2363, 1660);
-		App->entity_manager->CreateEntity(ENEMY_AIR, 2810, 512);
-		App->entity_manager->CreateEntity(ENEMY_AIR, 3160, 1290);
-		App->entity_manager->CreateEntity(ENEMY_AIR, 680, 1560);
-		//LAND
-		//App->entity_manager->CreateEntity(ENEMY_LAND, App->player->originalPosition_1.x + 120, App->player->originalPosition_1.y + 10);
-		App->entity_manager->CreateEntity(ENEMY_LAND, 895, 1145);
-		App->entity_manager->CreateEntity(ENEMY_LAND, 1160, 1712);
-		App->entity_manager->CreateEntity(ENEMY_LAND, 1800, 1135);
-		App->entity_manager->CreateEntity(ENEMY_LAND, 2620, 1365);
-		App->entity_manager->CreateEntity(ENEMY_LAND, 2445, 940);
-		App->entity_manager->CreateEntity(ENEMY_LAND, 3540, 645);
-		App->entity_manager->CreateEntity(ENEMY_LAND, 4000, 1020);
-
-	}
-	if (current_scene == 2) {
-		//AIR
-		//App->entity_manager->CreateEntity(ENEMY_AIR, App->player->originalPosition_1.x + 120, App->player->originalPosition_1.y - 20);
-		App->entity_manager->CreateEntity(ENEMY_AIR, 1800, 2800);
-		App->entity_manager->CreateEntity(ENEMY_AIR, 3270, 3130);
-		App->entity_manager->CreateEntity(ENEMY_AIR, 740, 3800);
-		App->entity_manager->CreateEntity(ENEMY_AIR, 1940, 4700);
-		App->entity_manager->CreateEntity(ENEMY_AIR, 1530, 5600);
-		App->entity_manager->CreateEntity(ENEMY_AIR, 4245, 3775);
-		App->entity_manager->CreateEntity(ENEMY_AIR, 3625, 4900);
-		//LAND
-		//App->entity_manager->CreateEntity(ENEMY_LAND, App->player->originalPosition_1.x + 120, App->player->originalPosition_1.y + 10);
-		App->entity_manager->CreateEntity(ENEMY_LAND, 4232, 5215);
-		App->entity_manager->CreateEntity(ENEMY_LAND, 3780, 3970);
-		App->entity_manager->CreateEntity(ENEMY_LAND, 2900, 5270);
-		App->entity_manager->CreateEntity(ENEMY_LAND, 3090, 5900);
-		App->entity_manager->CreateEntity(ENEMY_LAND, 2200, 3900);
-		App->entity_manager->CreateEntity(ENEMY_LAND, 645, 3260);
-		App->entity_manager->CreateEntity(ENEMY_LAND, 500, 4730);
-
-	}
+	
 
 	return true;
 }
@@ -110,8 +53,11 @@ bool j1Scene::PreUpdate() {
 bool j1Scene::Update(float dt) {
 
 	BROFILER_CATEGORY("Scene_Update", Profiler::Color::HotPink)
+	if (App->UI->mainMenu) {
 
-	{//DEBUG KEYS
+	}
+	else if (App->UI->scene) {
+		//DEBUG KEYS
 		if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN) { //CHANGE TO Tutorial
 			if (current_scene != 0) {
 				changeSceneTo(0);
@@ -130,7 +76,7 @@ bool j1Scene::Update(float dt) {
 				//TODO Insert sound in an else to say you can't load lvl1
 			}
 		}
-		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) { //CHANGE TO SCENE 2
+		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) { //CHANGE TO PAUSE MENU
 			if (current_scene != 99) {
 				changeSceneTo(99);
 				//TODO Insert sound in an else to say you can't load lvl1
@@ -191,17 +137,17 @@ bool j1Scene::Update(float dt) {
 
 			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) App->render->camera.x -= 100;
 		}
+
+		if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && App->audio->volume < 128) App->audio->volume += 4; //INCRESE VOLUME
+
+		if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 4; //DECREASE VOLUME
+
+
+		if (current_scene == 1) App->render->Blit(background1_small, 0, 0, NULL, 0.00f);
+		else if (current_scene == 2) App->render->Blit(background2_small, 0, 0, NULL, 0.00f);
+
+		App->map->Draw(-App->render->camera.x);
 	}
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && App->audio->volume < 128) App->audio->volume += 4; //INCRESE VOLUME
-	
-	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 4; //DECREASE VOLUME
-
-
-	if (current_scene == 1) App->render->Blit(background1_small, App->player->position.x - 250, App->player->position.y - 200);
-	else if (current_scene == 2) App->render->Blit(background2_small, App->player->position.x - 250, App->player->position.y - 200);
-
-	App->map->Draw(-App->render->camera.x);
-
 
 	return true;
 }
@@ -301,4 +247,71 @@ bool j1Scene::Load(pugi::xml_node& node) {
 		changeSceneTo(current_scene);
 	}
 	return true;
+}
+
+bool j1Scene::SetUpScene() {
+	bool ret = true;
+	if (current_scene == 0) {
+		background1_small = App->tex->Load("maps/fondo0_big.png");
+		App->map->Load("00 Tutorial.tmx");
+		//App->audio->PlayMusic("audio/music/intro.ogg");
+	}
+	else if (current_scene == 1) {
+		background1_small = App->tex->Load("maps/fondo1_big.png");
+		App->map->Load("01 Level1.tmx");
+		App->player->past2Sec.Start();
+		App->player->velocity.y = 0;
+		App->player->position.y = App->player->originalPosition_1.y;
+		//App->audio->PlayMusic("audio/music/Scene1.ogg");
+	}
+	else if (current_scene == 2) {
+		background2_small = App->tex->Load("maps/fondo2_big.png");
+		App->map->Load("02 Level2v2.tmx");
+		App->player->past2Sec.Start();
+		App->player->velocity.y = 0;
+		App->player->position.y = App->player->originalPosition_2.y - 10;
+		//App->audio->PlayMusic("audio/music/intro.ogg");
+	}
+
+	// ENEMIES
+	if (current_scene == 1) {
+		//AIR
+		App->entity_manager->CreateEntity(ENEMY_AIR, 1300, 1000);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 2100, 740);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 2100, 740);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 2363, 1660);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 2810, 512);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 3160, 1290);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 680, 1560);
+		//LAND
+		App->entity_manager->CreateEntity(ENEMY_LAND, 895, 1145);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 1160, 1712);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 1800, 1135);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 2620, 1365);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 2445, 940);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 3540, 645);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 4000, 1020);
+	}
+	if (current_scene == 2) {
+		//AIR
+		App->entity_manager->CreateEntity(ENEMY_AIR, 1800, 2800);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 3270, 3130);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 740, 3800);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 1940, 4700);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 1530, 5600);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 4245, 3775);
+		App->entity_manager->CreateEntity(ENEMY_AIR, 3625, 4900);
+		//LAND
+		App->entity_manager->CreateEntity(ENEMY_LAND, 4232, 5215);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 3780, 3970);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 2900, 5270);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 3090, 5900);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 2200, 3900);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 645, 3260);
+		App->entity_manager->CreateEntity(ENEMY_LAND, 500, 4730);
+	}
+
+	App->UI->gameTime.Start();
+
+	return ret;
 }

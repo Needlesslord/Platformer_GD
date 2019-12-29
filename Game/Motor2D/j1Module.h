@@ -59,7 +59,7 @@ public:
 public:
 	p2SString	name;
 	bool		active;
-	virtual void OnCollision(Collider*, Collider*) {} //WE NEED AN ONCOLLISION VOID ON ENEMIES		.H
+	virtual void OnCollision(Collider*, Collider*) {} 
 };
 
 #endif // __j1MODULE_H__

@@ -16,6 +16,7 @@ public:
 	bool Load(pugi::xml_node& node);
 	bool Save(pugi::xml_node& node);
 	bool CleanUp();
+	bool SetUpScene();
 	bool changeSceneTo(int scene);
 	bool keys_enabled = false;
 
