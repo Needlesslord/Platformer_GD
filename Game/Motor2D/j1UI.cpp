@@ -9,6 +9,7 @@
 #include "j1Player.h"
 #include "j1Collisions.h"
 #include "j1Input.h"
+#include "Brofiler.h"
 #include "j1Audio.h"
 
 j1UI::j1UI() : j1Module() {
@@ -22,6 +23,9 @@ bool j1UI::Awake(pugi::xml_node&) {
 }
 
 bool j1UI::Start() {
+
+	BROFILER_CATEGORY("UI_Update", Profiler::Color::Red)
+
 	LOG("Loading UI");
 	mainMenu_tex = App->tex->Load("ui/menu.png");
 	numbers = App->fonts->Load("textures/UI/Numbers.png", "0123456789", 1);
@@ -99,6 +103,9 @@ bool j1UI::Start() {
 }
 
 bool j1UI::CleanUp() {
+
+	BROFILER_CATEGORY("UI_CleanUp", Profiler::Color::RosyBrown)
+
 	LOG("Unloading UI");
 	App->fonts->UnLoad(numbers);
 	App->tex->UnLoad(background_tex);
@@ -106,10 +113,16 @@ bool j1UI::CleanUp() {
 }
 
 bool j1UI::PreUpdate() {
+
+	BROFILER_CATEGORY("UI_PreUpdate", Profiler::Color::PaleVioletRed)
+
 	return true;
 }
 
 bool j1UI::Update(float dt) {
+
+	BROFILER_CATEGORY("UI_Update", Profiler::Color::OrangeRed)
+
 	if (mainMenu) { // UI ELEMENTS
 		App->render->Blit(background_tex, 0, 0, NULL, 0.00f);
 		App->render->Blit(title1_tex, 55, 30, NULL, 0.00f);
@@ -238,6 +251,9 @@ bool j1UI::Update(float dt) {
 }
 
 bool j1UI::PostUpdate() {
+
+	BROFILER_CATEGORY("UI_PostUpdate", Profiler::Color::MediumVioletRed)
+
 	return true;
 }
 
