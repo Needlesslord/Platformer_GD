@@ -30,8 +30,16 @@ bool j1UI::Start() {
 	renderKey = false;
 	renderTimer = false;
 
+	heart1.x = 5;
+	heart1.y = 5;
+
+	heart2.x = 25;
+	heart2.y = 5;
+
+	heart3.x = 45;
+	heart3.y = 5;
+
 	minutes = 0;
-		
 	return true;
 }
 
@@ -70,12 +78,23 @@ bool j1UI::Update(float dt) {
 
 
 	lives = App->player->numLives;
-	if (lives > 0) App->render->Blit(lives_tex,  5, 5, NULL, 0.00f);
-	if (lives > 1) App->render->Blit(lives_tex, 25, 5, NULL, 0.00f);
-	if (lives > 2) App->render->Blit(lives_tex, 45, 5, NULL, 0.00f);
+	if (lives > 0) {
+		App->render->Blit(lives_tex, heart1.x, heart1.y, NULL, 0.00f);
+		if (lives > 1) {
+			App->render->Blit(lives_tex, heart2.x, heart2.y, NULL, 0.00f);
+			if (lives > 2) App->render->Blit(lives_tex, heart3.x, heart3.y, NULL, 0.00f); 
+			else {
+				heart3.y += dt * 500;
+				App->render->Blit(lives_tex, heart3.x, heart3.y, NULL, 0.00f);
+			}
+		}
+		else {
+			heart2.y += dt * 500;
+			App->render->Blit(lives_tex, heart2.x, heart2.y, NULL, 0.00f);
+		}
+	}
 
-
-	if (!renderKey) App->render->Blit(key_small, 485, 330, NULL, 0.00f);
+	if (renderKey) App->render->Blit(key_small, 485, 330, NULL, 0.00f);
 
 
 	seconds = gameTime.ReadSec();
@@ -94,6 +113,11 @@ bool j1UI::Update(float dt) {
 
 		App->render->Blit(twoDots, 239, 10, NULL, 0.00f);
 	}
+	if (App->player->score < 10000) sprintf_s(score_string, 10, "%1d", App->player->score);
+	if (App->player->score < 1000) sprintf_s(score_string, 10, "0%1d", App->player->score);
+	if (App->player->score < 100) sprintf_s(score_string, 10, "00%1d", App->player->score);
+	if (App->player->score < 10) sprintf_s(score_string, 10, "000%1d", App->player->score);
+	App->fonts->BlitText(385, 10, numbers, score_string);
 
 	return true;
 }

@@ -23,6 +23,10 @@ public:
 	SDL_Texture* key_small;
 
 	uint lives;
+	iPoint heart1;
+	iPoint heart2;
+	iPoint heart3;
+
 	SDL_Texture* lives_tex;
 
 	bool renderKey;
@@ -37,4 +41,5 @@ public:
 	char minutes_string[10];
 	j1Timer gameTime;
 	
+	char score_string[10];
 };

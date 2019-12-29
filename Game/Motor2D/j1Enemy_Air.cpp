@@ -147,30 +147,15 @@ void j1Enemy_Air::OnCollision(Collider* c1, Collider* c2)
 			isAlive = false;
 			c2->to_delete = true;
 			c1->to_delete = true;
+			App->player->score += 150;
 		}
 	}
 
 	if (c1->type == COLLIDER_ENEMY) {
-
 		if (c2->type == COLLIDER_PLAYER && !App->player->godMode) {
-
 			position = initial_position_enemy_air;
-
-			if (App->scene->current_scene == 0) {
-				App->player->position.x = App->player->originalPosition_1.x;
-				App->player->position.y = App->player->originalPosition_1.y;
-			}
-			else if (App->scene->current_scene == 1) {
-				App->player->position.x = App->player->originalPosition_1.x;
-				App->player->position.y = App->player->originalPosition_1.y;
-			}
-			else if (App->scene->current_scene == 2) {
-				App->player->position.x = App->player->originalPosition_2.x;
-				App->player->position.y = App->player->originalPosition_2.y;
-			}
 		}
 	}
-
 }
 
 void j1Enemy_Air::MoveIdle(iPoint position) {
@@ -181,7 +166,7 @@ void j1Enemy_Air::MoveIdle(iPoint position) {
 		if (distance_air > 30) {
 			move_direction_air = -1;
 		}
-		else if (distance_air < 0) {
+		else if (distance_air < 0 && distance_air>initial_position_enemy_air.x + 200) {
 			move_direction_air = +1;
 		}
 		else {
@@ -190,7 +175,6 @@ void j1Enemy_Air::MoveIdle(iPoint position) {
 			else distance_air++;
 		}
 	}
-
 }
 
 void j1Enemy_Air::AttackPlayer(iPoint initial_position_enemy_air) {

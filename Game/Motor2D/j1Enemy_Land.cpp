@@ -141,8 +141,6 @@ void j1Enemy_Land::Move(p2DynArray<iPoint>& path, float dt)
 	{
 		position.x += speed.x * dt;
 	}
-
-
 }
 
 void j1Enemy_Land::OnCollision(Collider* c1, Collider* c2) {
@@ -151,10 +149,7 @@ void j1Enemy_Land::OnCollision(Collider* c1, Collider* c2) {
 			isAlive = false;
 			c2->to_delete = true;
 			c1->to_delete = true;
-		}
-		if (c2->type == PLAYER) {
-			isAlive = false;
-			c1->to_delete = true;
+			App->player->score += 100;
 		}
 	}
 }

@@ -152,7 +152,7 @@ bool j1Player::Start() {
 	imgwin = App->tex->Load("textures/imgwin.png");
 	lockedDoor = App->tex->Load("textures/candado.png");
 	key_tex = App->tex->Load("textures/key_normal.png");
-
+	score = 0;
 	if (App->scene->current_scene == 0) {
 		position.x = originalPosition_1.x;
 		position.y = originalPosition_1.y;
@@ -163,11 +163,11 @@ bool j1Player::Start() {
 		position.y = originalPosition_1.y;
 		current_animation = &player_idle;
 		// KEY POSITION COLLIDER
-		key = App->collisions->AddCollider({ 700, 1405, 12, 48 }, COLLIDER_KEY, this);
+		key = App->collisions->AddCollider({ 700, 1405, 12, 48 /*Should come from XML*/ }, COLLIDER_KEY, this);
 		// CHECKPOINTS
-		if (autosave_1) checkpoint_1_tex = App->tex->Load("textures/checkpoint_activated_Swapped.png");
-		else if (!autosave_1) checkpoint_1_tex = App->tex->Load("textures/checkpoint_deactivated_Swapped.png");
-		checkpoint_1 = App->collisions->AddCollider({ 705, 1405, 32, 32 }, COLLIDER_CHECKPOINT, this); 
+		//if (autosave_1) checkpoint_1_tex = App->tex->Load("textures/checkpoint_activated_Swapped.png");
+		//else if (!autosave_1) checkpoint_1_tex = App->tex->Load("textures/checkpoint_deactivated_Swapped.png");
+		//checkpoint_1 = App->collisions->AddCollider({ 705, 1405, 32, 32 /*Should come from XML*/ }, COLLIDER_CHECKPOINT, this);
 	
 	}
 	else if (App->scene->current_scene == 2) {
@@ -175,7 +175,7 @@ bool j1Player::Start() {
 		position.y = originalPosition_2.y;
 		current_animation = &player_falling;
 		// KEY POSITION COLLIDER
-		key = App->collisions->AddCollider({ 700, 1405, 12, 48 }, COLLIDER_KEY, this);
+		key = App->collisions->AddCollider({ 700, 1405, 12, 48 /*Should come from XML*/}, COLLIDER_KEY, this);
 	}
 	App->UI->gameTime.Start();
 
@@ -258,7 +258,7 @@ bool j1Player::Update(float dt) {
 				justSwapped = false;
 				swapTimer.Stop();
 			}
-			if (justDied && dieTimer.ReadSec() > 1) {
+			if (justDied && dieTimer.ReadSec() > 2) {
 				justDied = false;
 				dieTimer.Stop();
 			}
@@ -402,6 +402,15 @@ bool j1Player::ChangeGravity(bool withImpulse) {
 	}
 }
 
+void j1Player::GameOver() {
+	if (numLives == 3) score += 1500;
+	else if (numLives == 2) score += 750;
+	else if (numLives == 1) score += 250;
+
+	if (App->UI->gameTime.ReadSec() < 120) score += (120 - App->UI->gameTime.ReadSec()) * 20;
+	else if (App->UI->gameTime.ReadSec() < 180) score += (180 - App->UI->gameTime.ReadSec()) * 10;
+}
+
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 	BROFILER_CATEGORY("Player_OnCollision", Profiler::Color::CornflowerBlue)
@@ -483,19 +492,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 		}
 
-		if (c2->type == COLLIDER_KEY) {
-			key->to_delete;
-			key = nullptr;
+		if (c2->type == COLLIDER_KEY && doorLocked) {
+			c2->to_delete = true;
 			doorLocked = false;
 			App->UI->renderKey = true;
 			App->SaveRequest = true;
-		}
-
-		else if (c2->type == COLLIDER_CHECKPOINT) {
-			checkpoint_1->to_delete;
-			checkpoint_1 = nullptr;
-			autosave_1 = true;
-			App->SaveRequest = true;
+			score += 500;
 		}
 
 		else if (c2->type == COLLIDER_WIN && !doorLocked) {
@@ -505,9 +507,10 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			if (App->scene->current_scene == 2) {
 				App->scene->changeSceneTo(1);
 			}
+			GameOver();
 		}
 
-		else if (c2->type == COLLIDER_DEATH || c2->type == COLLIDER_ENEMY || c2->type == COLLIDER_ENEMY_SHOT && !justDied) {
+		else if ((c2->type == COLLIDER_DEATH || c2->type == COLLIDER_ENEMY || c2->type == COLLIDER_ENEMY_SHOT) && !justDied) {
 			if (App->scene->current_scene == 1) {
 				position.x = originalPosition_1.x;
 				position.y = originalPosition_1.y;
@@ -520,7 +523,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			grounded = true;
 			gravitySwapped = false;
 			numLives--;
-			if (numLives < 0) isDead = true;//TODO: Make the restart function restart numLives to 3 as well (and isDead to false, duh)
+			if (numLives < 0) isDead = true; //TODO: Make the restart function restart numLives to 3 as well (and isDead to false, duh)
 			dieTimer.Start();
 			justDied = true;
 		}

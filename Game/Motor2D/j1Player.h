@@ -38,6 +38,7 @@ public:
 	bool ChangeGravity(bool withImpulse);
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
+	void GameOver();
 
 private:
 	SDL_Texture* player_textures = nullptr;
@@ -137,6 +138,8 @@ public:
 
 	bool isDead;
 	bool paused = false;
+
+	uint score;
 };
 
 #endif
