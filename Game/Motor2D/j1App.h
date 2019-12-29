@@ -13,6 +13,7 @@ class j1Render;
 class j1Textures;
 class j1Audio;
 class j1Scene;
+class j1SceneIntro;
 class j1Collisions;
 class j1Player;
 class j1Map;
@@ -72,6 +73,7 @@ public:
 	j1Textures*			tex;
 	j1Audio*			audio;
 	j1Scene*			scene;
+	j1SceneIntro*		scene_intro;
 	j1Map*				map;
 	j1Collisions*		collisions;
 	j1Player*			player;

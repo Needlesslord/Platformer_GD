@@ -7,6 +7,7 @@
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1Scene.h"
+#include "j1SceneIntro.h"
 #include "j1Map.h"
 #include "j1Collisions.h"
 #include "j1Player.h"
@@ -126,6 +127,12 @@ bool j1Scene::Update(float dt) {
 		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) { //CHANGE TO SCENE 2
 			if (current_scene != 2) {
 				changeSceneTo(2);
+				//TODO Insert sound in an else to say you can't load lvl1
+			}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) { //CHANGE TO SCENE 2
+			if (current_scene != 99) {
+				changeSceneTo(99);
 				//TODO Insert sound in an else to say you can't load lvl1
 			}
 		}
@@ -260,6 +267,24 @@ bool j1Scene::changeSceneTo(int scene) {
 		App->scene->CleanUp();
 		App->scene->Start();
 	}	
+	else if (scene == 99) {
+		App->collisions->CleanUp();
+		App->map->CleanUp();
+		current_scene = scene;
+
+		App->player->CleanUp();
+		App->player->Start();
+		App->player->position.x = App->player->originalPosition_1.x;		//change to 99, add variable
+		App->player->position.y = App->player->originalPosition_1.y;		//change to 99, add variable
+		App->player->velocity.y = 0;
+		App->player->current_map = 1;										//change to 99, with no map
+		App->player->doorLocked = true;
+
+		App->scene->CleanUp();
+
+		App->scene_intro->Start();
+
+	}
 	else return false;
 	//TODO:		IMPORTANT!!		 UNLOAD COLLIDERS
 	return true;

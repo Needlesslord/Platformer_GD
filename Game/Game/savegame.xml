@@ -8,12 +8,12 @@
 	</audio>
 	<map />
 	<scene>
-		<current_scene value="1" />
+		<current_scene value="2" />
 	</scene>
 	<collisions />
 	<player>
-		<position_x value="712.703064" />
-		<position_y value="1448.04834" />
+		<position_x value="527.100037" />
+		<position_y value="5608.3999" />
 		<num_lives value="3" />
 		<gravity_swapped value="false" />
 	</player>
@@ -22,9 +22,9 @@
 	<:anonymous />
 	<:anonymous />
 	<UI>
-		<render_key value="true" />
+		<render_key value="false" />
 	</UI>
 	<renderer>
-		<camera x="-941" y="-2560" />
+		<camera x="-570" y="-10880" />
 	</renderer>
 </save>
