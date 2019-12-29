@@ -36,17 +36,17 @@ bool j1Scene::Start() {
 	BROFILER_CATEGORY("Scene_Start", Profiler::Color::Salmon)
 
 	if (current_scene == 0) {
-		background1_small = App->tex->Load("maps/fondo0_small.png");
+		background1_small = App->tex->Load("maps/fondo0_big.png");
 		App->map->Load("00 Tutorial.tmx");
 		//App->audio->PlayMusic("audio/music/intro.ogg");
 	}
 	else if (current_scene == 1) {
-		background1_small = App->tex->Load("maps/fondo1_small.png");
+		background1_small = App->tex->Load("maps/fondo1_big.png");
 		App->map->Load("01 Level1.tmx");
 		//App->audio->PlayMusic("audio/music/Scene1.ogg");
 	}
 	else if (current_scene == 2) {
-		background2_small = App->tex->Load("maps/fondo2_small.png");
+		background2_small = App->tex->Load("maps/fondo2_big.png");
 		App->map->Load("02 Level2v2.tmx");
 		//App->audio->PlayMusic("audio/music/intro.ogg");
 	}
@@ -197,8 +197,8 @@ bool j1Scene::Update(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && App->audio->volume > 0) App->audio->volume -= 4; //DECREASE VOLUME
 
 
-	if (current_scene == 1) App->render->Blit(background1_small, App->player->position.x - 250, App->player->position.y - 200);
-	else if (current_scene == 2) App->render->Blit(background2_small, App->player->position.x - 250, App->player->position.y - 200);
+	if (current_scene == 1) App->render->Blit(background1_small, 0, 0, NULL, 0.00f);
+	else if (current_scene == 2) App->render->Blit(background2_small, 0, 0, NULL, 0.00f);
 
 	App->map->Draw(-App->render->camera.x);
 
